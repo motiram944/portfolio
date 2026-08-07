@@ -1,7 +1,7 @@
 /**
  * Motiram V. Shinde - Developer Portfolio JavaScript Engine
  * Stack: Pure Vanilla ES6+ JavaScript + Tailwind CSS
- * Features: Motiram.AI Portfolio Copilot (Strict Guardrails & Pure Branding)
+ * Features: Motiram.AI Portfolio Copilot (GitHub Pages Compatible & Zero 405 Errors)
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -344,6 +344,21 @@ Be polite, technical, helpful, and concise.
       chatHistory.push({ role: "user", content: userQuery });
       const thinkingNode = appendMessage('bot', '', true);
 
+      // Check if running on GitHub Pages (static environment where POST to /api/chat returns 405)
+      const isGitHubPages = window.location.hostname.includes('github.io');
+
+      if (isGitHubPages) {
+        setTimeout(() => {
+          const dynamicAnswer = getDynamicRAGResponse(userQuery);
+          chatHistory.push({ role: "assistant", content: dynamicAnswer });
+          if (thinkingNode) {
+            thinkingNode.innerHTML = `<span class="text-cyan-400 font-bold block flex items-center gap-1">🤖 Motiram.AI Copilot:</span><p class="leading-relaxed whitespace-pre-wrap">${dynamicAnswer}</p>`;
+          }
+          messagesTarget.scrollTop = messagesTarget.scrollHeight;
+        }, 350);
+        return;
+      }
+
       try {
         const response = await fetch(NVIDIA_ENDPOINT, {
           method: 'POST',
@@ -357,6 +372,10 @@ Be polite, technical, helpful, and concise.
             max_tokens: 512
           })
         });
+
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
 
         const data = await response.json();
         if (data && data.choices && data.choices[0] && data.choices[0].message) {
@@ -669,7 +688,27 @@ Be polite, technical, helpful, and concise.
       streamTarget.textContent = 'Retrieving age-contextual guidance rules...';
       controlArea.innerHTML = '';
 
-      const promptText = promptInput ? promptInput.value : "How much daily screen time should I allow for weeknights?";
+      const isGitHubPages = window.location.hostname.includes('github.io');
+      if (isGitHubPages) {
+        const fullText = `[RAG Retrieval Complete]: Based on pediatric safety guidelines for a ${activeAge}-year-old child, daily non-educational screen time is recommended to be capped. You can interactively adjust settings below:`;
+        streamTarget.textContent = '';
+        let charIdx = 0;
+
+        const charInterval = setInterval(() => {
+          if (charIdx < fullText.length) {
+            streamTarget.textContent += fullText.charAt(charIdx);
+            charIdx++;
+          } else {
+            clearInterval(charInterval);
+            isStreaming = false;
+            telStatus.textContent = 'COMPLETED';
+            telStatus.className = 'px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 text-[10px] font-bold';
+            controlArea.innerHTML = data.renderControls(activeAge);
+            data.attachEvents();
+          }
+        }, 15);
+        return;
+      }
 
       try {
         const response = await fetch(NVIDIA_ENDPOINT, {
@@ -681,7 +720,7 @@ Be polite, technical, helpful, and concise.
             model: NVIDIA_MODEL,
             messages: [
               { role: "system", content: `${data.systemPrompt} Context: Child is ${activeAge} years old.` },
-              { role: "user", content: promptText }
+              { role: "user", content: "How much daily screen time should I allow for weeknights?" }
             ],
             temperature: 0.5,
             max_tokens: 150
