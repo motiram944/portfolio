@@ -109,26 +109,27 @@ Be polite, technical, helpful, and concise.
      ========================================================================== */
   const getDynamicCounselorRAGResponse = (promptText, activeAge, currentScenario) => {
     const p = (promptText || '').toLowerCase();
+    const cleanPrompt = promptText ? `"${promptText}"` : 'Screen Time';
 
-    if (currentScenario === 'screentime' || p.includes('screen') || p.includes('time') || p.includes('hour') || p.includes('weeknight') || p.includes('allow')) {
+    if (currentScenario === 'screentime' || p.includes('screen') || p.includes('time') || p.includes('good') || p.includes('hour') || p.includes('weeknight') || p.includes('allow') || p.includes('limit') || p.includes('recommended')) {
       if (activeAge === '8') {
-        return `[RAG Vector Search Match: 0.965 Cosine Sim] Recommended max non-educational screen time for an 8-year-old child on weeknights is 1.0 hour. Educational study apps remain unrestricted. Use the interactive slider below to adjust daily caps:`;
+        return `[RAG Vector Match: 0.978] Pediatric Guidance for ${cleanPrompt} (Age 8): Recommended non-educational screen time is 1.0 hour/day. Educational apps remain unrestricted. Adjust daily hours control below:`;
       } else if (activeAge === '12') {
-        return `[RAG Vector Search Match: 0.965 Cosine Sim] Based on pediatric guidance for a 12-year-old pre-teen, daily recreational screen time is recommended to be capped at 1.5 hours on school nights. Interactively adjust the daily hours control below:`;
+        return `[RAG Vector Match: 0.985] Pediatric Guidance for ${cleanPrompt} (Age 12): Healthy recreational screen time is 1.5 hours/day on school nights to ensure 9 hours of sleep. Adjust daily hours control below:`;
       } else {
-        return `[RAG Vector Search Match: 0.965 Cosine Sim] For a 16-year-old teenager, recommended screen time is capped at 2.5 hours daily with bedtime lock at 11:00 PM. Adjust allowed gaming & social media hours below:`;
+        return `[RAG Vector Match: 0.969] Pediatric Guidance for ${cleanPrompt} (Age 16): Recommended daily screen time is 2.5 hours with automatic bedtime lock at 11:00 PM. Adjust daily hours control below:`;
       }
     }
 
     if (currentScenario === 'rules' || p.includes('block') || p.includes('url') || p.includes('app') || p.includes('rule') || p.includes('filter') || p.includes('roblox') || p.includes('youtube')) {
-      return `[RAG Vector Search Match: 0.982 Cosine Sim] Generated 3-state visual rule policies for a ${activeAge}-year-old child profile. Click on any action badge below to cycle through the 3 UI states (Allowed ➔ Scheduled ➔ Blocked):`;
+      return `[RAG Vector Match: 0.982] Safety Rule Policy for ${cleanPrompt} (Age ${activeAge}): 3-state rules configured for YouTube, Roblox, and Web Filters. Click any badge below to toggle states (Allowed ➔ Scheduled ➔ Blocked):`;
     }
 
     if (currentScenario === 'comparison' || p.includes('compare') || p.includes('policy') || p.includes('matrix') || p.includes('guardrail')) {
-      return `[RAG Vector Search Match: 0.948 Cosine Sim] Policy comparison matrix evaluated for ${activeAge}-year-old safety profile. Guardrail filters enforced for safe search, bedtime hours, and app installs:`;
+      return `[RAG Vector Match: 0.954] Guardrail Matrix Evaluation for ${cleanPrompt} (Age ${activeAge}): Verifying App Consent PIN, Bedtime Lock, and Safe Search Mode:`;
     }
 
-    return `[RAG Vector Search Match: 0.971 Cosine Sim] RAG guidance for "${promptText}" (${activeAge} yrs context): Pediatric safety policy advises setting clear digital boundaries, age-appropriate content filters, and structured quiet hours. Interactively configure controls below:`;
+    return `[RAG Vector Match: 0.971] AI Counselor Guidance for ${cleanPrompt} (Age ${activeAge}): Pediatric guidelines recommend structured digital boundaries, age-appropriate content filters, and enforced quiet hours. Adjust settings below:`;
   };
 
   /* ==========================================================================
@@ -713,7 +714,7 @@ Be polite, technical, helpful, and concise.
       streamTarget.textContent = 'Retrieving age-contextual guidance rules...';
       controlArea.innerHTML = '';
 
-      const promptText = promptInput ? promptInput.value : "How much daily screen time should I allow for weeknights?";
+      const promptText = promptInput ? promptInput.value.trim() : "What is good screen time";
       const fullText = getDynamicCounselorRAGResponse(promptText, activeAge, currentScenario);
 
       streamTarget.textContent = '';
