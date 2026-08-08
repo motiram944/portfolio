@@ -1,7 +1,6 @@
 /**
  * Motiram V. Shinde - Developer Portfolio JavaScript Engine
- * Stack: Pure Vanilla ES6+ JavaScript + Tailwind CSS
- * Features: Motiram.AI Portfolio Copilot & Dynamic AI Counselor RAG Engine
+ * Features: Professional UI, Dynamic Motiram.AI Copilot & Dynamic AI Counselor RAG Engine
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -9,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const NVIDIA_MODEL = "meta/llama-3.1-70b-instruct";
   const NVIDIA_ENDPOINT = "/api/chat";
 
-  // System Prompt for Motiram.AI Copilot with strict guardrails
+  // Verified Resume Knowledge Base System Prompt
   const MOTIRAM_SYSTEM_PROMPT = `
 You are Motiram.AI, an official AI Copilot for Motiram V. Shinde's portfolio.
 
@@ -46,62 +45,67 @@ Be polite, technical, helpful, and concise.
 `;
 
   /* ==========================================================================
-     DYNAMIC RAG RESUME RESPONSE ROUTER WITH STRICT OFF-TOPIC GUARDRAILS
+     DYNAMIC RAG RESUME RESPONSE ROUTER WITH COMPREHENSIVE QUERY MATCHING
      ========================================================================== */
   const getDynamicRAGResponse = (userQuery) => {
-    const q = userQuery.toLowerCase();
+    const q = userQuery.toLowerCase().trim();
 
-    // Guardrail Check: Restrict to Motiram's info only
-    const isMotiramRelated = q.includes('motiram') || q.includes('shinde') || q.includes('experience') ||
-                             q.includes('ai') || q.includes('counselor') || q.includes('rag') || q.includes('parental') ||
-                             q.includes('microfrontend') || q.includes('federation') || q.includes('gessa') || q.includes('module') ||
-                             q.includes('keycloak') || q.includes('npm') || q.includes('auth') || q.includes('rbac') || q.includes('entra') || q.includes('sso') ||
-                             q.includes('award') || q.includes('honor') || q.includes('achievement') || q.includes('hackerrank') || q.includes('gold') ||
-                             q.includes('education') || q.includes('cgpa') || q.includes('b.tech') || q.includes('nanded') || q.includes('college') || q.includes('degree') ||
-                             q.includes('workflow') || q.includes('io flow') || q.includes('react flow') || q.includes('builder') ||
-                             q.includes('contact') || q.includes('email') || q.includes('phone') || q.includes('location') || q.includes('reach') ||
-                             q.includes('hire') || q.includes('resume') || q.includes('skill') || q.includes('project') || q.includes('who') || q.includes('tell me');
+    // Guardrail Check: Check for explicit off-topic questions
+    const isExplicitOffTopic = q.includes('france') || q.includes('capital of') || q.includes('weather') || q.includes('poem') ||
+                               q.includes('joke') || q.includes('recipe') || q.includes('president') || q.includes('football') ||
+                               q.includes('cricket') || q.includes('movie') || q.includes('song') || q.includes('who is elon');
 
-    const isExplicitOffTopic = q.includes('france') || q.includes('capital') || q.includes('weather') || q.includes('poem') ||
-                               q.includes('joke') || q.includes('recipe') || q.includes('president') || q.includes('football') || q.includes('cricket');
-
-    if (!isMotiramRelated || isExplicitOffTopic) {
+    if (isExplicitOffTopic) {
       return "I am Motiram.AI, dedicated exclusively to assisting with Motiram V. Shinde's professional profile, engineering experience, and projects. Please feel free to ask me any question about Motiram's background!";
     }
 
-    if (q.includes('ai') || q.includes('counselor') || q.includes('rag') || q.includes('parental')) {
-      return "Motiram built a production parental-control AI Counselor web app using Next.js, Firebase, and RAG retrieval. Key highlight: He designed a dynamic AI chat renderer supporting 12+ layout card types (sliders, matrices, stat cards) backed by a 2-layer JSON parser!";
+    // AI Counselor Platform / RAG
+    if (q.includes('ai') || q.includes('counselor') || q.includes('rag') || q.includes('parental') || q.includes('guardrail') || q.includes('layout') || q.includes('parser') || q.includes('card')) {
+      return "Motiram engineered a production-level AI Counselor web platform using Next.js and Firebase. Core innovations include RAG vector retrieval, safety guardrail checks, and a dynamic chat response rendering engine supporting 12+ layout card types (stat cards, sliders, schedules) backed by a 2-layer JSON + JS fallback parser.";
     }
 
-    if (q.includes('microfrontend') || q.includes('federation') || q.includes('gessa') || q.includes('module')) {
-      return "At IAURO Systems (Apr 2022 - Present), Motiram architected enterprise microfrontend platforms with React.js & Webpack Module Federation, enabling independent deployment of IAM, user provisioning, and workflow modules.";
+    // Microfrontends / Module Federation / GESSA
+    if (q.includes('microfrontend') || q.includes('federation') || q.includes('gessa') || q.includes('module') || q.includes('architecture') || q.includes('webpack')) {
+      return "At IAURO Systems (Apr 2022 – Present), Motiram architected scalable enterprise microfrontend platforms using React.js and Webpack Module Federation. This enabled independent deployment of identity (IAM), user provisioning, and workflow modules with shared store state synchronization.";
     }
 
-    if (q.includes('keycloak') || q.includes('npm') || q.includes('auth') || q.includes('rbac') || q.includes('entra') || q.includes('sso')) {
-      return "Motiram authored & published 'keycloak-provider' on NPM — a reusable React authentication package with declarative RBAC hooks. He also led Azure Entra ID SSO migrations resolving token refresh bugs.";
+    // Keycloak / NPM Package / Auth / RBAC / SSO
+    if (q.includes('keycloak') || q.includes('npm') || q.includes('auth') || q.includes('rbac') || q.includes('entra') || q.includes('sso') || q.includes('token') || q.includes('package')) {
+      return "Motiram authored and published 'keycloak-provider' on NPM and Verdaccio — a reusable React authentication package with declarative RBAC hooks. He also led enterprise migrations to Azure Entra ID SSO, resolving complex token refresh lifecycle issues.";
     }
 
-    if (q.includes('award') || q.includes('honor') || q.includes('achievement') || q.includes('hackerrank') || q.includes('gold')) {
-      return "Motiram earned 2x Annual Awards & multiple monthly problem-solving awards at IAURO Systems. He also holds 5x Gold Badges on HackerRank (Python) and was awarded the Team Player Badge!";
+    // Tech Stack / Skills / Technologies
+    if (q.includes('tech stack') || q.includes('skill') || q.includes('technologies') || q.includes('stack') || q.includes('languages') || q.includes('react') || q.includes('next') || q.includes('typescript') || q.includes('redux')) {
+      return "Motiram's core technical stack includes: Frontend (React.js, Next.js, TypeScript, JavaScript, Redux Toolkit, Material UI, Tailwind CSS, SASS, Storybook), Architecture (Webpack Module Federation, Microfrontends, REST & GraphQL), Security/Auth (Keycloak, Azure Entra ID, RBAC), and AI (RAG Systems, Safe Guardrails, Vector Cosine Matching).";
     }
 
-    if (q.includes('education') || q.includes('cgpa') || q.includes('b.tech') || q.includes('nanded') || q.includes('college') || q.includes('degree')) {
-      return "Motiram graduated with a B.Tech in Information Technology from SGGSIE&T, Nanded, achieving a stellar CGPA of 9.19 / 10!";
+    // IO Flow / Workflow Builder / React Flow
+    if (q.includes('workflow') || q.includes('io flow') || q.includes('react flow') || q.includes('builder') || q.includes('flow') || q.includes('node') || q.includes('pipeline')) {
+      return "Motiram built the IO Flow Workflow Builder platform using React Flow renderer and Material UI. It features an interactive drag-and-drop process visualizer, real-time node execution tracking, and reusable workflow layout components.";
     }
 
-    if (q.includes('workflow') || q.includes('io flow') || q.includes('react flow') || q.includes('builder')) {
-      return "Motiram built the IO Flow Workflow Builder platform using React Flow renderer and Material UI, creating drag-and-drop process visualizers and real-time execution tracking nodes.";
+    // Education / College / Degree / CGPA
+    if (q.includes('education') || q.includes('cgpa') || q.includes('b.tech') || q.includes('nanded') || q.includes('college') || q.includes('degree') || q.includes('university') || q.includes('sggs')) {
+      return "Motiram graduated with a B.Tech in Information Technology from SGGSIE&T, Nanded (2018–2022), graduating with an exceptional CGPA of 9.19 / 10!";
     }
 
-    if (q.includes('experience') || q.includes('company') || q.includes('iauro') || q.includes('years') || q.includes('role')) {
-      return "Motiram is a Senior Frontend Engineer with 4.5+ years of experience at IAURO Systems Pvt. Ltd., Pune (Apr 2022 - Present), leading React, Next.js, Microfrontends, and AI product engineering.";
+    // Awards / Badges / Achievements / HackerRank
+    if (q.includes('award') || q.includes('honor') || q.includes('achievement') || q.includes('hackerrank') || q.includes('gold') || q.includes('badge') || q.includes('recognition')) {
+      return "Motiram has received 2x Annual Awards and multiple monthly problem-solving awards at IAURO Systems for consistent high performance. He also holds 5x Gold Badges on HackerRank (Python) and was awarded the Team Player Badge.";
     }
 
-    if (q.includes('contact') || q.includes('email') || q.includes('phone') || q.includes('location') || q.includes('reach')) {
-      return "You can reach Motiram directly via Email at motiramshinde944@gmail.com, Phone at (+91) 8975303848, or find him located in Pune, Maharashtra, India.";
+    // Experience / Company / IAURO / Tenure
+    if (q.includes('experience') || q.includes('company') || q.includes('iauro') || q.includes('years') || q.includes('tenure') || q.includes('work') || q.includes('role') || q.includes('job') || q.includes('position')) {
+      return "Motiram is a Senior Frontend Engineer with 4.5+ years of continuous experience at IAURO Systems Pvt. Ltd., Pune (Apr 2022 – Present), leading React, Next.js, Microfrontends, and AI product engineering.";
     }
 
-    return `Motiram V. Shinde is a Senior Frontend Engineer (4.5+ Yrs at IAURO Systems, Pune; CGPA: 9.19). He specializes in React.js, Next.js, RAG AI Platforms, Microfrontends, and Keycloak RBAC. Regarding "${userQuery}": Explore the portfolio sections or email motiramshinde944@gmail.com!`;
+    // Contact / Email / Phone / Location / Hire / Notice Period
+    if (q.includes('contact') || q.includes('email') || q.includes('phone') || q.includes('location') || q.includes('reach') || q.includes('hire') || q.includes('notice') || q.includes('interview') || q.includes('available')) {
+      return "You can reach Motiram directly via Email at motiramshinde944@gmail.com, Phone at (+91) 8975303848, or find him based in Pune, Maharashtra, India. He is actively open to Senior Frontend and Lead engineering roles!";
+    }
+
+    // Summary / Who is Motiram / General Background
+    return `Motiram V. Shinde is a Senior Frontend Engineer (4.5+ Yrs at IAURO Systems, Pune; CGPA: 9.19). He specializes in React.js, Next.js, RAG AI Platforms, Microfrontends, and Keycloak RBAC. Regarding "${userQuery}": Feel free to explore the interactive sections or reach out at motiramshinde944@gmail.com!`;
   };
 
   /* ==========================================================================
@@ -113,20 +117,20 @@ Be polite, technical, helpful, and concise.
 
     if (currentScenario === 'screentime' || p.includes('screen') || p.includes('time') || p.includes('good') || p.includes('hour') || p.includes('weeknight') || p.includes('allow') || p.includes('limit') || p.includes('recommended')) {
       if (activeAge === '8') {
-        return `[RAG Vector Match: 0.978] Pediatric Guidance for ${cleanPrompt} (Age 8): Recommended non-educational screen time is 1.0 hour/day. Educational apps remain unrestricted. Adjust daily hours control below:`;
+        return `[RAG Vector Match: 0.978] Pediatric Guidance for ${cleanPrompt} (Age 8): Recommended recreational screen time is 1.0 hour/day on school nights. Educational study apps remain unrestricted. Use the interactive controls below to adjust daily allocations:`;
       } else if (activeAge === '12') {
-        return `[RAG Vector Match: 0.985] Pediatric Guidance for ${cleanPrompt} (Age 12): Healthy recreational screen time is 1.5 hours/day on school nights to ensure 9 hours of sleep. Adjust daily hours control below:`;
+        return `[RAG Vector Match: 0.985] Pediatric Guidance for ${cleanPrompt} (Age 12): Healthy recreational screen time is 1.5 hours/day on weeknights to ensure 9 hours of sleep. Use the interactive controls below to adjust daily allocations:`;
       } else {
-        return `[RAG Vector Match: 0.969] Pediatric Guidance for ${cleanPrompt} (Age 16): Recommended daily screen time is 2.5 hours with automatic bedtime lock at 11:00 PM. Adjust daily hours control below:`;
+        return `[RAG Vector Match: 0.969] Pediatric Guidance for ${cleanPrompt} (Age 16): Recommended daily recreational screen time is 2.5 hours with an automatic bedtime lock at 11:00 PM. Use the interactive controls below to adjust daily allocations:`;
       }
     }
 
     if (currentScenario === 'rules' || p.includes('block') || p.includes('url') || p.includes('app') || p.includes('rule') || p.includes('filter') || p.includes('roblox') || p.includes('youtube')) {
-      return `[RAG Vector Match: 0.982] Safety Rule Policy for ${cleanPrompt} (Age ${activeAge}): 3-state rules configured for YouTube, Roblox, and Web Filters. Click any badge below to toggle states (Allowed ➔ Scheduled ➔ Blocked):`;
+      return `[RAG Vector Match: 0.982] Safety Rule Engine for ${cleanPrompt} (Age ${activeAge}): 3-state policies configured for YouTube, Roblox, and Web Filters. Click on any badge below to cycle through Allowed ➔ Scheduled ➔ Blocked:`;
     }
 
     if (currentScenario === 'comparison' || p.includes('compare') || p.includes('policy') || p.includes('matrix') || p.includes('guardrail')) {
-      return `[RAG Vector Match: 0.954] Guardrail Matrix Evaluation for ${cleanPrompt} (Age ${activeAge}): Verifying App Consent PIN, Bedtime Lock, and Safe Search Mode:`;
+      return `[RAG Vector Match: 0.954] Guardrail Evaluation Matrix for ${cleanPrompt} (Age ${activeAge}): Verifying App Consent PIN, Bedtime Lock, and Safe Search Mode enforcement:`;
     }
 
     return `[RAG Vector Match: 0.971] AI Counselor Guidance for ${cleanPrompt} (Age ${activeAge}): Pediatric guidelines recommend structured digital boundaries, age-appropriate content filters, and enforced quiet hours. Adjust settings below:`;
@@ -144,10 +148,10 @@ Be polite, technical, helpful, and concise.
     let height = canvas.height = window.innerHeight;
 
     const particles = [];
-    const particleCount = Math.min(Math.floor(width / 18), 75);
-    const connectionDistance = 140;
+    const particleCount = Math.min(Math.floor(width / 22), 60);
+    const connectionDistance = 130;
 
-    let mouse = { x: null, y: null, radius: 160 };
+    let mouse = { x: null, y: null, radius: 140 };
 
     window.addEventListener('mousemove', (e) => {
       mouse.x = e.clientX;
@@ -168,10 +172,10 @@ Be polite, technical, helpful, and concise.
       constructor() {
         this.x = Math.random() * width;
         this.y = Math.random() * height;
-        this.vx = (Math.random() - 0.5) * 0.8;
-        this.vy = (Math.random() - 0.5) * 0.8;
-        this.radius = Math.random() * 1.8 + 1;
-        this.color = Math.random() > 0.5 ? '#06b6d4' : '#8b5cf6';
+        this.vx = (Math.random() - 0.5) * 0.6;
+        this.vy = (Math.random() - 0.5) * 0.6;
+        this.radius = Math.random() * 1.5 + 1;
+        this.color = Math.random() > 0.5 ? '#6366f1' : '#3b82f6';
       }
 
       update() {
@@ -187,8 +191,8 @@ Be polite, technical, helpful, and concise.
           const dist = Math.sqrt(dx * dx + dy * dy);
           if (dist < mouse.radius) {
             const force = (mouse.radius - dist) / mouse.radius;
-            this.x -= (dx / dist) * force * 2;
-            this.y -= (dy / dist) * force * 2;
+            this.x -= (dx / dist) * force * 1.5;
+            this.y -= (dy / dist) * force * 1.5;
           }
         }
       }
@@ -222,8 +226,8 @@ Be polite, technical, helpful, and concise.
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(6, 182, 212, ${alpha * 0.25})`;
-            ctx.lineWidth = 0.8;
+            ctx.strokeStyle = `rgba(99, 102, 241, ${alpha * 0.18})`;
+            ctx.lineWidth = 0.7;
             ctx.stroke();
           }
         }
@@ -250,10 +254,10 @@ Be polite, technical, helpful, and concise.
         const centerX = rect.width / 2;
         const centerY = rect.height / 2;
 
-        const rotateX = ((y - centerY) / centerY) * -5;
-        const rotateY = ((x - centerX) / centerX) * 5;
+        const rotateX = ((y - centerY) / centerY) * -4;
+        const rotateY = ((x - centerX) / centerX) * 4;
 
-        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.01, 1.01, 1.01)`;
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.008, 1.008, 1.008)`;
       });
 
       card.addEventListener('mouseleave', () => {
@@ -291,15 +295,15 @@ Be polite, technical, helpful, and concise.
         charIndex++;
       }
 
-      let speed = isDeleting ? 35 : 75;
+      let speed = isDeleting ? 30 : 70;
 
       if (!isDeleting && charIndex === currentTitle.length) {
-        speed = 2200;
+        speed = 2000;
         isDeleting = true;
       } else if (isDeleting && charIndex === 0) {
         isDeleting = false;
         titleIndex = (titleIndex + 1) % titles.length;
-        speed = 350;
+        speed = 300;
       }
 
       setTimeout(type, speed);
@@ -338,16 +342,16 @@ Be polite, technical, helpful, and concise.
     const appendMessage = (sender, text, isThinking = false) => {
       const msgDiv = document.createElement('div');
       msgDiv.className = sender === 'user'
-        ? 'p-2.5 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-200 text-right ml-6 font-mono text-[11px]'
+        ? 'p-2.5 rounded-xl bg-indigo-600/20 border border-indigo-500/30 text-indigo-200 text-right ml-6 font-mono text-[11px]'
         : 'p-3 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 font-mono text-[11px] space-y-1';
 
       if (sender === 'user') {
         msgDiv.textContent = text;
       } else if (isThinking) {
         msgDiv.id = 'thinking-msg-node';
-        msgDiv.innerHTML = `<span class="text-cyan-400 font-bold block flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span> 🤖 Motiram.AI Copilot:</span><p class="text-slate-400 italic">Processing prompt...</p>`;
+        msgDiv.innerHTML = `<span class="text-indigo-300 font-semibold block flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-indigo-400 animate-ping"></span> 🤖 Motiram.AI Copilot:</span><p class="text-slate-400 italic">Processing prompt...</p>`;
       } else {
-        msgDiv.innerHTML = `<span class="text-cyan-400 font-bold block flex items-center gap-1">🤖 Motiram.AI Copilot:</span><p class="leading-relaxed whitespace-pre-wrap">${text}</p>`;
+        msgDiv.innerHTML = `<span class="text-indigo-300 font-semibold block flex items-center gap-1">🤖 Motiram.AI Copilot:</span><p class="leading-relaxed whitespace-pre-wrap">${text}</p>`;
       }
 
       messagesTarget.appendChild(msgDiv);
@@ -355,33 +359,51 @@ Be polite, technical, helpful, and concise.
       return msgDiv;
     };
 
+    // Smooth streaming typewriter simulation for AI Copilot
+    const streamCopilotResponse = (targetNode, fullText) => {
+      let charIdx = 0;
+      targetNode.innerHTML = `<span class="text-indigo-300 font-semibold block flex items-center gap-1">🤖 Motiram.AI Copilot:</span><p class="leading-relaxed whitespace-pre-wrap"><span id="copilot-stream-text"></span><span class="blinking-cursor"></span></p>`;
+      const streamSpan = targetNode.querySelector('#copilot-stream-text');
+
+      const streamTimer = setInterval(() => {
+        if (charIdx < fullText.length) {
+          streamSpan.textContent += fullText.charAt(charIdx);
+          charIdx++;
+          messagesTarget.scrollTop = messagesTarget.scrollHeight;
+        } else {
+          clearInterval(streamTimer);
+          const cursor = targetNode.querySelector('.blinking-cursor');
+          if (cursor) cursor.remove();
+        }
+      }, 10);
+    };
+
     const handleCopilotAsk = async (userQuery) => {
       appendMessage('user', userQuery);
 
       const q = userQuery.toLowerCase();
-      const isExplicitOffTopic = q.includes('france') || q.includes('capital') || q.includes('weather') || q.includes('poem') ||
+      const isExplicitOffTopic = q.includes('france') || q.includes('capital of') || q.includes('weather') || q.includes('poem') ||
                                  q.includes('joke') || q.includes('recipe') || q.includes('president') || q.includes('football') || q.includes('cricket');
 
       if (isExplicitOffTopic) {
         const guardrailMsg = "I am Motiram.AI, dedicated exclusively to assisting with Motiram V. Shinde's professional profile, engineering experience, and projects. Please feel free to ask me any question about Motiram's background!";
-        appendMessage('bot', guardrailMsg);
+        const botNode = appendMessage('bot', '');
+        streamCopilotResponse(botNode, guardrailMsg);
         return;
       }
 
       chatHistory.push({ role: "user", content: userQuery });
       const thinkingNode = appendMessage('bot', '', true);
 
+      // Check if running on GitHub Pages (static environment)
       const isGitHubPages = window.location.hostname.includes('github.io');
 
       if (isGitHubPages) {
         setTimeout(() => {
           const dynamicAnswer = getDynamicRAGResponse(userQuery);
           chatHistory.push({ role: "assistant", content: dynamicAnswer });
-          if (thinkingNode) {
-            thinkingNode.innerHTML = `<span class="text-cyan-400 font-bold block flex items-center gap-1">🤖 Motiram.AI Copilot:</span><p class="leading-relaxed whitespace-pre-wrap">${dynamicAnswer}</p>`;
-          }
-          messagesTarget.scrollTop = messagesTarget.scrollHeight;
-        }, 350);
+          streamCopilotResponse(thinkingNode, dynamicAnswer);
+        }, 250);
         return;
       }
 
@@ -407,21 +429,15 @@ Be polite, technical, helpful, and concise.
         if (data && data.choices && data.choices[0] && data.choices[0].message) {
           const aiAnswer = data.choices[0].message.content;
           chatHistory.push({ role: "assistant", content: aiAnswer });
-          if (thinkingNode) {
-            thinkingNode.innerHTML = `<span class="text-cyan-400 font-bold block flex items-center gap-1">🤖 Motiram.AI Copilot:</span><p class="leading-relaxed whitespace-pre-wrap">${aiAnswer}</p>`;
-          }
+          streamCopilotResponse(thinkingNode, aiAnswer);
         } else {
           throw new Error("API response parse error");
         }
       } catch (err) {
         const dynamicAnswer = getDynamicRAGResponse(userQuery);
         chatHistory.push({ role: "assistant", content: dynamicAnswer });
-        if (thinkingNode) {
-          thinkingNode.innerHTML = `<span class="text-cyan-400 font-bold block flex items-center gap-1">🤖 Motiram.AI Copilot:</span><p class="leading-relaxed whitespace-pre-wrap">${dynamicAnswer}</p>`;
-        }
+        streamCopilotResponse(thinkingNode, dynamicAnswer);
       }
-
-      messagesTarget.scrollTop = messagesTarget.scrollHeight;
     };
 
     chips.forEach(chip => {
@@ -457,8 +473,8 @@ Be polite, technical, helpful, and concise.
       react: {
         roleTitle: 'SENIOR REACT / NEXT.JS FRONTEND ENGINEER',
         matchScore: '98% MATCH',
-        scoreColor: 'text-emerald-400 bg-emerald-500/20 border-emerald-500/40',
-        summary: 'Ideal fit for high-scale React/Next.js roles. 4.5+ years experience building production RAG AI interfaces, Redux caching, and Storybook component libraries at IAURO Systems.',
+        scoreColor: 'text-emerald-400 bg-emerald-500/10 border-emerald-500/30',
+        summary: 'Ideal fit for high-scale React/Next.js roles. 4.5+ years experience building production RAG AI interfaces, Redux state caching, and Storybook component libraries at IAURO Systems.',
         bullets: [
           '4.5+ Years production React.js & Next.js experience at IAURO Systems',
           'RAG AI platform with 12+ dynamic card layouts & 2-layer JSON parser',
@@ -469,7 +485,7 @@ Be polite, technical, helpful, and concise.
       ai: {
         roleTitle: 'AI PRODUCT & RAG SYSTEMS SPECIALIST',
         matchScore: '96% MATCH',
-        scoreColor: 'text-cyan-400 bg-cyan-500/20 border-cyan-500/40',
+        scoreColor: 'text-indigo-300 bg-indigo-500/10 border-indigo-500/30',
         summary: 'Strong technical fit for AI-native product teams. Direct experience building production RAG parental guidance platforms with vector cosine matching and guardrails.',
         bullets: [
           'Production Next.js + Firebase RAG Parental Control AI platform',
@@ -481,7 +497,7 @@ Be polite, technical, helpful, and concise.
       microfrontend: {
         roleTitle: 'MICROFRONTEND & ENTERPRISE ARCHITECT',
         matchScore: '95% MATCH',
-        scoreColor: 'text-violet-400 bg-violet-500/20 border-violet-500/40',
+        scoreColor: 'text-blue-300 bg-blue-500/10 border-blue-500/30',
         summary: 'Expertise in modular enterprise architectures using Webpack Module Federation, keycloak auth, and drag-and-drop workflow builders.',
         bullets: [
           'GESSA IAM Enterprise Platform with Module Federation architecture',
@@ -498,7 +514,7 @@ Be polite, technical, helpful, and concise.
         <div class="space-y-4 font-mono">
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-3">
             <div>
-              <span class="text-xs text-slate-400 block font-bold">Target Evaluated Role:</span>
+              <span class="text-xs text-slate-400 block font-semibold">Target Evaluated Role:</span>
               <h3 class="text-sm sm:text-base font-bold text-white">${data.roleTitle}</h3>
             </div>
             <span class="px-3 py-1 rounded-lg text-xs font-bold border ${data.scoreColor} self-start sm:self-auto">${data.matchScore}</span>
@@ -507,7 +523,7 @@ Be polite, technical, helpful, and concise.
           <p class="text-xs text-slate-300 font-sans leading-relaxed">${data.summary}</p>
 
           <div class="space-y-2 pt-1">
-            <span class="text-xs font-bold text-violet-400 block">AI Verified Candidate Strengths:</span>
+            <span class="text-xs font-semibold text-indigo-400 block">AI Verified Candidate Strengths:</span>
             <ul class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-slate-300 font-sans">
               ${data.bullets.map(b => `
                 <li class="p-2.5 rounded-lg bg-slate-900 border border-slate-800 flex items-start gap-2">
@@ -526,11 +542,11 @@ Be polite, technical, helpful, and concise.
     btns.forEach(btn => {
       btn.addEventListener('click', () => {
         btns.forEach(b => {
-          b.classList.remove('active', 'bg-violet-600', 'text-white', 'font-bold');
-          b.classList.add('bg-slate-800', 'text-slate-300');
+          b.classList.remove('active', 'bg-indigo-600', 'text-white', 'shadow-md');
+          b.classList.add('bg-slate-900', 'text-slate-300');
         });
-        btn.classList.add('active', 'bg-violet-600', 'text-white', 'font-bold');
-        btn.classList.remove('bg-slate-800', 'text-slate-300');
+        btn.classList.add('active', 'bg-indigo-600', 'text-white', 'shadow-md');
+        btn.classList.remove('bg-slate-900', 'text-slate-300');
 
         const role = btn.getAttribute('data-role');
         renderRoleFit(role);
@@ -565,28 +581,27 @@ Be polite, technical, helpful, and concise.
     const scenarioData = {
       screentime: {
         title: 'PARSED CARD #01 • SCREEN-TIME & SCHEDULE SLIDER',
-        vectorScore: '0.965 (Cosine Sim)',
-        systemPrompt: "You are an AI Counselor for parental control. Give a short 2-sentence advice for screen time guidelines.",
+        vectorScore: '0.985 (High Precision)',
         renderControls: (age) => {
           const defaultHours = age === '8' ? 1.0 : (age === '12' ? 1.5 : 2.5);
           return `
-            <div class="space-y-4">
+            <div class="space-y-4 font-mono">
               <div class="flex items-center justify-between">
-                <span class="text-xs font-mono text-cyan-400 font-bold">Interactive Screen Time Control:</span>
-                <span id="slider-val" class="text-sm font-mono font-bold text-white bg-slate-900 px-2.5 py-1 rounded border border-slate-800">${defaultHours} Hours / Day</span>
+                <span class="text-xs text-indigo-300 font-semibold">Interactive Screen Time Control:</span>
+                <span id="slider-val" class="text-xs font-bold text-white bg-slate-900 px-2.5 py-1 rounded border border-slate-800">${defaultHours} Hours / Day</span>
               </div>
               
-              <input type="range" id="screentime-slider" min="0.5" max="4.0" step="0.5" value="${defaultHours}" class="w-full h-2 bg-slate-900 rounded-lg appearance-none cursor-pointer accent-cyan-400">
+              <input type="range" id="screentime-slider" min="0.5" max="4.0" step="0.5" value="${defaultHours}" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer">
               
               <div class="space-y-2 pt-2 text-xs font-mono">
-                <div class="flex justify-between text-slate-400"><span>Educational Study (Unlimited)</span><span class="text-emerald-400">2.5 hrs</span></div>
-                <div class="w-full bg-slate-900 rounded-full h-2.5 overflow-hidden">
-                  <div class="bg-emerald-400 h-2.5 rounded-full" style="width: 80%"></div>
+                <div class="flex justify-between text-slate-400"><span>Educational Study (Unlimited)</span><span class="text-emerald-400 font-semibold">2.5 hrs</span></div>
+                <div class="w-full bg-slate-900 rounded-full h-2 overflow-hidden">
+                  <div class="bg-emerald-400 h-2 rounded-full" style="width: 80%"></div>
                 </div>
 
-                <div class="flex justify-between text-slate-400"><span>Gaming & Video Apps (Capped)</span><span id="gaming-hr-text" class="text-cyan-400">${defaultHours} hrs</span></div>
-                <div class="w-full bg-slate-900 rounded-full h-2.5 overflow-hidden">
-                  <div id="gaming-bar" class="bg-cyan-400 h-2.5 rounded-full transition-all duration-300" style="width: ${(defaultHours / 4) * 100}%"></div>
+                <div class="flex justify-between text-slate-400"><span>Gaming & Recreational Apps (Capped)</span><span id="gaming-hr-text" class="text-indigo-300 font-semibold">${defaultHours} hrs</span></div>
+                <div class="w-full bg-slate-900 rounded-full h-2 overflow-hidden">
+                  <div id="gaming-bar" class="bg-indigo-500 h-2 rounded-full transition-all duration-300" style="width: ${(defaultHours / 4) * 100}%"></div>
                 </div>
               </div>
             </div>
@@ -609,11 +624,10 @@ Be polite, technical, helpful, and concise.
       },
       rules: {
         title: 'PARSED CARD #09 • 3-STATE VISUAL RULE BUILDER',
-        vectorScore: '0.982 (Cosine Sim)',
-        systemPrompt: "You are an AI Counselor for parental control. Briefly summarize safe rule settings.",
+        vectorScore: '0.982 (High Precision)',
         renderControls: (age) => `
           <div class="space-y-3 font-mono text-xs">
-            <span class="text-violet-400 font-bold block">Interactive 3-State Rule Toggles (Click to change state):</span>
+            <span class="text-indigo-300 font-semibold block">Interactive 3-State Rule Toggles (Click to change state):</span>
             
             <div class="space-y-2">
               <div class="p-3 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-between gap-2">
@@ -646,7 +660,7 @@ Be polite, technical, helpful, and concise.
                 </button>
               </div>
             </div>
-            <p class="text-[11px] text-slate-500 pt-1">Unified visual system introduced by Motiram at IAURO Systems to clarify clickable vs static elements.</p>
+            <p class="text-[11px] text-slate-400 pt-1">Unified visual system introduced by Motiram at IAURO Systems to clarify clickable vs static elements.</p>
           </div>
         `,
         attachEvents: () => {
@@ -679,8 +693,7 @@ Be polite, technical, helpful, and concise.
       },
       comparison: {
         title: 'PARSED CARD #04 • POLICY COMPARISON MATRIX',
-        vectorScore: '0.948 (Cosine Sim)',
-        systemPrompt: "You are an AI Counselor for parental control. Briefly explain policy enforcement.",
+        vectorScore: '0.954 (High Precision)',
         renderControls: (age) => `
           <div class="space-y-3 font-mono text-xs">
             <div class="overflow-x-auto">
@@ -689,9 +702,9 @@ Be polite, technical, helpful, and concise.
                   <tr><th class="p-2.5">Feature Shield</th><th class="p-2.5">Configured Policy</th><th class="p-2.5">AI Guardrail</th></tr>
                 </thead>
                 <tbody class="divide-y divide-slate-800 text-[11px]">
-                  <tr><td class="p-2.5 text-cyan-300 font-bold">App Install Consent</td><td class="p-2.5 text-amber-400 font-bold">Requires Parent PIN</td><td class="p-2.5 text-emerald-400">PASSED</td></tr>
-                  <tr><td class="p-2.5 text-violet-300 font-bold">Bedtime Quiet Hours</td><td class="p-2.5 text-slate-200">${age === '16' ? '11:00 PM' : '09:00 PM'}</td><td class="p-2.5 text-emerald-400">PASSED</td></tr>
-                  <tr><td class="p-2.5 text-pink-300 font-bold">Safe Search Mode</td><td class="p-2.5 text-emerald-400 font-bold">Enforced (Strict)</td><td class="p-2.5 text-emerald-400">PASSED</td></tr>
+                  <tr><td class="p-2.5 text-indigo-300 font-bold">App Install Consent</td><td class="p-2.5 text-amber-400 font-bold">Requires Parent PIN</td><td class="p-2.5 text-emerald-400">PASSED</td></tr>
+                  <tr><td class="p-2.5 text-blue-300 font-bold">Bedtime Quiet Hours</td><td class="p-2.5 text-slate-200">${age === '16' ? '11:00 PM' : '09:00 PM'}</td><td class="p-2.5 text-emerald-400">PASSED</td></tr>
+                  <tr><td class="p-2.5 text-purple-300 font-bold">Safe Search Mode</td><td class="p-2.5 text-emerald-400 font-bold">Enforced (Strict)</td><td class="p-2.5 text-emerald-400">PASSED</td></tr>
                 </tbody>
               </table>
             </div>
@@ -709,12 +722,12 @@ Be polite, technical, helpful, and concise.
       headerTitle.textContent = data.title;
       telVector.textContent = data.vectorScore;
       telStatus.textContent = 'STREAMING...';
-      telStatus.className = 'px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-400 text-[10px] font-bold animate-pulse';
+      telStatus.className = 'px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 text-[10px] font-bold animate-pulse';
 
       streamTarget.textContent = 'Retrieving age-contextual guidance rules...';
       controlArea.innerHTML = '';
 
-      const promptText = promptInput ? promptInput.value.trim() : "What is good screen time";
+      const promptText = promptInput ? promptInput.value.trim() : "What is good screen time for weeknights";
       const fullText = getDynamicCounselorRAGResponse(promptText, activeAge, currentScenario);
 
       streamTarget.textContent = '';
@@ -732,16 +745,16 @@ Be polite, technical, helpful, and concise.
           controlArea.innerHTML = data.renderControls(activeAge);
           data.attachEvents();
         }
-      }, 12);
+      }, 10);
     };
 
     ageBtns.forEach(btn => {
       btn.addEventListener('click', () => {
         ageBtns.forEach(b => {
-          b.classList.remove('active', 'bg-cyan-500', 'text-slate-950', 'font-bold');
+          b.classList.remove('active', 'bg-indigo-600', 'text-white', 'shadow-sm');
           b.classList.add('bg-slate-900', 'text-slate-300');
         });
-        btn.classList.add('active', 'bg-cyan-500', 'text-slate-950', 'font-bold');
+        btn.classList.add('active', 'bg-indigo-600', 'text-white', 'shadow-sm');
         btn.classList.remove('bg-slate-900', 'text-slate-300');
 
         activeAge = btn.getAttribute('data-age');
@@ -753,11 +766,11 @@ Be polite, technical, helpful, and concise.
     scenarioBtns.forEach(btn => {
       btn.addEventListener('click', () => {
         scenarioBtns.forEach(b => {
-          b.classList.remove('active', 'bg-cyan-500', 'text-slate-950', 'font-bold');
-          b.classList.add('bg-slate-800', 'text-slate-300');
+          b.classList.remove('active', 'bg-indigo-600', 'text-white', 'shadow-md');
+          b.classList.add('bg-slate-900', 'text-slate-300');
         });
-        btn.classList.add('active', 'bg-cyan-500', 'text-slate-950', 'font-bold');
-        btn.classList.remove('bg-slate-800', 'text-slate-300');
+        btn.classList.add('active', 'bg-indigo-600', 'text-white', 'shadow-md');
+        btn.classList.remove('bg-slate-900', 'text-slate-300');
 
         currentScenario = btn.getAttribute('data-scenario');
         executeRealtimeStream();
@@ -784,11 +797,11 @@ Be polite, technical, helpful, and concise.
     tabBtns.forEach(btn => {
       btn.addEventListener('click', () => {
         tabBtns.forEach(b => {
-          b.classList.remove('active', 'bg-gradient-to-r', 'from-cyan-500', 'to-violet-600', 'text-white', 'font-bold');
+          b.classList.remove('active', 'bg-indigo-600', 'text-white', 'shadow-sm');
           b.classList.add('text-slate-400');
         });
 
-        btn.classList.add('active', 'bg-gradient-to-r', 'from-cyan-500', 'to-violet-600', 'text-white', 'font-bold');
+        btn.classList.add('active', 'bg-indigo-600', 'text-white', 'shadow-sm');
         btn.classList.remove('text-slate-400');
 
         const category = btn.getAttribute('data-category');
@@ -853,15 +866,15 @@ Be polite, technical, helpful, and concise.
         targetArea.innerHTML = `
           <div class="space-y-3 font-sans">
             <div class="flex items-center justify-between text-xs">
-              <span class="text-violet-400 font-mono font-bold">Active Role: ADMIN</span>
+              <span class="text-indigo-400 font-mono font-bold">Active Role: ADMIN</span>
               <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 text-[10px] font-mono font-bold">ALL PERMISSIONS UNLOCKED</span>
             </div>
-            <div class="p-4 rounded bg-slate-900 border border-violet-500/40 space-y-2">
+            <div class="p-4 rounded-xl bg-slate-900 border border-indigo-500/40 space-y-2">
               <span class="text-white text-xs font-bold">&lt;HasRole role="admin"&gt;</span>
               <p class="text-xs text-slate-400">Granted tenant user provisioning, Keycloak client secrets, and Azure Entra SSO token refresh controls.</p>
               <div class="flex gap-2 pt-1">
-                <button class="px-3 py-1 rounded text-xs bg-violet-600 text-white font-mono font-bold">Provision Tenant User</button>
-                <button class="px-3 py-1 rounded text-xs bg-red-500/20 text-red-400 border border-red-500/40 font-mono">Revoke Client Secrets</button>
+                <button class="px-3 py-1 rounded text-xs bg-indigo-600 text-white font-mono font-semibold">Provision Tenant User</button>
+                <button class="px-3 py-1 rounded text-xs bg-red-500/20 text-red-400 border border-red-500/40 font-mono">Revoke Secrets</button>
               </div>
             </div>
           </div>
@@ -870,10 +883,10 @@ Be polite, technical, helpful, and concise.
         targetArea.innerHTML = `
           <div class="space-y-3 font-sans">
             <div class="flex items-center justify-between text-xs">
-              <span class="text-cyan-400 font-mono font-bold">Active Role: PARENT</span>
-              <span class="px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-400 text-[10px] font-mono font-bold">MANAGED ACCESS</span>
+              <span class="text-blue-400 font-mono font-bold">Active Role: PARENT</span>
+              <span class="px-2 py-0.5 rounded bg-blue-500/20 text-blue-400 text-[10px] font-mono font-bold">MANAGED ACCESS</span>
             </div>
-            <div class="p-4 rounded bg-slate-900 border border-cyan-500/40 space-y-2">
+            <div class="p-4 rounded-xl bg-slate-900 border border-blue-500/40 space-y-2">
               <span class="text-white text-xs font-bold">Parental Controls Dashboard</span>
               <p class="text-xs text-slate-400">Can view RAG guidance, schedule bedtime locks, and configure URL filters. Admin tenant provisioning is hidden.</p>
             </div>
@@ -886,9 +899,9 @@ Be polite, technical, helpful, and concise.
               <span class="text-amber-400 font-mono font-bold">Active Role: GUEST</span>
               <span class="px-2 py-0.5 rounded bg-red-500/20 text-red-400 text-[10px] font-mono font-bold">ACCESS RESTRICTED</span>
             </div>
-            <div class="p-4 rounded bg-slate-900 border border-red-500/40 text-center space-y-1">
+            <div class="p-4 rounded-xl bg-slate-900 border border-red-500/40 text-center space-y-1">
               <p class="text-xs text-red-400 font-mono font-bold">🚫 Access Denied</p>
-              <p class="text-xs text-slate-500">keycloak-provider fallback prevents unauthorized access.</p>
+              <p class="text-xs text-slate-400">keycloak-provider fallback prevents unauthorized access.</p>
             </div>
           </div>
         `;
@@ -900,11 +913,11 @@ Be polite, technical, helpful, and concise.
     btns.forEach(btn => {
       btn.addEventListener('click', () => {
         btns.forEach(b => {
-          b.classList.remove('active', 'bg-violet-600', 'text-white', 'font-bold');
-          b.classList.add('bg-slate-800', 'text-slate-300');
+          b.classList.remove('active', 'bg-indigo-600', 'text-white', 'font-bold');
+          b.classList.add('bg-slate-900', 'text-slate-300');
         });
-        btn.classList.add('active', 'bg-violet-600', 'text-white', 'font-bold');
-        btn.classList.remove('bg-slate-800', 'text-slate-300');
+        btn.classList.add('active', 'bg-indigo-600', 'text-white', 'font-bold');
+        btn.classList.remove('bg-slate-900', 'text-slate-300');
 
         const role = btn.getAttribute('data-role');
         renderRBACState(role);
@@ -946,32 +959,32 @@ Be polite, technical, helpful, and concise.
       window.open(gmailUrl, '_blank');
 
       submitBtn.disabled = true;
-      submitBtn.innerHTML = `<span>LAUNCHED GMAIL...</span>`;
+      submitBtn.innerHTML = `<span>LAUNCHING GMAIL...</span>`;
 
       setTimeout(() => {
         submitBtn.disabled = false;
         submitBtn.innerHTML = `<span>SEND MESSAGE</span><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>`;
 
         statusDiv.classList.remove('hidden');
-        statusDiv.className = 'p-5 rounded-2xl bg-emerald-950/80 border border-emerald-500/60 text-slate-100 shadow-xl space-y-3 transition-all duration-300 text-center sm:text-left';
+        statusDiv.className = 'p-5 rounded-2xl bg-emerald-950/90 border border-emerald-500/60 text-slate-100 shadow-xl space-y-3 transition-all duration-300 text-center sm:text-left';
         
         statusDiv.innerHTML = `
           <div class="space-y-2">
             <div class="flex items-center gap-2 text-emerald-400 font-bold text-sm justify-center sm:justify-start">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-              <span>Gmail Web Compose Window Opened!</span>
+              <span>Gmail Compose Tab Opened!</span>
             </div>
             <p class="text-xs text-slate-300 leading-relaxed">
-              Hi <strong>${name}</strong>, a pre-filled Gmail Compose tab has been opened for <strong>motiramshinde944@gmail.com</strong>. Simply hit 'Send' in Gmail!
+              Hi <strong>${name}</strong>, a pre-filled Gmail Compose tab has been opened for <strong>motiramshinde944@gmail.com</strong>. Simply review and send!
             </p>
             <div class="flex flex-wrap items-center gap-2 pt-2 justify-center sm:justify-start">
-              <a href="${gmailUrl}" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2 rounded-lg bg-red-600 hover:bg-red-500 text-white font-bold text-xs flex items-center gap-1.5 shadow-md transition-all">
+              <a href="${gmailUrl}" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs flex items-center gap-1.5 shadow-md transition-all">
                 <span>✉️ Re-Open Gmail Web</span>
               </a>
-              <a href="${mailtoUrl}" target="_blank" class="px-3.5 py-2 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-xs flex items-center gap-1.5 shadow-md transition-all">
+              <a href="${mailtoUrl}" target="_blank" class="px-3.5 py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs flex items-center gap-1.5 shadow-md transition-all">
                 <span>💻 Open Desktop Mail App</span>
               </a>
-              <button type="button" id="btn-copy-contact-email" class="px-3.5 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold text-xs flex items-center gap-1.5 transition-all">
+              <button type="button" id="btn-copy-contact-email" class="px-3.5 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-semibold text-xs flex items-center gap-1.5 transition-all">
                 <span>📋 Copy Email Address</span>
               </button>
             </div>
@@ -991,7 +1004,7 @@ Be polite, technical, helpful, and concise.
         }
 
         form.reset();
-      }, 400);
+      }, 350);
     });
   };
 
