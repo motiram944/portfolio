@@ -7,7 +7,10 @@
 document.addEventListener('DOMContentLoaded', () => {
 
   const NVIDIA_MODEL = "meta/llama-3.1-70b-instruct";
-  const NVIDIA_ENDPOINT = "/api/chat";
+  const NVIDIA_LOCAL_ENDPOINT = "/api/chat";
+  const NVIDIA_DIRECT_ENDPOINT = "https://integrate.api.nvidia.com/v1/chat/completions";
+  const NVIDIA_CORS_PROXY = "https://corsproxy.io/?url=" + encodeURIComponent("https://integrate.api.nvidia.com/v1/chat/completions");
+  const NVIDIA_API_KEY = "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";
 
   // System Prompt for Motiram.AI Copilot with verified resume context
   const MOTIRAM_SYSTEM_PROMPT = `
@@ -458,45 +461,56 @@ Be polite, technical, helpful, and concise.
       chatHistory.push({ role: "user", content: userQuery });
       const thinkingNode = appendMessage('bot', '', true);
 
-      // Check if running on GitHub Pages (static environment)
-      const isGitHubPages = window.location.hostname.includes('github.io');
+      chatHistory.push({ role: "user", content: userQuery });
+      const thinkingNode = appendMessage('bot', '', true);
 
-      if (isGitHubPages) {
-        setTimeout(() => {
-          const dynamicAnswer = getDynamicRAGResponse(userQuery);
-          chatHistory.push({ role: "assistant", content: dynamicAnswer });
-          streamCopilotResponse(thinkingNode, dynamicAnswer);
-        }, 200);
-        return;
+      let success = false;
+      const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+
+      // Multi-Tier Fetch Pipeline: Local Proxy -> Cloud CORS Proxy -> Direct Endpoint
+      const targetEndpoints = isLocal
+        ? [NVIDIA_LOCAL_ENDPOINT, NVIDIA_CORS_PROXY, NVIDIA_DIRECT_ENDPOINT]
+        : [NVIDIA_CORS_PROXY, NVIDIA_DIRECT_ENDPOINT, NVIDIA_LOCAL_ENDPOINT];
+
+      for (const endpoint of targetEndpoints) {
+        try {
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 4500);
+
+          const response = await fetch(endpoint, {
+            method: 'POST',
+            signal: controller.signal,
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${NVIDIA_API_KEY}`
+            },
+            body: JSON.stringify({
+              model: NVIDIA_MODEL,
+              messages: chatHistory,
+              temperature: 0.3,
+              max_tokens: 512
+            })
+          });
+
+          clearTimeout(timeoutId);
+
+          if (response.ok) {
+            const data = await response.json();
+            if (data && data.choices && data.choices[0] && data.choices[0].message) {
+              const aiAnswer = data.choices[0].message.content;
+              chatHistory.push({ role: "assistant", content: aiAnswer });
+              streamCopilotResponse(thinkingNode, aiAnswer);
+              success = true;
+              break;
+            }
+          }
+        } catch (e) {
+          // Continue to next endpoint in pipeline
+        }
       }
 
-      try {
-        const response = await fetch(NVIDIA_ENDPOINT, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            model: NVIDIA_MODEL,
-            messages: chatHistory,
-            temperature: 0.3,
-            max_tokens: 512
-          })
-        });
-
-        if (!response.ok) {
-          throw new Error(`HTTP ${response.status}`);
-        }
-
-        const data = await response.json();
-        if (data && data.choices && data.choices[0] && data.choices[0].message) {
-          const aiAnswer = data.choices[0].message.content;
-          chatHistory.push({ role: "assistant", content: aiAnswer });
-          streamCopilotResponse(thinkingNode, aiAnswer);
-        } else {
-          throw new Error("API response parse error");
-        }
-      } catch (err) {
+      // Robust Fallback to Verified Dynamic RAG Engine if API limits/offline
+      if (!success) {
         const dynamicAnswer = getDynamicRAGResponse(userQuery);
         chatHistory.push({ role: "assistant", content: dynamicAnswer });
         streamCopilotResponse(thinkingNode, dynamicAnswer);
