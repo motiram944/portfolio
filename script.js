@@ -1,7 +1,7 @@
 /**
  * Motiram V. Shinde - Developer Portfolio JavaScript Engine
  * Stack: Pure Vanilla ES6+ JavaScript + Tailwind CSS
- * Features: Light & Dark Theme Toggle, Professional AI Copilot Engine & Dynamic AI Counselor RAG Sandbox
+ * Features: Interactive Sun/Moon Theme Toggle, AI Copilot Engine & Dynamic AI Counselor RAG Sandbox
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -46,29 +46,34 @@ Be polite, technical, helpful, and concise.
 `;
 
   /* ==========================================================================
-     LIGHT / DARK THEME TOGGLE CONTROLLER
+     LIGHT / DARK THEME TOGGLE CONTROLLER (SUN ☀️ / MOON 🌙)
      ========================================================================== */
   const initThemeToggle = () => {
-    const themeToggleBtn = document.getElementById('theme-toggle-btn');
-    const darkIcon = document.getElementById('theme-toggle-dark-icon');
-    const lightIcon = document.getElementById('theme-toggle-light-icon');
-    if (!themeToggleBtn || !darkIcon || !lightIcon) return;
+    const desktopBtn = document.getElementById('theme-toggle-btn');
+    const desktopIcon = document.getElementById('theme-toggle-icon');
+    const desktopLabel = document.getElementById('theme-toggle-label');
+
+    const mobileBtn = document.getElementById('mobile-theme-toggle-btn');
+    const mobileIcon = document.getElementById('mobile-theme-icon');
+    const mobileLabel = document.getElementById('mobile-theme-label');
 
     const isDarkMode = () => document.documentElement.classList.contains('dark');
 
-    const updateIcons = () => {
-      if (isDarkMode()) {
-        lightIcon.classList.remove('hidden');
-        darkIcon.classList.add('hidden');
-      } else {
-        lightIcon.classList.add('hidden');
-        darkIcon.classList.remove('hidden');
-      }
+    const syncThemeUI = () => {
+      const dark = isDarkMode();
+      // In Dark Mode, show Sun icon ☀️ indicating click will switch to Light Mode
+      // In Light Mode, show Moon icon 🌙 indicating click will switch to Dark Mode
+      const icon = dark ? '☀️' : '🌙';
+      const label = dark ? 'Light' : 'Dark';
+      const mobileFullLabel = dark ? 'Switch to Light Theme' : 'Switch to Dark Theme';
+
+      if (desktopIcon) desktopIcon.textContent = icon;
+      if (desktopLabel) desktopLabel.textContent = label;
+      if (mobileIcon) mobileIcon.textContent = icon;
+      if (mobileLabel) mobileLabel.textContent = mobileFullLabel;
     };
 
-    updateIcons();
-
-    themeToggleBtn.addEventListener('click', () => {
+    const toggleTheme = () => {
       if (isDarkMode()) {
         document.documentElement.classList.remove('dark');
         localStorage.setItem('color-theme', 'light');
@@ -76,8 +81,13 @@ Be polite, technical, helpful, and concise.
         document.documentElement.classList.add('dark');
         localStorage.setItem('color-theme', 'dark');
       }
-      updateIcons();
-    });
+      syncThemeUI();
+    };
+
+    syncThemeUI();
+
+    if (desktopBtn) desktopBtn.addEventListener('click', toggleTheme);
+    if (mobileBtn) mobileBtn.addEventListener('click', toggleTheme);
   };
 
   initThemeToggle();
@@ -396,7 +406,7 @@ Be polite, technical, helpful, and concise.
       const msgDiv = document.createElement('div');
       msgDiv.className = sender === 'user'
         ? 'p-2.5 rounded-xl bg-indigo-600/20 border border-indigo-500/30 text-indigo-700 dark:text-indigo-200 text-right ml-6 font-mono text-[11px]'
-        : 'p-3 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-300 font-mono text-[11px] space-y-1';
+        : 'p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-300 font-mono text-[11px] space-y-1 shadow-sm dark:shadow-none';
 
       if (sender === 'user') {
         msgDiv.textContent = text;
@@ -641,7 +651,7 @@ Be polite, technical, helpful, and concise.
               <span class="text-indigo-600 dark:text-indigo-300 font-semibold block">Interactive 3-State Rule Toggles (Click to change state):</span>
               
               <div class="space-y-2">
-                <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-between gap-2">
+                <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-between gap-2 shadow-sm">
                   <div>
                     <span class="text-slate-900 dark:text-white font-bold block">YouTube App</span>
                     <span class="text-[10px] text-slate-500 dark:text-slate-400">Age Appropriateness Filter</span>
@@ -651,7 +661,7 @@ Be polite, technical, helpful, and concise.
                   </button>
                 </div>
 
-                <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-between gap-2">
+                <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-between gap-2 shadow-sm">
                   <div>
                     <span class="text-slate-900 dark:text-white font-bold block">Roblox & Online Gaming</span>
                     <span class="text-[10px] text-slate-500 dark:text-slate-400">Multiplayer Safety Guard</span>
@@ -661,7 +671,7 @@ Be polite, technical, helpful, and concise.
                   </button>
                 </div>
 
-                <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-between gap-2">
+                <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-between gap-2 shadow-sm">
                   <div>
                     <span class="text-slate-900 dark:text-white font-bold block">Adult Web Filtering</span>
                     <span class="text-[10px] text-slate-500 dark:text-slate-400">Strict Domain Shield</span>
@@ -678,13 +688,13 @@ Be polite, technical, helpful, and concise.
             const updateBtnUI = (btn, state) => {
               btn.setAttribute('data-state', state);
               if (state === 'allowed') {
-                btn.className = 'rule-toggle-btn px-3 py-1.5 rounded text-xs font-bold bg-emerald-500/20 text-emerald-600 dark:text-emerald-300 border border-emerald-500/40';
+                btn.className = 'rule-toggle-btn px-3 py-1.5 rounded text-xs font-bold bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-500/40 shadow-sm';
                 btn.textContent = '✔ ALLOWED';
               } else if (state === 'scheduled') {
-                btn.className = 'rule-toggle-btn px-3 py-1.5 rounded text-xs font-bold bg-amber-500/20 text-amber-600 dark:text-amber-300 border border-amber-500/40';
+                btn.className = 'rule-toggle-btn px-3 py-1.5 rounded text-xs font-bold bg-amber-100 dark:bg-amber-500/20 text-amber-700 dark:text-amber-300 border border-amber-300 dark:border-amber-500/40 shadow-sm';
                 btn.textContent = '⏳ SCHEDULED (09:00 PM)';
               } else {
-                btn.className = 'rule-toggle-btn px-3 py-1.5 rounded text-xs font-bold bg-red-500/20 text-red-600 dark:text-red-400 border border-red-500/40';
+                btn.className = 'rule-toggle-btn px-3 py-1.5 rounded text-xs font-bold bg-red-100 dark:bg-red-500/20 text-red-700 dark:text-red-400 border border-red-300 dark:border-red-500/40 shadow-sm';
                 btn.textContent = '🚫 BLOCKED';
               }
             };
@@ -708,15 +718,15 @@ Be polite, technical, helpful, and concise.
         return {
           html: `
             <div class="space-y-3 font-mono text-xs">
-              <div class="overflow-x-auto">
+              <div class="overflow-x-auto rounded-lg border border-slate-200 dark:border-slate-800">
                 <table class="w-full text-left text-slate-700 dark:text-slate-300">
-                  <thead class="bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400 text-[11px]">
+                  <thead class="bg-slate-100 dark:bg-slate-900 text-slate-700 dark:text-slate-400 text-[11px] font-bold">
                     <tr><th class="p-2.5">Feature Shield</th><th class="p-2.5">Configured Policy</th><th class="p-2.5">AI Guardrail</th></tr>
                   </thead>
-                  <tbody class="divide-y divide-slate-200 dark:divide-slate-800 text-[11px]">
-                    <tr><td class="p-2.5 text-indigo-600 dark:text-indigo-300 font-bold">App Install Consent</td><td class="p-2.5 text-amber-600 dark:text-amber-400 font-bold">Requires Parent PIN</td><td class="p-2.5 text-emerald-600 dark:text-emerald-400">PASSED</td></tr>
-                    <tr><td class="p-2.5 text-blue-600 dark:text-blue-300 font-bold">Bedtime Quiet Hours</td><td class="p-2.5 text-slate-800 dark:text-slate-200">${age === '16' ? '11:00 PM' : '09:00 PM'}</td><td class="p-2.5 text-emerald-600 dark:text-emerald-400">PASSED</td></tr>
-                    <tr><td class="p-2.5 text-purple-600 dark:text-purple-300 font-bold">Safe Search Mode</td><td class="p-2.5 text-emerald-600 dark:text-emerald-400 font-bold">Enforced (Strict)</td><td class="p-2.5 text-emerald-600 dark:text-emerald-400">PASSED</td></tr>
+                  <tbody class="divide-y divide-slate-200 dark:divide-slate-800 text-[11px] bg-white dark:bg-slate-950">
+                    <tr><td class="p-2.5 text-indigo-600 dark:text-indigo-300 font-bold">App Install Consent</td><td class="p-2.5 text-amber-600 dark:text-amber-400 font-bold">Requires Parent PIN</td><td class="p-2.5 text-emerald-600 dark:text-emerald-400 font-bold">PASSED</td></tr>
+                    <tr><td class="p-2.5 text-blue-600 dark:text-blue-300 font-bold">Bedtime Quiet Hours</td><td class="p-2.5 text-slate-900 dark:text-slate-200 font-semibold">${age === '16' ? '11:00 PM' : '09:00 PM'}</td><td class="p-2.5 text-emerald-600 dark:text-emerald-400 font-bold">PASSED</td></tr>
+                    <tr><td class="p-2.5 text-purple-600 dark:text-purple-300 font-bold">Safe Search Mode</td><td class="p-2.5 text-emerald-600 dark:text-emerald-400 font-bold">Enforced (Strict)</td><td class="p-2.5 text-emerald-600 dark:text-emerald-400 font-bold">PASSED</td></tr>
                   </tbody>
                 </table>
               </div>
@@ -734,19 +744,19 @@ Be polite, technical, helpful, and concise.
             <div class="space-y-4 font-mono">
               <div class="flex items-center justify-between">
                 <span class="text-xs text-indigo-600 dark:text-indigo-300 font-semibold">Interactive Screen Time Control:</span>
-                <span id="slider-val" class="text-xs font-bold text-slate-900 dark:text-white bg-slate-100 dark:bg-slate-900 px-2.5 py-1 rounded border border-slate-300 dark:border-slate-800">${defaultHours} Hours / Day</span>
+                <span id="slider-val" class="text-xs font-bold text-slate-900 dark:text-white bg-slate-100 dark:bg-slate-900 px-2.5 py-1 rounded border border-slate-300 dark:border-slate-800 shadow-sm">${defaultHours} Hours / Day</span>
               </div>
               
-              <input type="range" id="screentime-slider" min="0.5" max="4.0" step="0.5" value="${defaultHours}" class="w-full h-2 bg-slate-200 dark:bg-slate-800 rounded-lg appearance-none cursor-pointer">
+              <input type="range" id="screentime-slider" min="0.5" max="4.0" step="0.5" value="${defaultHours}" class="w-full h-2.5 bg-slate-200 dark:bg-slate-800 rounded-lg appearance-none cursor-pointer accent-indigo-600">
               
               <div class="space-y-2 pt-2 text-xs font-mono">
-                <div class="flex justify-between text-slate-500 dark:text-slate-400"><span>Educational Study (Unlimited)</span><span class="text-emerald-600 dark:text-emerald-400 font-semibold">2.5 hrs</span></div>
-                <div class="w-full bg-slate-200 dark:bg-slate-900 rounded-full h-2 overflow-hidden">
+                <div class="flex justify-between text-slate-600 dark:text-slate-400"><span>Educational Study (Unlimited)</span><span class="text-emerald-600 dark:text-emerald-400 font-semibold">2.5 hrs</span></div>
+                <div class="w-full bg-slate-200 dark:bg-slate-900 rounded-full h-2 overflow-hidden shadow-inner">
                   <div class="bg-emerald-500 h-2 rounded-full" style="width: 80%"></div>
                 </div>
 
-                <div class="flex justify-between text-slate-500 dark:text-slate-400"><span>Gaming & Recreational Apps (Capped)</span><span id="gaming-hr-text" class="text-indigo-600 dark:text-indigo-300 font-semibold">${defaultHours} hrs</span></div>
-                <div class="w-full bg-slate-200 dark:bg-slate-900 rounded-full h-2 overflow-hidden">
+                <div class="flex justify-between text-slate-600 dark:text-slate-400"><span>Gaming & Recreational Apps (Capped)</span><span id="gaming-hr-text" class="text-indigo-600 dark:text-indigo-300 font-semibold">${defaultHours} hrs</span></div>
+                <div class="w-full bg-slate-200 dark:bg-slate-900 rounded-full h-2 overflow-hidden shadow-inner">
                   <div id="gaming-bar" class="bg-indigo-600 dark:bg-indigo-500 h-2 rounded-full transition-all duration-300" style="width: ${(defaultHours / 4) * 100}%"></div>
                 </div>
               </div>
@@ -944,11 +954,11 @@ Be polite, technical, helpful, and concise.
               <span class="text-indigo-600 dark:text-indigo-400 font-mono font-bold">Active Role: ADMIN</span>
               <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-[10px] font-mono font-bold">ALL PERMISSIONS UNLOCKED</span>
             </div>
-            <div class="p-4 rounded-xl bg-slate-100 dark:bg-slate-900 border border-indigo-500/40 space-y-2">
+            <div class="p-4 rounded-xl bg-slate-100 dark:bg-slate-900 border border-indigo-500/40 space-y-2 shadow-sm dark:shadow-none">
               <span class="text-slate-900 dark:text-white text-xs font-bold">&lt;HasRole role="admin"&gt;</span>
               <p class="text-xs text-slate-600 dark:text-slate-400">Granted tenant user provisioning, Keycloak client secrets, and Azure Entra SSO token refresh controls.</p>
               <div class="flex gap-2 pt-1">
-                <button class="px-3 py-1 rounded text-xs bg-indigo-600 text-white font-mono font-semibold">Provision Tenant User</button>
+                <button class="px-3 py-1 rounded text-xs bg-indigo-600 text-white font-mono font-semibold shadow-sm">Provision Tenant User</button>
                 <button class="px-3 py-1 rounded text-xs bg-red-500/20 text-red-600 dark:text-red-400 border border-red-500/40 font-mono">Revoke Secrets</button>
               </div>
             </div>
@@ -961,7 +971,7 @@ Be polite, technical, helpful, and concise.
               <span class="text-blue-600 dark:text-blue-400 font-mono font-bold">Active Role: PARENT</span>
               <span class="px-2 py-0.5 rounded bg-blue-500/20 text-blue-600 dark:text-blue-400 text-[10px] font-mono font-bold">MANAGED ACCESS</span>
             </div>
-            <div class="p-4 rounded-xl bg-slate-100 dark:bg-slate-900 border border-blue-500/40 space-y-2">
+            <div class="p-4 rounded-xl bg-slate-100 dark:bg-slate-900 border border-blue-500/40 space-y-2 shadow-sm dark:shadow-none">
               <span class="text-slate-900 dark:text-white text-xs font-bold">Parental Controls Dashboard</span>
               <p class="text-xs text-slate-600 dark:text-slate-400">Can view RAG guidance, schedule bedtime locks, and configure URL filters. Admin tenant provisioning is hidden.</p>
             </div>
@@ -974,7 +984,7 @@ Be polite, technical, helpful, and concise.
               <span class="text-amber-600 dark:text-amber-400 font-mono font-bold">Active Role: GUEST</span>
               <span class="px-2 py-0.5 rounded bg-red-500/20 text-red-600 dark:text-red-400 text-[10px] font-mono font-bold">ACCESS RESTRICTED</span>
             </div>
-            <div class="p-4 rounded-xl bg-slate-100 dark:bg-slate-900 border border-red-500/40 text-center space-y-1">
+            <div class="p-4 rounded-xl bg-slate-100 dark:bg-slate-900 border border-red-500/40 text-center space-y-1 shadow-sm dark:shadow-none">
               <p class="text-xs text-red-600 dark:text-red-400 font-mono font-bold">🚫 Access Denied</p>
               <p class="text-xs text-slate-600 dark:text-slate-400">keycloak-provider fallback prevents unauthorized access.</p>
             </div>
