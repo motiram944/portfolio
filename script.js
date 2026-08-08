@@ -461,9 +461,6 @@ Be polite, technical, helpful, and concise.
       chatHistory.push({ role: "user", content: userQuery });
       const thinkingNode = appendMessage('bot', '', true);
 
-      chatHistory.push({ role: "user", content: userQuery });
-      const thinkingNode = appendMessage('bot', '', true);
-
       let success = false;
       const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
 
@@ -1026,12 +1023,77 @@ Be polite, technical, helpful, and concise.
 
   initRBACDemo();
 
-  // Print Resume Handler
+  // Foolproof 1-Page Isolated Resume Print Engine
+  const printResumeClean = () => {
+    const resumeEl = document.getElementById('printable-resume');
+    if (!resumeEl) {
+      window.print();
+      return;
+    }
+
+    const iframe = document.createElement('iframe');
+    iframe.style.position = 'fixed';
+    iframe.style.right = '0';
+    iframe.style.bottom = '0';
+    iframe.style.width = '0';
+    iframe.style.height = '0';
+    iframe.style.border = '0';
+    document.body.appendChild(iframe);
+
+    const doc = iframe.contentWindow.document;
+    doc.open();
+    doc.write(`
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <title>Motiram_V_Shinde_Resume</title>
+        <style>
+          @page { size: A4 portrait; margin: 10mm 14mm; }
+          * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color: #0f172a; }
+          body { background: #ffffff; padding: 0; font-size: 8.8pt; line-height: 1.36; color: #1e293b; }
+          h1 { font-size: 19pt; font-weight: 900; color: #0f172a; text-align: center; margin-bottom: 2px; letter-spacing: -0.3px; }
+          h2 { font-size: 9.8pt; font-weight: 800; color: #0f172a; text-transform: uppercase; border-bottom: 1.5px solid #334155; padding-bottom: 2px; margin-top: 9px; margin-bottom: 4px; letter-spacing: 0.5px; }
+          p, span, li { font-size: 8.8pt; line-height: 1.36; color: #334155; }
+          strong { font-weight: 700; color: #0f172a; }
+          a { color: #4f46e5; text-decoration: underline; font-weight: 600; }
+          ul { padding-left: 16px; margin-top: 2px; }
+          li { margin-bottom: 2px; }
+          .border-b { border-bottom: 1px solid #cbd5e1; padding-bottom: 4px; margin-bottom: 6px; }
+          .text-center { text-align: center; }
+          .flex { display: flex; }
+          .justify-between { justify-content: space-between; }
+          .font-bold { font-weight: 700; }
+          .italic { font-style: italic; }
+          .space-y-1 > * + * { margin-top: 3px; }
+          .space-y-2 > * + * { margin-top: 5px; }
+          .space-y-0\\.5 > * + * { margin-top: 2px; }
+          .space-y-4 > * + * { margin-top: 8px; }
+          .break-avoid { break-inside: avoid; page-break-inside: avoid; }
+        </style>
+      </head>
+      <body>
+        ${resumeEl.innerHTML}
+      </body>
+      </html>
+    `);
+    doc.close();
+
+    iframe.contentWindow.focus();
+    setTimeout(() => {
+      iframe.contentWindow.print();
+      setTimeout(() => {
+        if (document.body.contains(iframe)) {
+          document.body.removeChild(iframe);
+        }
+      }, 2000);
+    }, 250);
+  };
+
+  // Print Resume Handlers
   const printBtn = document.getElementById('btn-print-resume');
   if (printBtn) {
-    printBtn.addEventListener('click', () => {
-      window.print();
-    });
+    printBtn.addEventListener('click', printResumeClean);
   }
 
   /* ==========================================================================
