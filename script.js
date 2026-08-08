@@ -1,6 +1,7 @@
 /**
  * Motiram V. Shinde - Developer Portfolio JavaScript Engine
- * Features: Professional UI, Dynamic Motiram.AI Copilot & Dynamic AI Counselor RAG Engine
+ * Stack: Pure Vanilla ES6+ JavaScript + Tailwind CSS
+ * Features: Professional AI Copilot Engine & Dynamic AI Counselor RAG Sandbox
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -8,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const NVIDIA_MODEL = "meta/llama-3.1-70b-instruct";
   const NVIDIA_ENDPOINT = "/api/chat";
 
-  // Verified Resume Knowledge Base System Prompt
+  // System Prompt for Motiram.AI Copilot with verified resume context
   const MOTIRAM_SYSTEM_PROMPT = `
 You are Motiram.AI, an official AI Copilot for Motiram V. Shinde's portfolio.
 
@@ -45,18 +46,29 @@ Be polite, technical, helpful, and concise.
 `;
 
   /* ==========================================================================
-     DYNAMIC RAG RESUME RESPONSE ROUTER WITH COMPREHENSIVE QUERY MATCHING
+     COMPREHENSIVE DYNAMIC RAG RESUME ROUTER FOR MOTIRAM.AI COPILOT
      ========================================================================== */
   const getDynamicRAGResponse = (userQuery) => {
-    const q = userQuery.toLowerCase().trim();
+    const q = (userQuery || '').toLowerCase().trim();
 
     // Guardrail Check: Check for explicit off-topic questions
     const isExplicitOffTopic = q.includes('france') || q.includes('capital of') || q.includes('weather') || q.includes('poem') ||
                                q.includes('joke') || q.includes('recipe') || q.includes('president') || q.includes('football') ||
-                               q.includes('cricket') || q.includes('movie') || q.includes('song') || q.includes('who is elon');
+                               q.includes('cricket') || q.includes('movie') || q.includes('song') || q.includes('who is elon') ||
+                               q.includes('who is prime minister');
 
     if (isExplicitOffTopic) {
       return "I am Motiram.AI, dedicated exclusively to assisting with Motiram V. Shinde's professional profile, engineering experience, and projects. Please feel free to ask me any question about Motiram's background!";
+    }
+
+    // Why hire / Strengths / Value / Leadership
+    if (q.includes('why hire') || q.includes('hire') || q.includes('strength') || q.includes('value') || q.includes('why should') || q.includes('lead') || q.includes('benefit')) {
+      return "Why hire Motiram: With 4.5+ years at IAURO Systems, he bridges complex Frontend Architecture with production AI systems. Key assets: 1) Proven track record delivering production RAG AI platforms with 12+ layout card renderers, 2) Enterprise Microfrontend architect with Webpack Module Federation, 3) Open-source contributor (published 'keycloak-provider' on NPM), 4) Exceptional academic foundation (9.19 / 10 CGPA), and 5) Recognized with 2x Annual Awards and monthly problem-solving awards.";
+    }
+
+    // Projects / Featured Work / Portfolio summary
+    if (q.includes('project') || q.includes('portfolio') || q.includes('work done') || q.includes('build') || q.includes('built') || q.includes('created')) {
+      return "Motiram has built 4 key production platforms: 1) AI Counselor Platform (Next.js, Firebase, RAG retrieval, 12+ layout card renderer, guardrails), 2) GESSA IAM Platform (React.js, Webpack Module Federation microfrontends), 3) keycloak-provider NPM Package (reusable RBAC auth library), and 4) IO Flow Workflow Builder (drag-and-drop process orchestration with React Flow & Material UI).";
     }
 
     // AI Counselor Platform / RAG
@@ -75,7 +87,7 @@ Be polite, technical, helpful, and concise.
     }
 
     // Tech Stack / Skills / Technologies
-    if (q.includes('tech stack') || q.includes('skill') || q.includes('technologies') || q.includes('stack') || q.includes('languages') || q.includes('react') || q.includes('next') || q.includes('typescript') || q.includes('redux')) {
+    if (q.includes('tech stack') || q.includes('skill') || q.includes('technologies') || q.includes('stack') || q.includes('languages') || q.includes('react') || q.includes('next') || q.includes('typescript') || q.includes('redux') || q.includes('frontend')) {
       return "Motiram's core technical stack includes: Frontend (React.js, Next.js, TypeScript, JavaScript, Redux Toolkit, Material UI, Tailwind CSS, SASS, Storybook), Architecture (Webpack Module Federation, Microfrontends, REST & GraphQL), Security/Auth (Keycloak, Azure Entra ID, RBAC), and AI (RAG Systems, Safe Guardrails, Vector Cosine Matching).";
     }
 
@@ -85,7 +97,7 @@ Be polite, technical, helpful, and concise.
     }
 
     // Education / College / Degree / CGPA
-    if (q.includes('education') || q.includes('cgpa') || q.includes('b.tech') || q.includes('nanded') || q.includes('college') || q.includes('degree') || q.includes('university') || q.includes('sggs')) {
+    if (q.includes('education') || q.includes('cgpa') || q.includes('b.tech') || q.includes('nanded') || q.includes('college') || q.includes('degree') || q.includes('university') || q.includes('sggs') || q.includes('marks') || q.includes('score')) {
       return "Motiram graduated with a B.Tech in Information Technology from SGGSIE&T, Nanded (2018–2022), graduating with an exceptional CGPA of 9.19 / 10!";
     }
 
@@ -94,28 +106,28 @@ Be polite, technical, helpful, and concise.
       return "Motiram has received 2x Annual Awards and multiple monthly problem-solving awards at IAURO Systems for consistent high performance. He also holds 5x Gold Badges on HackerRank (Python) and was awarded the Team Player Badge.";
     }
 
-    // Experience / Company / IAURO / Tenure
+    // Experience / Company / IAURO / Tenure / Years
     if (q.includes('experience') || q.includes('company') || q.includes('iauro') || q.includes('years') || q.includes('tenure') || q.includes('work') || q.includes('role') || q.includes('job') || q.includes('position')) {
       return "Motiram is a Senior Frontend Engineer with 4.5+ years of continuous experience at IAURO Systems Pvt. Ltd., Pune (Apr 2022 – Present), leading React, Next.js, Microfrontends, and AI product engineering.";
     }
 
-    // Contact / Email / Phone / Location / Hire / Notice Period
-    if (q.includes('contact') || q.includes('email') || q.includes('phone') || q.includes('location') || q.includes('reach') || q.includes('hire') || q.includes('notice') || q.includes('interview') || q.includes('available')) {
+    // Contact / Email / Phone / Location / Notice Period
+    if (q.includes('contact') || q.includes('email') || q.includes('phone') || q.includes('location') || q.includes('reach') || q.includes('notice') || q.includes('interview') || q.includes('available') || q.includes('remote') || q.includes('call')) {
       return "You can reach Motiram directly via Email at motiramshinde944@gmail.com, Phone at (+91) 8975303848, or find him based in Pune, Maharashtra, India. He is actively open to Senior Frontend and Lead engineering roles!";
     }
 
-    // Summary / Who is Motiram / General Background
-    return `Motiram V. Shinde is a Senior Frontend Engineer (4.5+ Yrs at IAURO Systems, Pune; CGPA: 9.19). He specializes in React.js, Next.js, RAG AI Platforms, Microfrontends, and Keycloak RBAC. Regarding "${userQuery}": Feel free to explore the interactive sections or reach out at motiramshinde944@gmail.com!`;
+    // Default intelligent resume response
+    return `Motiram V. Shinde is a Senior Frontend Engineer with 4.5+ years experience at IAURO Systems (CGPA: 9.19 / 10). He specializes in React, Next.js, Microfrontends, and RAG AI Platforms. Regarding "${userQuery}": Explore his portfolio projects or contact him directly at motiramshinde944@gmail.com!`;
   };
 
   /* ==========================================================================
-     DYNAMIC RAG AI COUNSELOR RESPONSE ENGINE FOR PLAYGROUND
+     DYNAMIC RAG AI COUNSELOR RESPONSE & INTERACTIVE CARDS GENERATOR
      ========================================================================== */
   const getDynamicCounselorRAGResponse = (promptText, activeAge, currentScenario) => {
-    const p = (promptText || '').toLowerCase();
+    const p = (promptText || '').toLowerCase().trim();
     const cleanPrompt = promptText ? `"${promptText}"` : 'Screen Time';
 
-    if (currentScenario === 'screentime' || p.includes('screen') || p.includes('time') || p.includes('good') || p.includes('hour') || p.includes('weeknight') || p.includes('allow') || p.includes('limit') || p.includes('recommended')) {
+    if (currentScenario === 'screentime' || p.includes('screen') || p.includes('time') || p.includes('good') || p.includes('hour') || p.includes('weeknight') || p.includes('allow') || p.includes('limit') || p.includes('recommended') || p.includes('study') || p.includes('gaming')) {
       if (activeAge === '8') {
         return `[RAG Vector Match: 0.978] Pediatric Guidance for ${cleanPrompt} (Age 8): Recommended recreational screen time is 1.0 hour/day on school nights. Educational study apps remain unrestricted. Use the interactive controls below to adjust daily allocations:`;
       } else if (activeAge === '12') {
@@ -125,14 +137,15 @@ Be polite, technical, helpful, and concise.
       }
     }
 
-    if (currentScenario === 'rules' || p.includes('block') || p.includes('url') || p.includes('app') || p.includes('rule') || p.includes('filter') || p.includes('roblox') || p.includes('youtube')) {
+    if (currentScenario === 'rules' || p.includes('block') || p.includes('url') || p.includes('app') || p.includes('rule') || p.includes('filter') || p.includes('roblox') || p.includes('youtube') || p.includes('adult') || p.includes('safe')) {
       return `[RAG Vector Match: 0.982] Safety Rule Engine for ${cleanPrompt} (Age ${activeAge}): 3-state policies configured for YouTube, Roblox, and Web Filters. Click on any badge below to cycle through Allowed ➔ Scheduled ➔ Blocked:`;
     }
 
-    if (currentScenario === 'comparison' || p.includes('compare') || p.includes('policy') || p.includes('matrix') || p.includes('guardrail')) {
+    if (currentScenario === 'comparison' || p.includes('compare') || p.includes('policy') || p.includes('matrix') || p.includes('guardrail') || p.includes('audit') || p.includes('compliance')) {
       return `[RAG Vector Match: 0.954] Guardrail Evaluation Matrix for ${cleanPrompt} (Age ${activeAge}): Verifying App Consent PIN, Bedtime Lock, and Safe Search Mode enforcement:`;
     }
 
+    // Dynamic custom guidance for ANY other query
     return `[RAG Vector Match: 0.971] AI Counselor Guidance for ${cleanPrompt} (Age ${activeAge}): Pediatric guidelines recommend structured digital boundaries, age-appropriate content filters, and enforced quiet hours. Adjust settings below:`;
   };
 
@@ -403,7 +416,7 @@ Be polite, technical, helpful, and concise.
           const dynamicAnswer = getDynamicRAGResponse(userQuery);
           chatHistory.push({ role: "assistant", content: dynamicAnswer });
           streamCopilotResponse(thinkingNode, dynamicAnswer);
-        }, 250);
+        }, 200);
         return;
       }
 
@@ -578,13 +591,106 @@ Be polite, technical, helpful, and concise.
     let currentScenario = 'screentime';
     let isStreaming = false;
 
-    const scenarioData = {
-      screentime: {
-        title: 'PARSED CARD #01 • SCREEN-TIME & SCHEDULE SLIDER',
-        vectorScore: '0.985 (High Precision)',
-        renderControls: (age) => {
-          const defaultHours = age === '8' ? 1.0 : (age === '12' ? 1.5 : 2.5);
-          return `
+    const renderControlsForIntent = (intent, age) => {
+      if (intent === 'rules') {
+        headerTitle.textContent = 'PARSED CARD #09 • 3-STATE VISUAL RULE BUILDER';
+        telVector.textContent = '0.982 (High Precision)';
+        return {
+          html: `
+            <div class="space-y-3 font-mono text-xs">
+              <span class="text-indigo-300 font-semibold block">Interactive 3-State Rule Toggles (Click to change state):</span>
+              
+              <div class="space-y-2">
+                <div class="p-3 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-between gap-2">
+                  <div>
+                    <span class="text-white font-bold block">YouTube App</span>
+                    <span class="text-[10px] text-slate-400">Age Appropriateness Filter</span>
+                  </div>
+                  <button class="rule-toggle-btn px-3 py-1.5 rounded text-xs font-bold border transition-all" data-state="scheduled" id="rule-yt">
+                    ⏳ SCHEDULED (09:00 PM)
+                  </button>
+                </div>
+
+                <div class="p-3 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-between gap-2">
+                  <div>
+                    <span class="text-white font-bold block">Roblox & Online Gaming</span>
+                    <span class="text-[10px] text-slate-400">Multiplayer Safety Guard</span>
+                  </div>
+                  <button class="rule-toggle-btn px-3 py-1.5 rounded text-xs font-bold border transition-all" data-state="allowed" id="rule-gaming">
+                    ✔ ALLOWED
+                  </button>
+                </div>
+
+                <div class="p-3 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-between gap-2">
+                  <div>
+                    <span class="text-white font-bold block">Adult Web Filtering</span>
+                    <span class="text-[10px] text-slate-400">Strict Domain Shield</span>
+                  </div>
+                  <button class="rule-toggle-btn px-3 py-1.5 rounded text-xs font-bold border transition-all" data-state="blocked" id="rule-adult">
+                    🚫 BLOCKED
+                  </button>
+                </div>
+              </div>
+              <p class="text-[11px] text-slate-400 pt-1">Unified visual system introduced by Motiram at IAURO Systems to clarify clickable vs static elements.</p>
+            </div>
+          `,
+          attach: () => {
+            const updateBtnUI = (btn, state) => {
+              btn.setAttribute('data-state', state);
+              if (state === 'allowed') {
+                btn.className = 'rule-toggle-btn px-3 py-1.5 rounded text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40';
+                btn.textContent = '✔ ALLOWED';
+              } else if (state === 'scheduled') {
+                btn.className = 'rule-toggle-btn px-3 py-1.5 rounded text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40';
+                btn.textContent = '⏳ SCHEDULED (09:00 PM)';
+              } else {
+                btn.className = 'rule-toggle-btn px-3 py-1.5 rounded text-xs font-bold bg-red-500/20 text-red-400 border border-red-500/40';
+                btn.textContent = '🚫 BLOCKED';
+              }
+            };
+
+            const btns = document.querySelectorAll('.rule-toggle-btn');
+            btns.forEach(btn => {
+              const initialState = btn.getAttribute('data-state');
+              updateBtnUI(btn, initialState);
+
+              btn.addEventListener('click', () => {
+                const cur = btn.getAttribute('data-state');
+                const nextState = cur === 'allowed' ? 'scheduled' : (cur === 'scheduled' ? 'blocked' : 'allowed');
+                updateBtnUI(btn, nextState);
+              });
+            });
+          }
+        };
+      } else if (intent === 'comparison') {
+        headerTitle.textContent = 'PARSED CARD #04 • POLICY COMPARISON MATRIX';
+        telVector.textContent = '0.954 (High Precision)';
+        return {
+          html: `
+            <div class="space-y-3 font-mono text-xs">
+              <div class="overflow-x-auto">
+                <table class="w-full text-left text-slate-300">
+                  <thead class="bg-slate-900 text-slate-400 text-[11px]">
+                    <tr><th class="p-2.5">Feature Shield</th><th class="p-2.5">Configured Policy</th><th class="p-2.5">AI Guardrail</th></tr>
+                  </thead>
+                  <tbody class="divide-y divide-slate-800 text-[11px]">
+                    <tr><td class="p-2.5 text-indigo-300 font-bold">App Install Consent</td><td class="p-2.5 text-amber-400 font-bold">Requires Parent PIN</td><td class="p-2.5 text-emerald-400">PASSED</td></tr>
+                    <tr><td class="p-2.5 text-blue-300 font-bold">Bedtime Quiet Hours</td><td class="p-2.5 text-slate-200">${age === '16' ? '11:00 PM' : '09:00 PM'}</td><td class="p-2.5 text-emerald-400">PASSED</td></tr>
+                    <tr><td class="p-2.5 text-purple-300 font-bold">Safe Search Mode</td><td class="p-2.5 text-emerald-400 font-bold">Enforced (Strict)</td><td class="p-2.5 text-emerald-400">PASSED</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          `,
+          attach: () => {}
+        };
+      } else {
+        // Default to Screen Time Slider Intent
+        headerTitle.textContent = 'PARSED CARD #01 • SCREEN-TIME & SCHEDULE SLIDER';
+        telVector.textContent = '0.985 (High Precision)';
+        const defaultHours = age === '8' ? 1.0 : (age === '12' ? 1.5 : 2.5);
+        return {
+          html: `
             <div class="space-y-4 font-mono">
               <div class="flex items-center justify-between">
                 <span class="text-xs text-indigo-300 font-semibold">Interactive Screen Time Control:</span>
@@ -605,112 +711,22 @@ Be polite, technical, helpful, and concise.
                 </div>
               </div>
             </div>
-          `;
-        },
-        attachEvents: () => {
-          const slider = document.getElementById('screentime-slider');
-          const valText = document.getElementById('slider-val');
-          const gamingText = document.getElementById('gaming-hr-text');
-          const gamingBar = document.getElementById('gaming-bar');
-          if (slider) {
-            slider.addEventListener('input', (e) => {
-              const val = e.target.value;
-              valText.textContent = `${val} Hours / Day`;
-              gamingText.textContent = `${val} hrs`;
-              gamingBar.style.width = `${(val / 4) * 100}%`;
-            });
-          }
-        }
-      },
-      rules: {
-        title: 'PARSED CARD #09 • 3-STATE VISUAL RULE BUILDER',
-        vectorScore: '0.982 (High Precision)',
-        renderControls: (age) => `
-          <div class="space-y-3 font-mono text-xs">
-            <span class="text-indigo-300 font-semibold block">Interactive 3-State Rule Toggles (Click to change state):</span>
-            
-            <div class="space-y-2">
-              <div class="p-3 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-between gap-2">
-                <div>
-                  <span class="text-white font-bold block">YouTube App</span>
-                  <span class="text-[10px] text-slate-400">Age Appropriateness Filter</span>
-                </div>
-                <button class="rule-toggle-btn px-3 py-1.5 rounded text-xs font-bold border transition-all" data-state="scheduled" id="rule-yt">
-                  ⏳ SCHEDULED (09:00 PM)
-                </button>
-              </div>
-
-              <div class="p-3 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-between gap-2">
-                <div>
-                  <span class="text-white font-bold block">Roblox & Online Gaming</span>
-                  <span class="text-[10px] text-slate-400">Multiplayer Safety Guard</span>
-                </div>
-                <button class="rule-toggle-btn px-3 py-1.5 rounded text-xs font-bold border transition-all" data-state="allowed" id="rule-gaming">
-                  ✔ ALLOWED
-                </button>
-              </div>
-
-              <div class="p-3 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-between gap-2">
-                <div>
-                  <span class="text-white font-bold block">Adult Web Filtering</span>
-                  <span class="text-[10px] text-slate-400">Strict Domain Shield</span>
-                </div>
-                <button class="rule-toggle-btn px-3 py-1.5 rounded text-xs font-bold border transition-all" data-state="blocked" id="rule-adult">
-                  🚫 BLOCKED
-                </button>
-              </div>
-            </div>
-            <p class="text-[11px] text-slate-400 pt-1">Unified visual system introduced by Motiram at IAURO Systems to clarify clickable vs static elements.</p>
-          </div>
-        `,
-        attachEvents: () => {
-          const updateBtnUI = (btn, state) => {
-            btn.setAttribute('data-state', state);
-            if (state === 'allowed') {
-              btn.className = 'rule-toggle-btn px-3 py-1.5 rounded text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40';
-              btn.textContent = '✔ ALLOWED';
-            } else if (state === 'scheduled') {
-              btn.className = 'rule-toggle-btn px-3 py-1.5 rounded text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40';
-              btn.textContent = '⏳ SCHEDULED (09:00 PM)';
-            } else {
-              btn.className = 'rule-toggle-btn px-3 py-1.5 rounded text-xs font-bold bg-red-500/20 text-red-400 border border-red-500/40';
-              btn.textContent = '🚫 BLOCKED';
+          `,
+          attach: () => {
+            const slider = document.getElementById('screentime-slider');
+            const valText = document.getElementById('slider-val');
+            const gamingText = document.getElementById('gaming-hr-text');
+            const gamingBar = document.getElementById('gaming-bar');
+            if (slider) {
+              slider.addEventListener('input', (e) => {
+                const val = e.target.value;
+                valText.textContent = `${val} Hours / Day`;
+                gamingText.textContent = `${val} hrs`;
+                gamingBar.style.width = `${(val / 4) * 100}%`;
+              });
             }
-          };
-
-          const btns = document.querySelectorAll('.rule-toggle-btn');
-          btns.forEach(btn => {
-            const initialState = btn.getAttribute('data-state');
-            updateBtnUI(btn, initialState);
-
-            btn.addEventListener('click', () => {
-              const cur = btn.getAttribute('data-state');
-              const nextState = cur === 'allowed' ? 'scheduled' : (cur === 'scheduled' ? 'blocked' : 'allowed');
-              updateBtnUI(btn, nextState);
-            });
-          });
-        }
-      },
-      comparison: {
-        title: 'PARSED CARD #04 • POLICY COMPARISON MATRIX',
-        vectorScore: '0.954 (High Precision)',
-        renderControls: (age) => `
-          <div class="space-y-3 font-mono text-xs">
-            <div class="overflow-x-auto">
-              <table class="w-full text-left text-slate-300">
-                <thead class="bg-slate-900 text-slate-400 text-[11px]">
-                  <tr><th class="p-2.5">Feature Shield</th><th class="p-2.5">Configured Policy</th><th class="p-2.5">AI Guardrail</th></tr>
-                </thead>
-                <tbody class="divide-y divide-slate-800 text-[11px]">
-                  <tr><td class="p-2.5 text-indigo-300 font-bold">App Install Consent</td><td class="p-2.5 text-amber-400 font-bold">Requires Parent PIN</td><td class="p-2.5 text-emerald-400">PASSED</td></tr>
-                  <tr><td class="p-2.5 text-blue-300 font-bold">Bedtime Quiet Hours</td><td class="p-2.5 text-slate-200">${age === '16' ? '11:00 PM' : '09:00 PM'}</td><td class="p-2.5 text-emerald-400">PASSED</td></tr>
-                  <tr><td class="p-2.5 text-purple-300 font-bold">Safe Search Mode</td><td class="p-2.5 text-emerald-400 font-bold">Enforced (Strict)</td><td class="p-2.5 text-emerald-400">PASSED</td></tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        `,
-        attachEvents: () => {}
+          }
+        };
       }
     };
 
@@ -718,9 +734,6 @@ Be polite, technical, helpful, and concise.
       if (isStreaming) return;
       isStreaming = true;
 
-      const data = scenarioData[currentScenario];
-      headerTitle.textContent = data.title;
-      telVector.textContent = data.vectorScore;
       telStatus.textContent = 'STREAMING...';
       telStatus.className = 'px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 text-[10px] font-bold animate-pulse';
 
@@ -728,7 +741,20 @@ Be polite, technical, helpful, and concise.
       controlArea.innerHTML = '';
 
       const promptText = promptInput ? promptInput.value.trim() : "What is good screen time for weeknights";
-      const fullText = getDynamicCounselorRAGResponse(promptText, activeAge, currentScenario);
+      const p = promptText.toLowerCase();
+
+      // Semantic Intent Detection based on prompt text & scenario
+      let detectedIntent = currentScenario;
+      if (p.includes('block') || p.includes('url') || p.includes('app') || p.includes('rule') || p.includes('filter') || p.includes('roblox') || p.includes('youtube')) {
+        detectedIntent = 'rules';
+      } else if (p.includes('compare') || p.includes('policy') || p.includes('matrix') || p.includes('guardrail')) {
+        detectedIntent = 'comparison';
+      } else if (p.includes('screen') || p.includes('time') || p.includes('hour') || p.includes('bedtime') || p.includes('limit') || p.includes('good')) {
+        detectedIntent = 'screentime';
+      }
+
+      const fullText = getDynamicCounselorRAGResponse(promptText, activeAge, detectedIntent);
+      const controls = renderControlsForIntent(detectedIntent, activeAge);
 
       streamTarget.textContent = '';
       let charIdx = 0;
@@ -742,8 +768,8 @@ Be polite, technical, helpful, and concise.
           isStreaming = false;
           telStatus.textContent = 'COMPLETED';
           telStatus.className = 'px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 text-[10px] font-bold';
-          controlArea.innerHTML = data.renderControls(activeAge);
-          data.attachEvents();
+          controlArea.innerHTML = controls.html;
+          controls.attach();
         }
       }, 10);
     };
@@ -773,6 +799,15 @@ Be polite, technical, helpful, and concise.
         btn.classList.remove('bg-slate-900', 'text-slate-300');
 
         currentScenario = btn.getAttribute('data-scenario');
+        if (promptInput) {
+          if (currentScenario === 'screentime') {
+            promptInput.value = "What is good screen time for weeknights and how to manage gaming hours?";
+          } else if (currentScenario === 'rules') {
+            promptInput.value = "How to block adult websites and set YouTube to scheduled after 9 PM?";
+          } else if (currentScenario === 'comparison') {
+            promptInput.value = "Show policy comparison matrix with safe search and parent PIN enforcement.";
+          }
+        }
         executeRealtimeStream();
       });
     });
