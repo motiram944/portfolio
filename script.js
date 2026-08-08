@@ -8,9 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const NVIDIA_MODEL = "meta/llama-3.1-70b-instruct";
   const NVIDIA_LOCAL_ENDPOINT = "/api/chat";
-  const NVIDIA_DIRECT_ENDPOINT = "https://integrate.api.nvidia.com/v1/chat/completions";
-  const NVIDIA_CORS_PROXY = "https://corsproxy.io/?url=" + encodeURIComponent("https://integrate.api.nvidia.com/v1/chat/completions");
-  const NVIDIA_API_KEY = "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";
 
   // System Prompt for Motiram.AI Copilot with verified resume context
   const MOTIRAM_SYSTEM_PROMPT = `
