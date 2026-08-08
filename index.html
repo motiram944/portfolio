@@ -1027,52 +1027,122 @@
         </div>
       </div>
 
-      <div id="printable-resume" class="bg-white text-slate-900 p-6 sm:p-8 rounded-xl space-y-5 font-sans text-sm shadow-inner border border-slate-200">
-        <div class="text-center space-y-1 border-b pb-4">
-          <h1 class="text-xl sm:text-2xl font-black text-slate-900">MOTIRAM V. SHINDE</h1>
-          <p class="text-xs text-slate-600">Pune, India | (+91) 8975303848 | motiramshinde944@gmail.com</p>
+      <div id="printable-resume" class="bg-white text-slate-900 p-6 sm:p-8 rounded-xl space-y-4 font-sans text-sm shadow-inner border border-slate-200">
+        <!-- Resume Header -->
+        <div class="text-center space-y-1 border-b border-slate-300 pb-3">
+          <h1 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">MOTIRAM V. SHINDE</h1>
+          <p class="text-xs text-slate-600">
+            Pune, India | (+91) 8975303848 | motiramshinde944@gmail.com | <a href="https://linkedin.com" target="_blank" class="text-indigo-600 font-semibold underline">LinkedIn</a> | <a href="https://github.com/motiram944" target="_blank" class="text-indigo-600 font-semibold underline">GitHub</a>
+          </p>
         </div>
 
+        <!-- Summary -->
         <div>
-          <h2 class="text-xs font-bold text-slate-900 uppercase border-b pb-1 mb-2 tracking-wider">SUMMARY</h2>
+          <h2 class="text-xs font-bold text-slate-900 uppercase border-b border-slate-300 pb-1 mb-1.5 tracking-wider">SUMMARY</h2>
           <p class="text-xs text-slate-700 leading-relaxed">
             Frontend Engineer with 4.5+ years building scalable, secure React/Next.js applications, microfrontend architectures, and AI-powered products — including a production parental-control AI Counselor platform, reusable authentication packages, and enterprise workflow tools.
           </p>
         </div>
 
+        <!-- Work Experience -->
         <div>
-          <h2 class="text-xs font-bold text-slate-900 uppercase border-b pb-1 mb-2 tracking-wider">WORK EXPERIENCE</h2>
+          <h2 class="text-xs font-bold text-slate-900 uppercase border-b border-slate-300 pb-1 mb-1.5 tracking-wider">WORK EXPERIENCE</h2>
           <div class="space-y-1">
             <div class="flex justify-between font-bold text-xs text-slate-900">
-              <span>IAURO SYSTEMS PVT. LTD. — Software Engineer</span>
+              <span>IAURO SYSTEMS PVT. LTD.</span>
+              <span>Pune, India</span>
+            </div>
+            <div class="flex justify-between italic text-xs text-slate-600">
+              <span>Software Engineer</span>
               <span>Apr 2022 – Present</span>
             </div>
             <ul class="list-disc list-inside text-xs text-slate-700 space-y-1 pt-1">
-              <li>Delivered secure Next.js parental control web app with Firebase, building core AI Counselor platform with RAG retrieval & guardrail responses.</li>
-              <li>Designed dynamic AI chat rendering system with 12+ card layout types backed by two-layer JSON parser.</li>
-              <li>Architected scalable microfrontend platform using React.js & Module Federation for independent module deployment.</li>
-              <li>Developed and published React authentication package (keycloak-provider) with RBAC on NPM.</li>
-              <li>Migrated SSO to Azure Entra ID, resolving critical token refresh issues.</li>
+              <li>Delivered a secure Next.js parental control web app with Firebase, building the core AI Counselor platform that combines RAG-based retrieval, guardrail-checked responses, and age-based contextual guidance to give parents personalized, real-time chat recommendations.</li>
+              <li>Designed a dynamic AI chat response rendering system with 12+ card layout types (stat cards, comparison tables, timelines, screen-time graphs), backed by a two-layer JSON + JavaScript fallback parser, and built AI-generated insights dashboards with charts and summaries.</li>
+              <li>Designed rule-creation UI flows for schedule locks, URL blocking, and content filtering, introducing a unified three-state visual language for clickable vs. static elements to improve usability of parental control actions.</li>
+              <li>Architected a scalable microfrontend platform using React.js and Module Federation, enabling independent deployment of identity, access management, and workflow modules across the enterprise product suite.</li>
+              <li>Developed and published a reusable React NPM authentication package (keycloak-provider) with role-based access control (RBAC) and a customizable UI, distributed internally via Verdaccio.</li>
+              <li>Migrated authentication to Azure Entra (SSO), resolving critical token-refresh issues and improving login reliability across client applications.</li>
+              <li>Optimized Redux state management and reduced redundant API calls through caching and memoization, improving UI responsiveness and cutting unnecessary re-renders on high-traffic screens.</li>
+              <li>Built and documented a shared component library in Storybook, and engineered client-side handling of large datasets without external libraries, improving load performance for data-heavy workflow UIs.</li>
             </ul>
           </div>
         </div>
 
+        <!-- Projects -->
         <div>
-          <h2 class="text-xs font-bold text-slate-900 uppercase border-b pb-1 mb-2 tracking-wider">TECHNICAL SKILLS</h2>
-          <p class="text-xs text-slate-700 leading-relaxed">
-            <strong>Languages & Frontend:</strong> JavaScript, TypeScript, Python, React.js, Next.js, Redux Toolkit, React Flow, HTML5, CSS3, SASS, Material UI, Tailwind CSS<br>
-            <strong>Architecture & Tools:</strong> Microfrontends, Module Federation, Webpack, REST APIs, Storybook, Keycloak, Azure Entra ID (SSO), RBAC<br>
-            <strong>AI & LLM:</strong> RAG Systems, AI Chat Interfaces, Guardrails for Safe AI Responses
-          </p>
+          <h2 class="text-xs font-bold text-slate-900 uppercase border-b border-slate-300 pb-1 mb-1.5 tracking-wider">PROJECTS</h2>
+          <div class="space-y-2">
+            <div>
+              <div class="flex justify-between font-bold text-xs text-slate-900">
+                <span>GESSA Platform Enterprise Application</span>
+                <span>2022 – Present</span>
+              </div>
+              <ul class="list-disc list-inside text-xs text-slate-700 space-y-0.5 pt-0.5">
+                <li>Built the identity and access management UI for an enterprise microfrontend platform, standardizing user provisioning and permission workflows across multiple client-facing modules.</li>
+                <li>Developed pipeline visualization using React Flow Renderer, enabling real-time, interactive views of complex data pipelines.</li>
+              </ul>
+            </div>
+            <div>
+              <div class="flex justify-between font-bold text-xs text-slate-900">
+                <span>IO Flow Workflow Platform</span>
+                <span>2022 – Present</span>
+              </div>
+              <ul class="list-disc list-inside text-xs text-slate-700 space-y-0.5 pt-0.5">
+                <li>Developed a drag-and-drop workflow builder with real-time execution tracking, reducing manual effort in configuring multi-step business processes.</li>
+                <li>Built a reusable Material UI component set that became the standard for new workflow screens across the platform.</li>
+              </ul>
+            </div>
+          </div>
         </div>
 
+        <!-- Open Source Contribution -->
         <div>
-          <h2 class="text-xs font-bold text-slate-900 uppercase border-b pb-1 mb-2 tracking-wider">EDUCATION & ACHIEVEMENTS</h2>
-          <p class="text-xs text-slate-700">
-            <strong>SGGSIE&T, Nanded</strong> — B.Tech in Information Technology (CGPA: 9.19 / 10)<br>
-            • Awarded 2 Annual Awards & multiple monthly awards for consistent problem solving at IAURO Systems.<br>
-            • 5x Gold Badge on HackerRank (Python); recognized with Team Player Badge.
-          </p>
+          <h2 class="text-xs font-bold text-slate-900 uppercase border-b border-slate-300 pb-1 mb-1.5 tracking-wider">OPEN SOURCE CONTRIBUTION</h2>
+          <div class="space-y-1">
+            <div class="font-bold text-xs text-slate-900">
+              <span>keycloak-provider — React Authentication Package</span> | <span class="font-mono text-indigo-600 font-semibold">npmjs.com/keycloak-provider</span>
+            </div>
+            <ul class="list-disc list-inside text-xs text-slate-700 space-y-0.5">
+              <li>Designed and published an open-source React NPM package for Keycloak-based authentication with role-based access control (RBAC) and a customizable UI.</li>
+              <li>Managed versioning and package distribution using Verdaccio, enabling consistent authentication reuse across multiple internal products.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Technical Skills -->
+        <div>
+          <h2 class="text-xs font-bold text-slate-900 uppercase border-b border-slate-300 pb-1 mb-1.5 tracking-wider">TECHNICAL SKILLS</h2>
+          <div class="text-xs text-slate-700 space-y-0.5 leading-relaxed">
+            <p><strong>Languages:</strong> JavaScript | TypeScript | Python | Java | C++ | C</p>
+            <p><strong>Frontend:</strong> React.js | Next.js | Redux | React Hooks | React Flow | HTML | CSS | SASS | Material UI</p>
+            <p><strong>Architecture & Tooling:</strong> Microfrontends | Module Federation | Webpack | REST APIs | Storybook | Git | Bitbucket</p>
+            <p><strong>Identity & Security:</strong> Keycloak | Azure Entra ID (SSO) | Role-Based Access Control (RBAC)</p>
+            <p><strong>AI & LLM:</strong> RAG (Retrieval-Augmented Guidance) | AI Chat Interfaces | Guardrails for Safe AI Responses</p>
+            <p><strong>Other:</strong> Firebase | NPM Package Publishing | Verdaccio | Figma</p>
+          </div>
+        </div>
+
+        <!-- Education -->
+        <div>
+          <h2 class="text-xs font-bold text-slate-900 uppercase border-b border-slate-300 pb-1 mb-1.5 tracking-wider">EDUCATION</h2>
+          <div class="flex justify-between text-xs text-slate-900">
+            <div>
+              <span class="font-bold">SGGSIE&T, Nanded</span><br>
+              <span class="text-slate-700">B.Tech in Information Technology (CGPA: 9.19)</span>
+            </div>
+            <span class="font-semibold text-slate-600">2018 – 2022</span>
+          </div>
+        </div>
+
+        <!-- Achievements -->
+        <div>
+          <h2 class="text-xs font-bold text-slate-900 uppercase border-b border-slate-300 pb-1 mb-1.5 tracking-wider">ACHIEVEMENTS</h2>
+          <ul class="list-disc list-inside text-xs text-slate-700 space-y-0.5">
+            <li>Awarded 2 Annual Awards for consistent performance.</li>
+            <li>Received multiple monthly awards for problem-solving.</li>
+            <li>5x Gold Badge on HackerRank (Python); recognized with Team Player Badge.</li>
+          </ul>
         </div>
       </div>
     </div>
