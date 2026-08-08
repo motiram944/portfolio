@@ -461,25 +461,18 @@ Be polite, technical, helpful, and concise.
       chatHistory.push({ role: "user", content: userQuery });
       const thinkingNode = appendMessage('bot', '', true);
 
-      let success = false;
       const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
 
-      // Multi-Tier Fetch Pipeline: Local Proxy -> Cloud CORS Proxy -> Direct Endpoint
-      const targetEndpoints = isLocal
-        ? [NVIDIA_LOCAL_ENDPOINT, NVIDIA_CORS_PROXY, NVIDIA_DIRECT_ENDPOINT]
-        : [NVIDIA_CORS_PROXY, NVIDIA_DIRECT_ENDPOINT, NVIDIA_LOCAL_ENDPOINT];
-
-      for (const endpoint of targetEndpoints) {
+      if (isLocal) {
         try {
           const controller = new AbortController();
-          const timeoutId = setTimeout(() => controller.abort(), 4500);
+          const timeoutId = setTimeout(() => controller.abort(), 4000);
 
-          const response = await fetch(endpoint, {
+          const response = await fetch(NVIDIA_LOCAL_ENDPOINT, {
             method: 'POST',
             signal: controller.signal,
             headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${NVIDIA_API_KEY}`
+              'Content-Type': 'application/json'
             },
             body: JSON.stringify({
               model: NVIDIA_MODEL,
@@ -497,21 +490,20 @@ Be polite, technical, helpful, and concise.
               const aiAnswer = data.choices[0].message.content;
               chatHistory.push({ role: "assistant", content: aiAnswer });
               streamCopilotResponse(thinkingNode, aiAnswer);
-              success = true;
-              break;
+              return;
             }
           }
         } catch (e) {
-          // Continue to next endpoint in pipeline
+          // Fallback to dynamic RAG if local server is not running
         }
       }
 
-      // Robust Fallback to Verified Dynamic RAG Engine if API limits/offline
-      if (!success) {
+      // On GitHub Pages (Static Hosting) & fallback: Instant zero-CORS Neural RAG Engine
+      setTimeout(() => {
         const dynamicAnswer = getDynamicRAGResponse(userQuery);
         chatHistory.push({ role: "assistant", content: dynamicAnswer });
         streamCopilotResponse(thinkingNode, dynamicAnswer);
-      }
+      }, 150);
     };
 
     chips.forEach(chip => {
