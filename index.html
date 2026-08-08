@@ -8,6 +8,15 @@
   <meta name="keywords" content="Motiram Shinde, Senior Frontend Engineer, React Developer, Next.js, AI Counselor, Microfrontends, Module Federation, Keycloak, Pune Engineer">
   <meta name="author" content="Motiram V. Shinde">
   
+  <!-- Early Theme Detection Script to prevent FOUC -->
+  <script>
+    if (localStorage.getItem('color-theme') === 'light' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+      document.documentElement.classList.remove('dark');
+    } else {
+      document.documentElement.classList.add('dark');
+    }
+  </script>
+
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -40,69 +49,76 @@
   <!-- Custom Stylesheet -->
   <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-[#090d16] text-slate-100 font-sans selection:bg-indigo-500/30 selection:text-indigo-200 relative overflow-x-hidden min-h-screen pb-16">
+<body class="bg-slate-50 dark:bg-[#090d16] text-slate-800 dark:text-slate-100 font-sans selection:bg-indigo-500/30 selection:text-indigo-200 relative overflow-x-hidden min-h-screen pb-16 transition-colors duration-300">
 
   <!-- Canvas Particle Background -->
-  <canvas id="bg-canvas" class="fixed top-0 left-0 w-full h-full pointer-events-none z-0 opacity-30"></canvas>
+  <canvas id="bg-canvas" class="fixed top-0 left-0 w-full h-full pointer-events-none z-0 opacity-25 dark:opacity-30"></canvas>
 
   <!-- Subtle Ambient Glow Mesh -->
-  <div class="fixed top-[-10%] left-[-10%] w-[550px] h-[550px] bg-indigo-600/10 rounded-full blur-[140px] pointer-events-none z-0"></div>
-  <div class="fixed bottom-[-10%] right-[-10%] w-[650px] h-[650px] bg-blue-600/10 rounded-full blur-[160px] pointer-events-none z-0"></div>
+  <div class="fixed top-[-10%] left-[-10%] w-[550px] h-[550px] bg-indigo-600/5 dark:bg-indigo-600/10 rounded-full blur-[140px] pointer-events-none z-0"></div>
+  <div class="fixed bottom-[-10%] right-[-10%] w-[650px] h-[650px] bg-blue-600/5 dark:bg-blue-600/10 rounded-full blur-[160px] pointer-events-none z-0"></div>
 
   <!-- Navigation Bar -->
-  <header id="main-header" class="fixed top-0 left-0 w-full z-50 transition-all duration-300 py-3.5 px-4 sm:px-6 md:px-12 backdrop-blur-xl bg-[#090d16]/90 border-b border-slate-800/80">
+  <header id="main-header" class="fixed top-0 left-0 w-full z-50 transition-all duration-300 py-3.5 px-4 sm:px-6 md:px-12 backdrop-blur-xl bg-white/85 dark:bg-[#090d16]/90 border-b border-slate-200/80 dark:border-slate-800/80">
     <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
       
-      <a href="#hero" class="group flex items-center gap-3 text-lg font-bold tracking-tight text-white min-w-0">
+      <a href="#hero" class="group flex items-center gap-3 text-lg font-bold tracking-tight text-slate-900 dark:text-white min-w-0">
         <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-blue-600 flex-shrink-0 flex items-center justify-center text-white font-mono font-bold shadow-md shadow-indigo-500/20 group-hover:scale-105 transition-transform duration-300">
           MS
         </div>
         <div class="flex flex-col truncate min-w-0">
-          <span class="font-mono text-xs sm:text-sm font-bold tracking-wider text-slate-100 truncate" title="Motiram V. Shinde">
-            MOTIRAM<span class="text-indigo-400">.SHINDE</span>
+          <span class="font-mono text-xs sm:text-sm font-bold tracking-wider text-slate-900 dark:text-slate-100 truncate" title="Motiram V. Shinde">
+            MOTIRAM<span class="text-indigo-600 dark:text-indigo-400">.SHINDE</span>
           </span>
-          <span class="text-[10px] text-slate-400 font-mono truncate" title="Senior Frontend Engineer (4.5+ Yrs)">Senior Frontend Engineer</span>
+          <span class="text-[10px] text-slate-500 dark:text-slate-400 font-mono truncate" title="Senior Frontend Engineer (4.5+ Yrs)">Senior Frontend Engineer</span>
         </div>
       </a>
 
       <!-- Desktop Nav -->
-      <nav class="hidden md:flex items-center gap-6 lg:gap-8 text-xs lg:text-sm font-medium text-slate-300">
-        <a href="#about" class="nav-link">About</a>
-        <a href="#ai-matcher" class="nav-link">AI Role Matcher</a>
-        <a href="#projects" class="nav-link">Projects</a>
-        <a href="#ai-sandbox" class="nav-link">AI Counselor RAG</a>
-        <a href="#skills" class="nav-link">Skills</a>
-        <a href="#experience" class="nav-link">Experience</a>
-        <a href="#contact" class="nav-link">Contact</a>
+      <nav class="hidden md:flex items-center gap-6 lg:gap-8 text-xs lg:text-sm font-medium text-slate-600 dark:text-slate-300">
+        <a href="#about" class="nav-link hover:text-indigo-600 dark:hover:text-white">About</a>
+        <a href="#ai-matcher" class="nav-link hover:text-indigo-600 dark:hover:text-white">AI Role Matcher</a>
+        <a href="#projects" class="nav-link hover:text-indigo-600 dark:hover:text-white">Projects</a>
+        <a href="#ai-sandbox" class="nav-link hover:text-indigo-600 dark:hover:text-white">AI Counselor RAG</a>
+        <a href="#skills" class="nav-link hover:text-indigo-600 dark:hover:text-white">Skills</a>
+        <a href="#experience" class="nav-link hover:text-indigo-600 dark:hover:text-white">Experience</a>
+        <a href="#contact" class="nav-link hover:text-indigo-600 dark:hover:text-white">Contact</a>
       </nav>
 
       <!-- Action Buttons -->
       <div class="flex items-center gap-2 sm:gap-3 flex-shrink-0">
-        <button id="btn-resume-modal" class="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-mono font-semibold rounded-lg bg-slate-900 hover:bg-slate-800 text-indigo-300 border border-slate-700 hover:border-indigo-400 transition-all duration-200 shadow-sm">
-          <svg class="w-3.5 h-3.5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+        <!-- Theme Toggle Button -->
+        <button id="theme-toggle-btn" class="p-2 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 text-slate-700 dark:text-indigo-300 border border-slate-300 dark:border-slate-700 transition-all duration-200 shadow-sm" aria-label="Toggle theme" title="Toggle Light / Dark Theme">
+          <svg id="theme-toggle-dark-icon" class="hidden w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+          <svg id="theme-toggle-light-icon" class="hidden w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+        </button>
+
+        <button id="btn-resume-modal" class="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-mono font-semibold rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 text-slate-800 dark:text-indigo-300 border border-slate-300 dark:border-slate-700 hover:border-indigo-400 transition-all duration-200 shadow-sm">
+          <svg class="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
           <span>RESUME PDF</span>
         </button>
+        
         <a href="#contact" class="hidden lg:inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white shadow-md shadow-indigo-600/25 transition-all duration-200 hover:scale-[1.02]">
           GET IN TOUCH
         </a>
         
-        <button id="mobile-menu-btn" class="md:hidden p-2 text-slate-400 hover:text-white focus:outline-none rounded-lg bg-slate-900 border border-slate-800" aria-label="Toggle menu">
+        <button id="mobile-menu-btn" class="md:hidden p-2 text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white focus:outline-none rounded-lg bg-slate-100 dark:bg-slate-900 border border-slate-300 dark:border-slate-800" aria-label="Toggle menu">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
         </button>
       </div>
     </div>
 
     <!-- Mobile Dropdown Menu -->
-    <div id="mobile-menu" class="hidden md:hidden mt-3 pb-4 border-t border-slate-800 pt-3 px-2 space-y-2">
-      <a href="#about" class="block px-3 py-2 text-sm font-medium text-slate-300 hover:text-indigo-400 rounded-md hover:bg-slate-900">About</a>
-      <a href="#ai-matcher" class="block px-3 py-2 text-sm font-medium text-slate-300 hover:text-indigo-400 rounded-md hover:bg-slate-900">AI Role Matcher</a>
-      <a href="#projects" class="block px-3 py-2 text-sm font-medium text-slate-300 hover:text-indigo-400 rounded-md hover:bg-slate-900">Projects</a>
-      <a href="#ai-sandbox" class="block px-3 py-2 text-sm font-medium text-slate-300 hover:text-indigo-400 rounded-md hover:bg-slate-900">AI Counselor RAG</a>
-      <a href="#skills" class="block px-3 py-2 text-sm font-medium text-slate-300 hover:text-indigo-400 rounded-md hover:bg-slate-900">Skills</a>
-      <a href="#experience" class="block px-3 py-2 text-sm font-medium text-slate-300 hover:text-indigo-400 rounded-md hover:bg-slate-900">Experience</a>
-      <a href="#contact" class="block px-3 py-2 text-sm font-medium text-slate-300 hover:text-indigo-400 rounded-md hover:bg-slate-900">Contact</a>
+    <div id="mobile-menu" class="hidden md:hidden mt-3 pb-4 border-t border-slate-200 dark:border-slate-800 pt-3 px-2 space-y-2">
+      <a href="#about" class="block px-3 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 rounded-md hover:bg-slate-100 dark:hover:bg-slate-900">About</a>
+      <a href="#ai-matcher" class="block px-3 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 rounded-md hover:bg-slate-100 dark:hover:bg-slate-900">AI Role Matcher</a>
+      <a href="#projects" class="block px-3 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 rounded-md hover:bg-slate-100 dark:hover:bg-slate-900">Projects</a>
+      <a href="#ai-sandbox" class="block px-3 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 rounded-md hover:bg-slate-100 dark:hover:bg-slate-900">AI Counselor RAG</a>
+      <a href="#skills" class="block px-3 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 rounded-md hover:bg-slate-100 dark:hover:bg-slate-900">Skills</a>
+      <a href="#experience" class="block px-3 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 rounded-md hover:bg-slate-100 dark:hover:bg-slate-900">Experience</a>
+      <a href="#contact" class="block px-3 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 rounded-md hover:bg-slate-100 dark:hover:bg-slate-900">Contact</a>
       <div class="pt-2">
-        <button id="btn-resume-modal-mobile" class="w-full text-center px-4 py-2.5 text-xs font-mono font-semibold rounded-lg bg-slate-900 text-indigo-300 border border-slate-700">
+        <button id="btn-resume-modal-mobile" class="w-full text-center px-4 py-2.5 text-xs font-mono font-semibold rounded-lg bg-slate-100 dark:bg-slate-900 text-indigo-600 dark:text-indigo-300 border border-slate-300 dark:border-slate-700">
           📄 VIEW RESUME PDF
         </button>
       </div>
@@ -117,33 +133,33 @@
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
         
         <div class="lg:col-span-7 space-y-6">
-          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900/90 border border-slate-800 text-[11px] sm:text-xs font-mono shadow-inner max-w-full truncate">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-100 dark:bg-slate-900/90 border border-slate-300 dark:border-slate-800 text-[11px] sm:text-xs font-mono shadow-inner max-w-full truncate">
             <span class="relative flex h-2 w-2 flex-shrink-0">
               <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
               <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
             </span>
-            <span class="text-slate-300 font-medium tracking-wide truncate">Available for Senior Frontend & Lead Roles</span>
+            <span class="text-slate-700 dark:text-slate-300 font-medium tracking-wide truncate">Available for Senior Frontend & Lead Roles</span>
           </div>
 
           <div class="space-y-2">
-            <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight">
-              Motiram V. <span class="bg-gradient-to-r from-indigo-400 via-blue-400 to-indigo-200 bg-clip-text text-transparent">Shinde</span>
+            <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-tight">
+              Motiram V. <span class="bg-gradient-to-r from-indigo-600 via-blue-600 to-indigo-400 dark:from-indigo-400 dark:via-blue-400 dark:to-indigo-200 bg-clip-text text-transparent">Shinde</span>
             </h1>
-            <div class="text-base sm:text-xl font-semibold text-slate-300 font-mono min-h-[32px] flex items-center">
-              <span id="typing-text" class="text-indigo-400"></span><span class="blinking-cursor"></span>
+            <div class="text-base sm:text-xl font-semibold text-slate-700 dark:text-slate-300 font-mono min-h-[32px] flex items-center">
+              <span id="typing-text" class="text-indigo-600 dark:text-indigo-400"></span><span class="blinking-cursor"></span>
             </div>
           </div>
 
-          <p class="text-sm sm:text-base text-slate-300 max-w-2xl leading-relaxed">
-            Frontend Engineer with <strong class="text-white font-semibold">4.5+ years of experience</strong> at <span class="text-indigo-400 font-semibold">IAURO Systems</span>. Specializing in high-scale <strong class="text-white">React & Next.js architectures</strong>, production <strong class="text-indigo-300">RAG AI platforms</strong> with 12+ dynamic card layouts, <strong class="text-blue-300">Microfrontends (Module Federation)</strong>, and open-source packages (<code class="text-indigo-300 font-mono text-xs">keycloak-provider</code>).
+          <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-2xl leading-relaxed">
+            Frontend Engineer with <strong class="text-slate-900 dark:text-white font-semibold">4.5+ years of experience</strong> at <span class="text-indigo-600 dark:text-indigo-400 font-semibold">IAURO Systems</span>. Specializing in high-scale <strong class="text-slate-900 dark:text-white">React & Next.js architectures</strong>, production <strong class="text-indigo-600 dark:text-indigo-300">RAG AI platforms</strong> with 12+ dynamic card layouts, <strong class="text-blue-600 dark:text-blue-300">Microfrontends (Module Federation)</strong>, and open-source packages (<code class="text-indigo-600 dark:text-indigo-300 font-mono text-xs">keycloak-provider</code>).
           </p>
 
           <div class="flex flex-wrap gap-2 pt-1">
-            <span class="px-2.5 py-1 rounded-md text-xs font-mono bg-slate-900/80 text-slate-300 border border-slate-800">React.js & Next.js</span>
-            <span class="px-2.5 py-1 rounded-md text-xs font-mono bg-slate-900/80 text-indigo-300 border border-slate-800">RAG AI & Guardrails</span>
-            <span class="px-2.5 py-1 rounded-md text-xs font-mono bg-slate-900/80 text-blue-300 border border-slate-800">Microfrontends</span>
-            <span class="px-2.5 py-1 rounded-md text-xs font-mono bg-slate-900/80 text-emerald-300 border border-slate-800">keycloak-provider (NPM)</span>
-            <span class="px-2.5 py-1 rounded-md text-xs font-mono bg-slate-900/80 text-purple-300 border border-slate-800">React Flow Workflows</span>
+            <span class="px-2.5 py-1 rounded-md text-xs font-mono bg-slate-100 dark:bg-slate-900/80 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800">React.js & Next.js</span>
+            <span class="px-2.5 py-1 rounded-md text-xs font-mono bg-slate-100 dark:bg-slate-900/80 text-indigo-600 dark:text-indigo-300 border border-slate-200 dark:border-slate-800">RAG AI & Guardrails</span>
+            <span class="px-2.5 py-1 rounded-md text-xs font-mono bg-slate-100 dark:bg-slate-900/80 text-blue-600 dark:text-blue-300 border border-slate-200 dark:border-slate-800">Microfrontends</span>
+            <span class="px-2.5 py-1 rounded-md text-xs font-mono bg-slate-100 dark:bg-slate-900/80 text-emerald-600 dark:text-emerald-300 border border-slate-200 dark:border-slate-800">keycloak-provider (NPM)</span>
+            <span class="px-2.5 py-1 rounded-md text-xs font-mono bg-slate-100 dark:bg-slate-900/80 text-purple-600 dark:text-purple-300 border border-slate-200 dark:border-slate-800">React Flow Workflows</span>
           </div>
 
           <div class="flex flex-wrap items-center gap-3 pt-2">
@@ -151,7 +167,7 @@
               <span>EXPLORE FEATURED WORK</span>
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
             </a>
-            <button id="btn-open-ai-copilot-hero" class="px-5 py-3 text-xs sm:text-sm font-semibold rounded-xl bg-slate-900 hover:bg-slate-800 text-indigo-300 border border-slate-700 hover:border-indigo-500/50 transition-all duration-200 flex items-center gap-2">
+            <button id="btn-open-ai-copilot-hero" class="px-5 py-3 text-xs sm:text-sm font-semibold rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 text-indigo-600 dark:text-indigo-300 border border-slate-300 dark:border-slate-700 hover:border-indigo-400 transition-all duration-200 flex items-center gap-2 shadow-sm">
               <span>🤖 ASK MOTIRAM.AI COPILOT</span>
             </button>
           </div>
@@ -159,48 +175,48 @@
 
         <!-- Terminal Profile Card -->
         <div class="lg:col-span-5 w-full">
-          <div class="tilt-card relative p-1 rounded-2xl bg-slate-900/70 shadow-2xl backdrop-blur-xl border border-slate-800/90 group w-full">
-            <div class="bg-[#090d16]/95 rounded-xl p-5 space-y-4 font-mono text-xs text-slate-300">
-              <div class="flex items-center justify-between pb-3 border-b border-slate-800 gap-2">
+          <div class="tilt-card relative p-1 rounded-2xl bg-white dark:bg-slate-900/70 shadow-xl dark:shadow-2xl backdrop-blur-xl border border-slate-200 dark:border-slate-800/90 group w-full">
+            <div class="bg-slate-50 dark:bg-[#090d16]/95 rounded-xl p-5 space-y-4 font-mono text-xs text-slate-700 dark:text-slate-300">
+              <div class="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800 gap-2">
                 <div class="flex items-center gap-2 flex-shrink-0">
-                  <span class="w-3 h-3 rounded-full bg-slate-700 inline-block"></span>
-                  <span class="w-3 h-3 rounded-full bg-slate-700 inline-block"></span>
-                  <span class="w-3 h-3 rounded-full bg-slate-700 inline-block"></span>
+                  <span class="w-3 h-3 rounded-full bg-red-400 inline-block"></span>
+                  <span class="w-3 h-3 rounded-full bg-amber-400 inline-block"></span>
+                  <span class="w-3 h-3 rounded-full bg-emerald-400 inline-block"></span>
                 </div>
                 <span class="text-slate-500 text-[11px] truncate">motiram-profile.ts</span>
-                <span class="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 text-[10px] font-semibold flex-shrink-0">VERIFIED</span>
+                <span class="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[10px] font-semibold flex-shrink-0">VERIFIED</span>
               </div>
 
               <div class="space-y-2">
-                <div class="flex items-center gap-2 text-slate-400">
-                  <span class="text-indigo-400">➜</span>
-                  <span class="text-blue-400">~</span>
-                  <span class="text-slate-200 font-semibold truncate">cat resume_summary.json</span>
+                <div class="flex items-center gap-2 text-slate-500 dark:text-slate-400">
+                  <span class="text-indigo-600 dark:text-indigo-400">➜</span>
+                  <span class="text-blue-600 dark:text-blue-400">~</span>
+                  <span class="text-slate-900 dark:text-slate-200 font-semibold truncate">cat resume_summary.json</span>
                 </div>
-                <div class="p-3 rounded-lg bg-slate-950 border border-slate-800 text-slate-300 space-y-1 text-[11px] overflow-x-auto">
-                  <p class="truncate"><span class="text-slate-500">"company":</span> <span class="text-indigo-300 font-semibold">"IAURO Systems Pvt. Ltd."</span>,</p>
-                  <p class="truncate"><span class="text-slate-500">"experience":</span> <span class="text-emerald-400 font-semibold">"4.5+ Years (Apr 2022 - Present)"</span>,</p>
-                  <p class="truncate"><span class="text-slate-500">"education":</span> <span class="text-blue-300 font-semibold">"B.Tech IT (CGPA: 9.19 / 10)"</span>,</p>
-                  <p class="truncate"><span class="text-slate-500">"awards":</span> <span class="text-amber-300 font-semibold">"2x Annual Awards + 5x Gold Badge"</span>,</p>
-                  <p class="truncate"><span class="text-slate-500">"npm_package":</span> <span class="text-purple-300 font-semibold">"keycloak-provider (RBAC Auth)"</span></p>
+                <div class="p-3 rounded-lg bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-300 space-y-1 text-[11px] overflow-x-auto shadow-inner">
+                  <p class="truncate"><span class="text-slate-400 dark:text-slate-500">"company":</span> <span class="text-indigo-600 dark:text-indigo-300 font-semibold">"IAURO Systems Pvt. Ltd."</span>,</p>
+                  <p class="truncate"><span class="text-slate-400 dark:text-slate-500">"experience":</span> <span class="text-emerald-600 dark:text-emerald-400 font-semibold">"4.5+ Years (Apr 2022 - Present)"</span>,</p>
+                  <p class="truncate"><span class="text-slate-400 dark:text-slate-500">"education":</span> <span class="text-blue-600 dark:text-blue-300 font-semibold">"B.Tech IT (CGPA: 9.19 / 10)"</span>,</p>
+                  <p class="truncate"><span class="text-slate-400 dark:text-slate-500">"awards":</span> <span class="text-amber-600 dark:text-amber-300 font-semibold">"2x Annual Awards + 5x Gold Badge"</span>,</p>
+                  <p class="truncate"><span class="text-slate-400 dark:text-slate-500">"npm_package":</span> <span class="text-purple-600 dark:text-purple-300 font-semibold">"keycloak-provider (RBAC Auth)"</span></p>
                 </div>
               </div>
 
-              <div class="p-3 rounded-lg bg-slate-900/60 border border-slate-800 space-y-2">
+              <div class="p-3 rounded-lg bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 space-y-2">
                 <div class="flex items-center justify-between text-[11px] gap-2">
-                  <span class="text-slate-400">Architecture Modules</span>
-                  <span class="text-indigo-400 text-[10px]">Module Federation</span>
+                  <span class="text-slate-500 dark:text-slate-400">Architecture Modules</span>
+                  <span class="text-indigo-600 dark:text-indigo-400 text-[10px]">Module Federation</span>
                 </div>
                 <div class="grid grid-cols-3 gap-1.5 text-[10px] text-center font-semibold">
-                  <div class="p-1 rounded bg-indigo-500/10 text-indigo-300 border border-indigo-500/20 truncate">Host App</div>
-                  <div class="p-1 rounded bg-blue-500/10 text-blue-300 border border-blue-500/20 truncate">GESSA IAM</div>
-                  <div class="p-1 rounded bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 truncate">IO Flow</div>
+                  <div class="p-1 rounded bg-indigo-500/10 text-indigo-600 dark:text-indigo-300 border border-indigo-500/20 truncate">Host App</div>
+                  <div class="p-1 rounded bg-blue-500/10 text-blue-600 dark:text-blue-300 border border-blue-500/20 truncate">GESSA IAM</div>
+                  <div class="p-1 rounded bg-emerald-500/10 text-emerald-600 dark:text-emerald-300 border border-emerald-500/20 truncate">IO Flow</div>
                 </div>
               </div>
 
-              <div class="flex items-center justify-between pt-1 text-[11px] text-slate-400 gap-2">
-                <span class="truncate">NPM: <code class="text-indigo-300">keycloak-provider</code></span>
-                <button id="copy-cmd-btn" class="hover:text-indigo-300 flex items-center gap-1 transition-colors flex-shrink-0 text-slate-400">
+              <div class="flex items-center justify-between pt-1 text-[11px] text-slate-500 dark:text-slate-400 gap-2">
+                <span class="truncate">NPM: <code class="text-indigo-600 dark:text-indigo-300">keycloak-provider</code></span>
+                <button id="copy-cmd-btn" class="hover:text-indigo-600 dark:hover:text-indigo-300 flex items-center gap-1 transition-colors flex-shrink-0 text-slate-500 dark:text-slate-400">
                   <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
                   <span id="copy-cmd-text">Copy NPM Cmd</span>
                 </button>
@@ -213,16 +229,16 @@
     </section>
 
     <!-- AI RECRUITER JOB-FIT MATCHER -->
-    <section id="ai-matcher" class="space-y-6 p-6 sm:p-8 rounded-2xl bg-slate-900/50 border border-slate-800 shadow-xl backdrop-blur-xl relative overflow-hidden">
-      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-5">
+    <section id="ai-matcher" class="space-y-6 p-6 sm:p-8 rounded-2xl bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 shadow-xl backdrop-blur-xl relative overflow-hidden">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-5">
         <div>
-          <div class="inline-flex items-center gap-2 text-xs font-mono text-indigo-400 font-semibold tracking-wider uppercase">
+          <div class="inline-flex items-center gap-2 text-xs font-mono text-indigo-600 dark:text-indigo-400 font-semibold tracking-wider uppercase">
             <span>// AI RECRUITER EVALUATION</span>
           </div>
-          <h2 class="text-xl sm:text-2xl font-bold text-white">
+          <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
             AI Recruiter Role-Fit Matcher
           </h2>
-          <p class="text-xs text-slate-400 mt-1 max-w-2xl">
+          <p class="text-xs text-slate-600 dark:text-slate-400 mt-1 max-w-2xl">
             Select a target role to run an AI evaluation matching Motiram's 4.5+ years experience, CGPA 9.19, and verified skill achievements against your hiring requirements.
           </p>
         </div>
@@ -231,17 +247,17 @@
           <button class="role-match-btn active px-3 py-1.5 rounded-lg text-xs font-mono font-semibold bg-indigo-600 text-white shadow-md transition-all" data-role="react">
             ⚡ Senior React / Next.js
           </button>
-          <button class="role-match-btn px-3 py-1.5 rounded-lg text-xs font-mono font-semibold bg-slate-900 border border-slate-800 text-slate-300 hover:text-white transition-all" data-role="ai">
+          <button class="role-match-btn px-3 py-1.5 rounded-lg text-xs font-mono font-semibold bg-slate-100 dark:bg-slate-900 border border-slate-300 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-all" data-role="ai">
             🤖 AI RAG Systems Lead
           </button>
-          <button class="role-match-btn px-3 py-1.5 rounded-lg text-xs font-mono font-semibold bg-slate-900 border border-slate-800 text-slate-300 hover:text-white transition-all" data-role="microfrontend">
+          <button class="role-match-btn px-3 py-1.5 rounded-lg text-xs font-mono font-semibold bg-slate-100 dark:bg-slate-900 border border-slate-300 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-all" data-role="microfrontend">
             🏗️ Microfrontend Architect
           </button>
         </div>
       </div>
 
       <!-- AI Match Evaluation Display Target -->
-      <div id="ai-match-result-card" class="p-5 sm:p-6 rounded-xl bg-slate-950/80 border border-slate-800/80 space-y-4">
+      <div id="ai-match-result-card" class="p-5 sm:p-6 rounded-xl bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800/80 space-y-4">
         <!-- Rendered dynamically via script.js -->
       </div>
     </section>
@@ -249,252 +265,252 @@
     <!-- ABOUT ME & RESUME METRICS -->
     <section id="about" class="space-y-8 sm:space-y-12">
       <div class="space-y-2">
-        <div class="inline-flex items-center gap-2 text-xs font-mono text-indigo-400 tracking-wider uppercase font-semibold">
+        <div class="inline-flex items-center gap-2 text-xs font-mono text-indigo-600 dark:text-indigo-400 tracking-wider uppercase font-semibold">
           <span>// ABOUT & ENGINEERING IMPACT</span>
         </div>
-        <h2 class="text-2xl sm:text-3xl font-bold text-white">
+        <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">
           Enterprise Systems, Production AI & Open Source
         </h2>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="tilt-card p-6 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-indigo-500/40 transition-all duration-300 space-y-3">
-          <div class="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400">
+        <div class="tilt-card p-6 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 hover:border-indigo-400 dark:hover:border-indigo-500/40 transition-all duration-300 space-y-3 shadow-md dark:shadow-none">
+          <div class="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
           </div>
-          <h3 class="text-base font-bold text-white">Frontend Architecture</h3>
-          <p class="text-xs text-slate-300 leading-relaxed">
+          <h3 class="text-base font-bold text-slate-900 dark:text-white">Frontend Architecture</h3>
+          <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
             At IAURO Systems, architected scalable microfrontend platforms using React.js and Module Federation. Optimized Redux state caching to eliminate redundant API roundtrips, memoized high-traffic screens, and established a shared Storybook design system.
           </p>
         </div>
 
-        <div class="tilt-card p-6 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-blue-500/40 transition-all duration-300 space-y-3">
-          <div class="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400">
+        <div class="tilt-card p-6 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 hover:border-blue-400 dark:hover:border-blue-500/40 transition-all duration-300 space-y-3 shadow-md dark:shadow-none">
+          <div class="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-600 dark:text-blue-400">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
           </div>
-          <h3 class="text-base font-bold text-white">Production RAG AI Platform</h3>
-          <p class="text-xs text-slate-300 leading-relaxed">
+          <h3 class="text-base font-bold text-slate-900 dark:text-white">Production RAG AI Platform</h3>
+          <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
             Delivered the Next.js parental control AI Counselor platform with Firebase, RAG retrieval, and age-based contextual guidance. Designed a dynamic AI chat response renderer supporting 12+ card layout types backed by a 2-layer JSON + JS fallback parser.
           </p>
         </div>
 
-        <div class="tilt-card p-6 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-emerald-500/40 transition-all duration-300 space-y-3">
-          <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
+        <div class="tilt-card p-6 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 hover:border-emerald-400 dark:hover:border-emerald-500/40 transition-all duration-300 space-y-3 shadow-md dark:shadow-none">
+          <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
           </div>
-          <h3 class="text-base font-bold text-white">Identity & Workflows</h3>
-          <p class="text-xs text-slate-300 leading-relaxed">
-            Authored and published <code class="text-indigo-300 font-mono">keycloak-provider</code> on NPM, standardized RBAC hooks, migrated client applications to Azure Entra ID SSO, and built drag-and-drop workflow visualizers using React Flow and Material UI.
+          <h3 class="text-base font-bold text-slate-900 dark:text-white">Identity & Workflows</h3>
+          <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+            Authored and published <code class="text-indigo-600 dark:text-indigo-300 font-mono">keycloak-provider</code> on NPM, standardized RBAC hooks, migrated client applications to Azure Entra ID SSO, and built drag-and-drop workflow visualizers using React Flow and Material UI.
           </p>
         </div>
       </div>
 
       <!-- Quick Metrics Grid -->
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 p-4 sm:p-6 rounded-2xl bg-slate-950 border border-slate-800">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 p-4 sm:p-6 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 shadow-md dark:shadow-none">
         <div class="text-center space-y-1 p-2">
-          <div class="text-2xl sm:text-3xl font-extrabold text-indigo-400 font-mono">4.5+</div>
-          <p class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Years Experience</p>
+          <div class="text-2xl sm:text-3xl font-extrabold text-indigo-600 dark:text-indigo-400 font-mono">4.5+</div>
+          <p class="text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Years Experience</p>
         </div>
 
         <div class="text-center space-y-1 p-2">
-          <div class="text-2xl sm:text-3xl font-extrabold text-blue-400 font-mono">9.19</div>
-          <p class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">B.Tech CGPA / 10</p>
+          <div class="text-2xl sm:text-3xl font-extrabold text-blue-600 dark:text-blue-400 font-mono">9.19</div>
+          <p class="text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">B.Tech CGPA / 10</p>
         </div>
 
         <div class="text-center space-y-1 p-2">
-          <div class="text-2xl sm:text-3xl font-extrabold text-emerald-400 font-mono">12+</div>
-          <p class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">AI Card Layouts</p>
+          <div class="text-2xl sm:text-3xl font-extrabold text-emerald-600 dark:text-emerald-400 font-mono">12+</div>
+          <p class="text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">AI Card Layouts</p>
         </div>
 
         <div class="text-center space-y-1 p-2">
-          <div class="text-2xl sm:text-3xl font-extrabold text-amber-400 font-mono">5x</div>
-          <p class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">HackerRank Gold</p>
+          <div class="text-2xl sm:text-3xl font-extrabold text-amber-600 dark:text-amber-400 font-mono">5x</div>
+          <p class="text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">HackerRank Gold</p>
         </div>
       </div>
     </section>
 
     <!-- FEATURED MAJOR PROJECTS SHOWCASE -->
     <section id="projects" class="space-y-8 sm:space-y-12">
-      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-800 pb-6">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-6">
         <div class="space-y-2">
-          <div class="inline-flex items-center gap-2 text-xs font-mono text-indigo-400 tracking-wider uppercase font-semibold">
+          <div class="inline-flex items-center gap-2 text-xs font-mono text-indigo-600 dark:text-indigo-400 tracking-wider uppercase font-semibold">
             <span>// FEATURED MAJOR PROJECTS</span>
           </div>
-          <h2 class="text-2xl sm:text-3xl font-bold text-white">
+          <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">
             Production Platforms & Open Source Work
           </h2>
         </div>
-        <p class="text-xs sm:text-sm text-slate-400 max-w-md">
+        <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-md">
           Production applications engineered during 4.5+ years at IAURO Systems.
         </p>
       </div>
 
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
         <!-- AI Counselor Card -->
-        <div class="tilt-card group relative flex flex-col justify-between p-6 sm:p-8 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-indigo-500/40 shadow-xl transition-all duration-300">
+        <div class="tilt-card group relative flex flex-col justify-between p-6 sm:p-8 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 hover:border-indigo-400 dark:hover:border-indigo-500/40 shadow-xl transition-all duration-300">
           <div class="space-y-4">
             <div class="flex items-center justify-between gap-2">
               <div class="flex items-center gap-3 min-w-0">
-                <div class="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex-shrink-0 flex items-center justify-center text-indigo-400 font-mono font-bold text-sm">AI</div>
+                <div class="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex-shrink-0 flex items-center justify-center text-indigo-600 dark:text-indigo-400 font-mono font-bold text-sm">AI</div>
                 <div class="min-w-0">
-                  <h3 class="text-base sm:text-lg font-bold text-white group-hover:text-indigo-300 transition-colors truncate" title="AI Counselor & Parental Guidance Platform">AI Counselor & Parental Platform</h3>
-                  <span class="text-xs font-mono text-slate-400 block truncate">Next.js • RAG Retrieval • Firebase • Guardrails</span>
+                  <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-300 transition-colors truncate" title="AI Counselor & Parental Guidance Platform">AI Counselor & Parental Platform</h3>
+                  <span class="text-xs font-mono text-slate-500 dark:text-slate-400 block truncate">Next.js • RAG Retrieval • Firebase • Guardrails</span>
                 </div>
               </div>
-              <span class="px-2.5 py-1 rounded-full text-[10px] font-mono font-bold bg-indigo-500/10 text-indigo-300 border border-indigo-500/30 flex-shrink-0">PRODUCTION</span>
+              <span class="px-2.5 py-1 rounded-full text-[10px] font-mono font-bold bg-indigo-500/10 text-indigo-600 dark:text-indigo-300 border border-indigo-500/30 flex-shrink-0">PRODUCTION</span>
             </div>
 
-            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
-              Delivered a secure Next.js parental control web application powered by Firebase, combining RAG-based retrieval, guardrail-checked responses, and age-based contextual guidance. Designed a dynamic AI chat rendering system with <strong class="text-indigo-300 font-semibold">12+ layout card types</strong> backed by a 2-layer JSON + JavaScript fallback parser.
+            <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+              Delivered a secure Next.js parental control web application powered by Firebase, combining RAG-based retrieval, guardrail-checked responses, and age-based contextual guidance. Designed a dynamic AI chat rendering system with <strong class="text-indigo-600 dark:text-indigo-300 font-semibold">12+ layout card types</strong> backed by a 2-layer JSON + JavaScript fallback parser.
             </p>
 
-            <div class="p-3 rounded-lg bg-slate-950 border border-slate-800/80 space-y-1 text-xs">
-              <span class="text-indigo-300 font-mono font-semibold block">3-State Action Visual Language:</span>
-              <p class="text-slate-400 text-[11px]">Unified 3-state system (Clickable Allowed / Active Schedule / Static Blocked) for schedule locks, URL blocking, and content filters.</p>
+            <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800/80 space-y-1 text-xs">
+              <span class="text-indigo-600 dark:text-indigo-300 font-mono font-semibold block">3-State Action Visual Language:</span>
+              <p class="text-slate-600 dark:text-slate-400 text-[11px]">Unified 3-state system (Clickable Allowed / Active Schedule / Static Blocked) for schedule locks, URL blocking, and content filters.</p>
             </div>
 
             <div class="flex flex-wrap gap-1.5 pt-1">
-              <span class="px-2.5 py-1 rounded-md text-[11px] font-mono bg-slate-950 text-slate-300 border border-slate-800">Next.js</span>
-              <span class="px-2.5 py-1 rounded-md text-[11px] font-mono bg-slate-950 text-slate-300 border border-slate-800">RAG AI</span>
-              <span class="px-2.5 py-1 rounded-md text-[11px] font-mono bg-slate-950 text-slate-300 border border-slate-800">Firebase</span>
-              <span class="px-2.5 py-1 rounded-md text-[11px] font-mono bg-slate-950 text-slate-300 border border-slate-800">12+ Layout Parser</span>
+              <span class="px-2.5 py-1 rounded-md text-[11px] font-mono bg-slate-100 dark:bg-slate-950 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800">Next.js</span>
+              <span class="px-2.5 py-1 rounded-md text-[11px] font-mono bg-slate-100 dark:bg-slate-950 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800">RAG AI</span>
+              <span class="px-2.5 py-1 rounded-md text-[11px] font-mono bg-slate-100 dark:bg-slate-950 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800">Firebase</span>
+              <span class="px-2.5 py-1 rounded-md text-[11px] font-mono bg-slate-100 dark:bg-slate-950 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800">12+ Layout Parser</span>
             </div>
           </div>
 
-          <div class="pt-5 flex items-center justify-between border-t border-slate-800/80 mt-5 gap-2">
-            <a href="#ai-sandbox" class="px-3.5 py-2 rounded-lg bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 text-xs font-mono font-semibold flex items-center gap-1.5 transition-all truncate">
+          <div class="pt-5 flex items-center justify-between border-t border-slate-200 dark:border-slate-800/80 mt-5 gap-2">
+            <a href="#ai-sandbox" class="px-3.5 py-2 rounded-lg bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-600 dark:text-indigo-300 border border-indigo-500/30 text-xs font-mono font-semibold flex items-center gap-1.5 transition-all truncate">
               <span>TEST LIVE PLAYGROUND ➔</span>
             </a>
-            <span class="text-xs font-mono text-slate-400 flex-shrink-0">IAURO Systems</span>
+            <span class="text-xs font-mono text-slate-500 dark:text-slate-400 flex-shrink-0">IAURO Systems</span>
           </div>
         </div>
 
         <!-- keycloak-provider Card -->
-        <div class="tilt-card group relative flex flex-col justify-between p-6 sm:p-8 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-blue-500/40 shadow-xl transition-all duration-300">
+        <div class="tilt-card group relative flex flex-col justify-between p-6 sm:p-8 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 hover:border-blue-400 dark:hover:border-blue-500/40 shadow-xl transition-all duration-300">
           <div class="space-y-4">
             <div class="flex items-center justify-between gap-2">
               <div class="flex items-center gap-3 min-w-0">
-                <div class="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex-shrink-0 flex items-center justify-center text-blue-400 font-mono font-bold text-sm">NPM</div>
+                <div class="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex-shrink-0 flex items-center justify-center text-blue-600 dark:text-blue-400 font-mono font-bold text-sm">NPM</div>
                 <div class="min-w-0">
-                  <h3 class="text-base sm:text-lg font-bold text-white group-hover:text-blue-300 transition-colors truncate" title="keycloak-provider (React Package)">keycloak-provider (NPM Package)</h3>
-                  <span class="text-xs font-mono text-slate-400 block truncate">Open Source • React • RBAC • Keycloak</span>
+                  <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-300 transition-colors truncate" title="keycloak-provider (React Package)">keycloak-provider (NPM Package)</h3>
+                  <span class="text-xs font-mono text-slate-500 dark:text-slate-400 block truncate">Open Source • React • RBAC • Keycloak</span>
                 </div>
               </div>
-              <span class="px-2.5 py-1 rounded-full text-[10px] font-mono font-bold bg-blue-500/10 text-blue-300 border border-blue-500/30 flex-shrink-0">PUBLISHED NPM</span>
+              <span class="px-2.5 py-1 rounded-full text-[10px] font-mono font-bold bg-blue-500/10 text-blue-600 dark:text-blue-300 border border-blue-500/30 flex-shrink-0">PUBLISHED NPM</span>
             </div>
 
-            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+            <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
               Authored and published an open-source React NPM package providing seamless Keycloak authentication integration with Role-Based Access Control (RBAC), declarative permission guards, and customizable UI components. Distributed via NPM and Verdaccio.
             </p>
 
-            <div class="p-3 rounded-xl bg-slate-950 border border-slate-800 font-mono text-xs text-slate-300 flex items-center justify-between gap-2 overflow-x-auto">
+            <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 font-mono text-xs text-slate-700 dark:text-slate-300 flex items-center justify-between gap-2 overflow-x-auto">
               <div class="flex items-center gap-1.5 truncate">
-                <span class="text-blue-400">$</span>
-                <span class="text-slate-200 truncate" title="npm install keycloak-provider">npm install keycloak-provider</span>
+                <span class="text-blue-600 dark:text-blue-400">$</span>
+                <span class="text-slate-900 dark:text-slate-200 truncate" title="npm install keycloak-provider">npm install keycloak-provider</span>
               </div>
-              <button id="copy-npm-btn-card" class="hover:text-blue-300 text-slate-400 text-[11px] flex items-center gap-1 transition-colors px-2 py-1 rounded bg-slate-900 border border-slate-800 flex-shrink-0">
+              <button id="copy-npm-btn-card" class="hover:text-blue-600 dark:hover:text-blue-300 text-slate-500 dark:text-slate-400 text-[11px] flex items-center gap-1 transition-colors px-2 py-1 rounded bg-slate-200 dark:bg-slate-900 border border-slate-300 dark:border-slate-800 flex-shrink-0">
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
                 <span id="copy-npm-text-card">Copy</span>
               </button>
             </div>
 
             <div class="flex flex-wrap gap-1.5 pt-1">
-              <span class="px-2.5 py-1 rounded-md text-[11px] font-mono bg-slate-950 text-slate-300 border border-slate-800">React Hooks</span>
-              <span class="px-2.5 py-1 rounded-md text-[11px] font-mono bg-slate-950 text-slate-300 border border-slate-800">Keycloak</span>
-              <span class="px-2.5 py-1 rounded-md text-[11px] font-mono bg-slate-950 text-slate-300 border border-slate-800">RBAC</span>
-              <span class="px-2.5 py-1 rounded-md text-[11px] font-mono bg-slate-950 text-slate-300 border border-slate-800">Azure Entra SSO</span>
+              <span class="px-2.5 py-1 rounded-md text-[11px] font-mono bg-slate-100 dark:bg-slate-950 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800">React Hooks</span>
+              <span class="px-2.5 py-1 rounded-md text-[11px] font-mono bg-slate-100 dark:bg-slate-950 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800">Keycloak</span>
+              <span class="px-2.5 py-1 rounded-md text-[11px] font-mono bg-slate-100 dark:bg-slate-950 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800">RBAC</span>
+              <span class="px-2.5 py-1 rounded-md text-[11px] font-mono bg-slate-100 dark:bg-slate-950 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800">Azure Entra SSO</span>
             </div>
           </div>
 
-          <div class="pt-5 flex items-center justify-between border-t border-slate-800/80 mt-5 gap-2">
-            <button id="btn-demo-rbac" class="px-3.5 py-2 rounded-lg bg-blue-500/10 hover:bg-blue-500/20 text-blue-300 border border-blue-500/30 text-xs font-mono font-semibold flex items-center gap-1.5 transition-all truncate">
+          <div class="pt-5 flex items-center justify-between border-t border-slate-200 dark:border-slate-800/80 mt-5 gap-2">
+            <button id="btn-demo-rbac" class="px-3.5 py-2 rounded-lg bg-blue-500/10 hover:bg-blue-500/20 text-blue-600 dark:text-blue-300 border border-blue-500/30 text-xs font-mono font-semibold flex items-center gap-1.5 transition-all truncate">
               <span>TEST RBAC DEMO ➔</span>
             </button>
-            <a href="https://npmjs.com/package/keycloak-provider" target="_blank" rel="noopener noreferrer" class="text-xs font-mono text-slate-400 hover:text-white underline truncate">
+            <a href="https://npmjs.com/package/keycloak-provider" target="_blank" rel="noopener noreferrer" class="text-xs font-mono text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white underline truncate">
               npmjs.com ↗
             </a>
           </div>
         </div>
 
         <!-- GESSA IAM Card -->
-        <div class="tilt-card group relative flex flex-col justify-between p-6 sm:p-8 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-emerald-500/40 shadow-xl transition-all duration-300">
+        <div class="tilt-card group relative flex flex-col justify-between p-6 sm:p-8 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 hover:border-emerald-400 dark:hover:border-emerald-500/40 shadow-xl transition-all duration-300">
           <div class="space-y-4">
             <div class="flex items-center justify-between gap-2">
               <div class="flex items-center gap-3 min-w-0">
-                <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex-shrink-0 flex items-center justify-center text-emerald-400 font-mono font-bold text-sm">IAM</div>
+                <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex-shrink-0 flex items-center justify-center text-emerald-600 dark:text-emerald-400 font-mono font-bold text-sm">IAM</div>
                 <div class="min-w-0">
-                  <h3 class="text-base sm:text-lg font-bold text-white group-hover:text-emerald-300 transition-colors truncate" title="GESSA Enterprise Platform & IAM UI">GESSA Enterprise Platform</h3>
-                  <span class="text-xs font-mono text-slate-400 block truncate">Microfrontends • Module Federation • React Flow</span>
+                  <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-300 transition-colors truncate" title="GESSA Enterprise Platform & IAM UI">GESSA Enterprise Platform</h3>
+                  <span class="text-xs font-mono text-slate-500 dark:text-slate-400 block truncate">Microfrontends • Module Federation • React Flow</span>
                 </div>
               </div>
-              <span class="px-2.5 py-1 rounded-full text-[10px] font-mono font-bold bg-emerald-500/10 text-emerald-300 border border-emerald-500/30 flex-shrink-0">ENTERPRISE</span>
+              <span class="px-2.5 py-1 rounded-full text-[10px] font-mono font-bold bg-emerald-500/10 text-emerald-600 dark:text-emerald-300 border border-emerald-500/30 flex-shrink-0">ENTERPRISE</span>
             </div>
 
-            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+            <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
               Built the identity & access management UI for an enterprise microfrontend platform using React.js and Webpack Module Federation, standardizing user provisioning across multiple client-facing modules. Developed interactive pipeline visualization using React Flow Renderer.
             </p>
 
             <div class="flex flex-wrap gap-1.5 pt-1">
-              <span class="px-2.5 py-1 rounded-md text-[11px] font-mono bg-slate-950 text-slate-300 border border-slate-800">Module Federation</span>
-              <span class="px-2.5 py-1 rounded-md text-[11px] font-mono bg-slate-950 text-slate-300 border border-slate-800">React Flow</span>
-              <span class="px-2.5 py-1 rounded-md text-[11px] font-mono bg-slate-950 text-slate-300 border border-slate-800">User Provisioning</span>
+              <span class="px-2.5 py-1 rounded-md text-[11px] font-mono bg-slate-100 dark:bg-slate-950 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800">Module Federation</span>
+              <span class="px-2.5 py-1 rounded-md text-[11px] font-mono bg-slate-100 dark:bg-slate-950 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800">React Flow</span>
+              <span class="px-2.5 py-1 rounded-md text-[11px] font-mono bg-slate-100 dark:bg-slate-950 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800">User Provisioning</span>
             </div>
           </div>
 
-          <div class="pt-5 flex items-center justify-between border-t border-slate-800/80 mt-5 gap-2">
-            <button id="btn-demo-pipeline" class="px-3.5 py-2 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-xs font-mono font-semibold flex items-center gap-1.5 transition-all truncate">
+          <div class="pt-5 flex items-center justify-between border-t border-slate-200 dark:border-slate-800/80 mt-5 gap-2">
+            <button id="btn-demo-pipeline" class="px-3.5 py-2 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-600 dark:text-emerald-300 border border-emerald-500/30 text-xs font-mono font-semibold flex items-center gap-1.5 transition-all truncate">
               <span>PIPELINE DEMO ➔</span>
             </button>
-            <span class="text-xs font-mono text-slate-400 flex-shrink-0">2022 – Present</span>
+            <span class="text-xs font-mono text-slate-500 dark:text-slate-400 flex-shrink-0">2022 – Present</span>
           </div>
         </div>
 
         <!-- IO Flow Builder Card -->
-        <div class="tilt-card group relative flex flex-col justify-between p-6 sm:p-8 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-purple-500/40 shadow-xl transition-all duration-300">
+        <div class="tilt-card group relative flex flex-col justify-between p-6 sm:p-8 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 hover:border-purple-400 dark:hover:border-purple-500/40 shadow-xl transition-all duration-300">
           <div class="space-y-4">
             <div class="flex items-center justify-between gap-2">
               <div class="flex items-center gap-3 min-w-0">
-                <div class="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/20 flex-shrink-0 flex items-center justify-center text-purple-400 font-mono font-bold text-sm">IO</div>
+                <div class="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/20 flex-shrink-0 flex items-center justify-center text-purple-600 dark:text-purple-400 font-mono font-bold text-sm">IO</div>
                 <div class="min-w-0">
-                  <h3 class="text-base sm:text-lg font-bold text-white group-hover:text-purple-300 transition-colors truncate" title="IO Flow Workflow Builder Platform">IO Flow Workflow Platform</h3>
-                  <span class="text-xs font-mono text-slate-400 block truncate">Drag & Drop • Real-time Execution • Material UI</span>
+                  <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-300 transition-colors truncate" title="IO Flow Workflow Builder Platform">IO Flow Workflow Platform</h3>
+                  <span class="text-xs font-mono text-slate-500 dark:text-slate-400 block truncate">Drag & Drop • Real-time Execution • Material UI</span>
                 </div>
               </div>
-              <span class="px-2.5 py-1 rounded-full text-[10px] font-mono font-bold bg-purple-500/10 text-purple-300 border border-purple-500/30 flex-shrink-0">WORKFLOW</span>
+              <span class="px-2.5 py-1 rounded-full text-[10px] font-mono font-bold bg-purple-500/10 text-purple-600 dark:text-purple-300 border border-purple-500/30 flex-shrink-0">WORKFLOW</span>
             </div>
 
-            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+            <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
               Developed a drag-and-drop workflow builder with real-time execution tracking, reducing manual effort in configuring multi-step business processes. Built a reusable Material UI component set that became the standard for new workflow screens across the platform.
             </p>
 
             <div class="flex flex-wrap gap-1.5 pt-1">
-              <span class="px-2.5 py-1 rounded-md text-[11px] font-mono bg-slate-950 text-slate-300 border border-slate-800">Material UI</span>
-              <span class="px-2.5 py-1 rounded-md text-[11px] font-mono bg-slate-950 text-slate-300 border border-slate-800">Drag & Drop</span>
-              <span class="px-2.5 py-1 rounded-md text-[11px] font-mono bg-slate-950 text-slate-300 border border-slate-800">Real-time Logs</span>
+              <span class="px-2.5 py-1 rounded-md text-[11px] font-mono bg-slate-100 dark:bg-slate-950 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800">Material UI</span>
+              <span class="px-2.5 py-1 rounded-md text-[11px] font-mono bg-slate-100 dark:bg-slate-950 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800">Drag & Drop</span>
+              <span class="px-2.5 py-1 rounded-md text-[11px] font-mono bg-slate-100 dark:bg-slate-950 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800">Real-time Logs</span>
             </div>
           </div>
 
-          <div class="pt-5 flex items-center justify-between border-t border-slate-800/80 mt-5 gap-2">
-            <button id="btn-demo-workflow" class="px-3.5 py-2 rounded-lg bg-purple-500/10 hover:bg-purple-500/20 text-purple-300 border border-purple-500/30 text-xs font-mono font-semibold flex items-center gap-1.5 transition-all truncate">
+          <div class="pt-5 flex items-center justify-between border-t border-slate-200 dark:border-slate-800/80 mt-5 gap-2">
+            <button id="btn-demo-workflow" class="px-3.5 py-2 rounded-lg bg-purple-500/10 hover:bg-purple-500/20 text-purple-600 dark:text-purple-300 border border-purple-500/30 text-xs font-mono font-semibold flex items-center gap-1.5 transition-all truncate">
               <span>WORKFLOW DEMO ➔</span>
             </button>
-            <span class="text-xs font-mono text-slate-400 flex-shrink-0">2022 – Present</span>
+            <span class="text-xs font-mono text-slate-500 dark:text-slate-400 flex-shrink-0">2022 – Present</span>
           </div>
         </div>
       </div>
     </section>
 
     <!-- REAL-TIME AI COUNSELOR PLAYGROUND -->
-    <section id="ai-sandbox" class="space-y-6 sm:space-y-8 p-6 sm:p-8 rounded-2xl bg-slate-900/50 border border-slate-800 shadow-xl backdrop-blur-xl relative overflow-hidden">
-      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-5">
+    <section id="ai-sandbox" class="space-y-6 sm:space-y-8 p-6 sm:p-8 rounded-2xl bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 shadow-xl backdrop-blur-xl relative overflow-hidden">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-5">
         <div>
-          <div class="inline-flex items-center gap-2 text-xs font-mono text-indigo-400 tracking-wider uppercase font-semibold">
+          <div class="inline-flex items-center gap-2 text-xs font-mono text-indigo-600 dark:text-indigo-400 tracking-wider uppercase font-semibold">
             <span>// DYNAMIC AI COUNSELOR RAG PLAYGROUND</span>
           </div>
-          <h2 class="text-xl sm:text-2xl font-bold text-white">
+          <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
             Parental AI Counselor & 12+ Layout Card Engine
           </h2>
-          <p class="text-xs text-slate-400 mt-1 max-w-2xl">
+          <p class="text-xs text-slate-600 dark:text-slate-400 mt-1 max-w-2xl">
             Interactive simulation of the Next.js AI Counselor platform. Type any parental guidance query or switch child age profiles below to trigger real-time RAG token streaming, intent routing, and dynamic 12+ card layout parsing!
           </p>
         </div>
@@ -503,10 +519,10 @@
           <button class="ai-prompt-btn active px-3 py-1.5 rounded-lg text-xs font-mono font-semibold bg-indigo-600 text-white shadow-md transition-all" data-scenario="screentime">
             📊 Screen Time Control
           </button>
-          <button class="ai-prompt-btn px-3 py-1.5 rounded-lg text-xs font-mono font-semibold bg-slate-900 border border-slate-800 text-slate-300 hover:text-white transition-all" data-scenario="rules">
+          <button class="ai-prompt-btn px-3 py-1.5 rounded-lg text-xs font-mono font-semibold bg-slate-100 dark:bg-slate-900 border border-slate-300 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-all" data-scenario="rules">
             ⚡ 3-State Rule Builder
           </button>
-          <button class="ai-prompt-btn px-3 py-1.5 rounded-lg text-xs font-mono font-semibold bg-slate-900 border border-slate-800 text-slate-300 hover:text-white transition-all" data-scenario="comparison">
+          <button class="ai-prompt-btn px-3 py-1.5 rounded-lg text-xs font-mono font-semibold bg-slate-100 dark:bg-slate-900 border border-slate-300 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-all" data-scenario="comparison">
             ⚖️ Policy Guardrails Matrix
           </button>
         </div>
@@ -514,62 +530,62 @@
 
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
         <div class="lg:col-span-5 space-y-4 font-mono text-xs">
-          <div class="p-4 rounded-xl bg-slate-950/90 border border-slate-800 space-y-2">
-            <div class="flex items-center justify-between text-slate-400">
-              <span class="font-semibold text-white">Target Child Age Profile:</span>
-              <span id="current-age-badge" class="px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-300 font-bold">12 Years Old</span>
+          <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-950/90 border border-slate-200 dark:border-slate-800 space-y-2">
+            <div class="flex items-center justify-between text-slate-500 dark:text-slate-400">
+              <span class="font-semibold text-slate-900 dark:text-white">Target Child Age Profile:</span>
+              <span id="current-age-badge" class="px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-600 dark:text-indigo-300 font-bold">12 Years Old</span>
             </div>
             <div class="grid grid-cols-3 gap-2 pt-1 text-[11px] text-center font-semibold">
-              <button class="age-selector-btn px-2 py-1.5 rounded bg-slate-900 border border-slate-800 text-slate-300 hover:text-white" data-age="8">Child (8 yrs)</button>
+              <button class="age-selector-btn px-2 py-1.5 rounded bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white" data-age="8">Child (8 yrs)</button>
               <button class="age-selector-btn active px-2 py-1.5 rounded bg-indigo-600 text-white shadow-sm" data-age="12">Pre-Teen (12 yrs)</button>
-              <button class="age-selector-btn px-2 py-1.5 rounded bg-slate-900 border border-slate-800 text-slate-300 hover:text-white" data-age="16">Teen (16 yrs)</button>
+              <button class="age-selector-btn px-2 py-1.5 rounded bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white" data-age="16">Teen (16 yrs)</button>
             </div>
           </div>
 
-          <form id="ai-sandbox-form" class="p-4 rounded-xl bg-slate-950/90 border border-slate-800 space-y-3">
-            <label for="ai-prompt-input" class="text-slate-300 font-semibold block text-xs">Parent Guidance Query:</label>
-            <textarea id="ai-prompt-input" rows="3" class="w-full p-2.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 text-xs font-mono resize-none">What is good screen time for weeknights and what apps should be filtered?</textarea>
+          <form id="ai-sandbox-form" class="p-4 rounded-xl bg-slate-50 dark:bg-slate-950/90 border border-slate-200 dark:border-slate-800 space-y-3">
+            <label for="ai-prompt-input" class="text-slate-700 dark:text-slate-300 font-semibold block text-xs">Parent Guidance Query:</label>
+            <textarea id="ai-prompt-input" rows="3" class="w-full p-2.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-indigo-500 text-xs font-mono resize-none">What is good screen time for weeknights and how to manage gaming hours?</textarea>
             <button type="submit" id="btn-run-ai" class="w-full py-2.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-semibold flex items-center justify-center gap-2 transition-all shadow-md shadow-indigo-600/20">
               <span id="btn-run-ai-text">▶ EXECUTE RAG QUERY</span>
             </button>
           </form>
 
-          <div class="p-4 rounded-xl bg-slate-950/90 border border-slate-800 space-y-2">
+          <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-950/90 border border-slate-200 dark:border-slate-800 space-y-2">
             <div class="flex items-center justify-between">
-              <span class="text-indigo-400 font-semibold">RAG Retrieval Telemetry</span>
-              <span id="telemetry-status" class="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 text-[10px] font-bold">READY</span>
+              <span class="text-indigo-600 dark:text-indigo-400 font-semibold">RAG Retrieval Telemetry</span>
+              <span id="telemetry-status" class="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[10px] font-bold">READY</span>
             </div>
-            <div class="space-y-1.5 text-[11px] text-slate-400 pt-1">
-              <div class="flex justify-between"><span>Vector Cosine Match:</span><span id="tel-vector" class="text-indigo-300 font-semibold">0.985 (High Precision)</span></div>
-              <div class="flex justify-between"><span>Guardrail Safety Filter:</span><span id="tel-guard" class="text-emerald-400 font-semibold">PASSED (Zero Violations)</span></div>
-              <div class="flex justify-between"><span>Layout Card Parser:</span><span id="tel-parser" class="text-blue-300 font-semibold">Layer 1 Direct Match</span></div>
+            <div class="space-y-1.5 text-[11px] text-slate-500 dark:text-slate-400 pt-1">
+              <div class="flex justify-between"><span>Vector Cosine Match:</span><span id="tel-vector" class="text-indigo-600 dark:text-indigo-300 font-semibold">0.985 (High Precision)</span></div>
+              <div class="flex justify-between"><span>Guardrail Safety Filter:</span><span id="tel-guard" class="text-emerald-600 dark:text-emerald-400 font-semibold">PASSED (Zero Violations)</span></div>
+              <div class="flex justify-between"><span>Layout Card Parser:</span><span id="tel-parser" class="text-blue-600 dark:text-blue-300 font-semibold">Layer 1 Direct Match</span></div>
             </div>
           </div>
         </div>
 
         <div class="lg:col-span-7 space-y-4">
-          <div class="p-5 sm:p-6 rounded-xl bg-slate-950 border border-slate-800/90 space-y-4 min-h-[340px] flex flex-col justify-between" id="ai-sandbox-output-card">
+          <div class="p-5 sm:p-6 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800/90 space-y-4 min-h-[340px] flex flex-col justify-between" id="ai-sandbox-output-card">
             <div class="space-y-3">
-              <div class="flex items-center justify-between border-b border-slate-800 pb-3 gap-2">
+              <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3 gap-2">
                 <div class="flex items-center gap-2 truncate">
-                  <span class="w-2 h-2 rounded-full bg-indigo-400 animate-pulse"></span>
-                  <span class="text-xs font-mono text-indigo-300 font-bold truncate" id="sandbox-card-header">PARSED CARD #01 • SCREEN-TIME & SCHEDULE SLIDER</span>
+                  <span class="w-2 h-2 rounded-full bg-indigo-500 animate-pulse"></span>
+                  <span class="text-xs font-mono text-indigo-600 dark:text-indigo-300 font-bold truncate" id="sandbox-card-header">PARSED CARD #01 • SCREEN-TIME & SCHEDULE SLIDER</span>
                 </div>
-                <span class="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 text-[10px] font-mono font-bold flex-shrink-0">JSON PARSED</span>
+                <span class="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[10px] font-mono font-bold flex-shrink-0">JSON PARSED</span>
               </div>
 
-              <div class="p-3 rounded-lg bg-slate-900/90 border border-slate-800 text-xs font-mono text-slate-300 min-h-[48px] leading-relaxed" id="streaming-text-target">
+              <div class="p-3 rounded-lg bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 text-xs font-mono text-slate-700 dark:text-slate-300 min-h-[48px] leading-relaxed shadow-inner" id="streaming-text-target">
                 <!-- Streamed real-time -->
               </div>
 
-              <div id="interactive-card-control-area" class="p-4 rounded-xl bg-slate-900/60 border border-slate-800 space-y-4 font-sans">
+              <div id="interactive-card-control-area" class="p-4 rounded-xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 space-y-4 font-sans shadow-sm">
                 <!-- Rendered dynamically -->
               </div>
             </div>
 
-            <div class="text-[11px] font-mono text-slate-500 flex items-center justify-between pt-2 border-t border-slate-800">
+            <div class="text-[11px] font-mono text-slate-500 flex items-center justify-between pt-2 border-t border-slate-200 dark:border-slate-800">
               <span>Architecture: Next.js + Firebase RAG</span>
-              <span class="text-emerald-400">Interactive Controls Active</span>
+              <span class="text-emerald-600 dark:text-emerald-400">Interactive Controls Active</span>
             </div>
           </div>
         </div>
@@ -580,94 +596,94 @@
     <section id="skills" class="space-y-8 sm:space-y-12">
       <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div class="space-y-2">
-          <div class="inline-flex items-center gap-2 text-xs font-mono text-indigo-400 tracking-wider uppercase font-semibold">
+          <div class="inline-flex items-center gap-2 text-xs font-mono text-indigo-600 dark:text-indigo-400 tracking-wider uppercase font-semibold">
             <span>// TECHNICAL SKILLS MATRIX</span>
           </div>
-          <h2 class="text-2xl sm:text-3xl font-bold text-white">
+          <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">
             Core Competencies & Technology Stack
           </h2>
         </div>
 
-        <div class="flex flex-wrap gap-1.5 p-1 rounded-xl bg-slate-950 border border-slate-800">
+        <div class="flex flex-wrap gap-1.5 p-1 rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-300 dark:border-slate-800">
           <button class="skill-tab-btn active px-3 py-1.5 rounded-lg text-xs font-mono font-semibold text-white bg-indigo-600 shadow-sm" data-category="all">ALL</button>
-          <button class="skill-tab-btn px-3 py-1.5 rounded-lg text-xs font-mono font-semibold text-slate-400 hover:text-white" data-category="frontend">FRONTEND</button>
-          <button class="skill-tab-btn px-3 py-1.5 rounded-lg text-xs font-mono font-semibold text-slate-400 hover:text-white" data-category="ai">AI & LLM</button>
-          <button class="skill-tab-btn px-3 py-1.5 rounded-lg text-xs font-mono font-semibold text-slate-400 hover:text-white" data-category="arch">ARCHITECTURE</button>
-          <button class="skill-tab-btn px-3 py-1.5 rounded-lg text-xs font-mono font-semibold text-slate-400 hover:text-white" data-category="security">SECURITY & AUTH</button>
+          <button class="skill-tab-btn px-3 py-1.5 rounded-lg text-xs font-mono font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white" data-category="frontend">FRONTEND</button>
+          <button class="skill-tab-btn px-3 py-1.5 rounded-lg text-xs font-mono font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white" data-category="ai">AI & LLM</button>
+          <button class="skill-tab-btn px-3 py-1.5 rounded-lg text-xs font-mono font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white" data-category="arch">ARCHITECTURE</button>
+          <button class="skill-tab-btn px-3 py-1.5 rounded-lg text-xs font-mono font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white" data-category="security">SECURITY & AUTH</button>
         </div>
       </div>
 
       <div id="skills-container" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 sm:gap-4">
-        <div class="skill-card p-4 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-indigo-500/40 transition-all text-center space-y-2 group overflow-hidden" data-category="frontend">
-          <div class="w-10 h-10 mx-auto rounded-lg bg-indigo-500/10 flex items-center justify-center text-indigo-400 font-bold font-mono group-hover:scale-110 transition-transform">R</div>
-          <p class="text-xs sm:text-sm font-bold text-white truncate" title="React.js">React.js</p>
-          <p class="text-[11px] font-mono text-indigo-300 truncate">4.5+ Yrs Exp</p>
+        <div class="skill-card p-4 rounded-xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 hover:border-indigo-400 dark:hover:border-indigo-500/40 transition-all text-center space-y-2 group overflow-hidden shadow-sm" data-category="frontend">
+          <div class="w-10 h-10 mx-auto rounded-lg bg-indigo-500/10 flex items-center justify-center text-indigo-600 dark:text-indigo-400 font-bold font-mono group-hover:scale-110 transition-transform">R</div>
+          <p class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white truncate" title="React.js">React.js</p>
+          <p class="text-[11px] font-mono text-indigo-600 dark:text-indigo-300 truncate">4.5+ Yrs Exp</p>
         </div>
 
-        <div class="skill-card p-4 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-blue-500/40 transition-all text-center space-y-2 group overflow-hidden" data-category="frontend">
-          <div class="w-10 h-10 mx-auto rounded-lg bg-slate-800 flex items-center justify-center text-white font-bold font-mono group-hover:scale-110 transition-transform">N</div>
-          <p class="text-xs sm:text-sm font-bold text-white truncate" title="Next.js">Next.js</p>
-          <p class="text-[11px] font-mono text-blue-300 truncate">Advanced</p>
+        <div class="skill-card p-4 rounded-xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 hover:border-blue-400 dark:hover:border-blue-500/40 transition-all text-center space-y-2 group overflow-hidden shadow-sm" data-category="frontend">
+          <div class="w-10 h-10 mx-auto rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-900 dark:text-white font-bold font-mono group-hover:scale-110 transition-transform">N</div>
+          <p class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white truncate" title="Next.js">Next.js</p>
+          <p class="text-[11px] font-mono text-blue-600 dark:text-blue-300 truncate">Advanced</p>
         </div>
 
-        <div class="skill-card p-4 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-blue-500/40 transition-all text-center space-y-2 group overflow-hidden" data-category="frontend">
-          <div class="w-10 h-10 mx-auto rounded-lg bg-blue-500/10 flex items-center justify-center text-blue-400 font-bold font-mono group-hover:scale-110 transition-transform">TS</div>
-          <p class="text-xs sm:text-sm font-bold text-white truncate" title="TypeScript">TypeScript</p>
-          <p class="text-[11px] font-mono text-blue-300 truncate">Proficient</p>
+        <div class="skill-card p-4 rounded-xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 hover:border-blue-400 dark:hover:border-blue-500/40 transition-all text-center space-y-2 group overflow-hidden shadow-sm" data-category="frontend">
+          <div class="w-10 h-10 mx-auto rounded-lg bg-blue-500/10 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold font-mono group-hover:scale-110 transition-transform">TS</div>
+          <p class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white truncate" title="TypeScript">TypeScript</p>
+          <p class="text-[11px] font-mono text-blue-600 dark:text-blue-300 truncate">Proficient</p>
         </div>
 
-        <div class="skill-card p-4 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-indigo-500/40 transition-all text-center space-y-2 group overflow-hidden" data-category="arch">
-          <div class="w-10 h-10 mx-auto rounded-lg bg-indigo-500/10 flex items-center justify-center text-indigo-400 font-bold font-mono group-hover:scale-110 transition-transform">MF</div>
-          <p class="text-xs sm:text-sm font-bold text-white truncate" title="Microfrontends">Microfrontends</p>
-          <p class="text-[11px] font-mono text-indigo-300 truncate">Module Fed</p>
+        <div class="skill-card p-4 rounded-xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 hover:border-indigo-400 dark:hover:border-indigo-500/40 transition-all text-center space-y-2 group overflow-hidden shadow-sm" data-category="arch">
+          <div class="w-10 h-10 mx-auto rounded-lg bg-indigo-500/10 flex items-center justify-center text-indigo-600 dark:text-indigo-400 font-bold font-mono group-hover:scale-110 transition-transform">MF</div>
+          <p class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white truncate" title="Microfrontends">Microfrontends</p>
+          <p class="text-[11px] font-mono text-indigo-600 dark:text-indigo-300 truncate">Module Fed</p>
         </div>
 
-        <div class="skill-card p-4 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-purple-500/40 transition-all text-center space-y-2 group overflow-hidden" data-category="ai">
-          <div class="w-10 h-10 mx-auto rounded-lg bg-purple-500/10 flex items-center justify-center text-purple-400 font-bold font-mono group-hover:scale-110 transition-transform">AI</div>
-          <p class="text-xs sm:text-sm font-bold text-white truncate" title="RAG Systems">RAG Systems</p>
-          <p class="text-[11px] font-mono text-purple-300 truncate">Guardrails</p>
+        <div class="skill-card p-4 rounded-xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 hover:border-purple-400 dark:hover:border-purple-500/40 transition-all text-center space-y-2 group overflow-hidden shadow-sm" data-category="ai">
+          <div class="w-10 h-10 mx-auto rounded-lg bg-purple-500/10 flex items-center justify-center text-purple-600 dark:text-purple-400 font-bold font-mono group-hover:scale-110 transition-transform">AI</div>
+          <p class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white truncate" title="RAG Systems">RAG Systems</p>
+          <p class="text-[11px] font-mono text-purple-600 dark:text-purple-300 truncate">Guardrails</p>
         </div>
 
-        <div class="skill-card p-4 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-blue-500/40 transition-all text-center space-y-2 group overflow-hidden" data-category="security">
-          <div class="w-10 h-10 mx-auto rounded-lg bg-blue-500/10 flex items-center justify-center text-blue-400 font-bold font-mono group-hover:scale-110 transition-transform">KC</div>
-          <p class="text-xs sm:text-sm font-bold text-white truncate" title="Keycloak / RBAC">Keycloak / RBAC</p>
-          <p class="text-[11px] font-mono text-blue-300 truncate">NPM Author</p>
+        <div class="skill-card p-4 rounded-xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 hover:border-blue-400 dark:hover:border-blue-500/40 transition-all text-center space-y-2 group overflow-hidden shadow-sm" data-category="security">
+          <div class="w-10 h-10 mx-auto rounded-lg bg-blue-500/10 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold font-mono group-hover:scale-110 transition-transform">KC</div>
+          <p class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white truncate" title="Keycloak / RBAC">Keycloak / RBAC</p>
+          <p class="text-[11px] font-mono text-blue-600 dark:text-blue-300 truncate">NPM Author</p>
         </div>
 
-        <div class="skill-card p-4 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-emerald-500/40 transition-all text-center space-y-2 group overflow-hidden" data-category="frontend">
-          <div class="w-10 h-10 mx-auto rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-400 font-bold font-mono group-hover:scale-110 transition-transform">RF</div>
-          <p class="text-xs sm:text-sm font-bold text-white truncate" title="React Flow">React Flow</p>
-          <p class="text-[11px] font-mono text-emerald-300 truncate">Workflows</p>
+        <div class="skill-card p-4 rounded-xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 hover:border-emerald-400 dark:hover:border-emerald-500/40 transition-all text-center space-y-2 group overflow-hidden shadow-sm" data-category="frontend">
+          <div class="w-10 h-10 mx-auto rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-600 dark:text-emerald-400 font-bold font-mono group-hover:scale-110 transition-transform">RF</div>
+          <p class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white truncate" title="React Flow">React Flow</p>
+          <p class="text-[11px] font-mono text-emerald-600 dark:text-emerald-300 truncate">Workflows</p>
         </div>
 
-        <div class="skill-card p-4 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-indigo-500/40 transition-all text-center space-y-2 group overflow-hidden" data-category="frontend">
-          <div class="w-10 h-10 mx-auto rounded-lg bg-indigo-500/10 flex items-center justify-center text-indigo-400 font-bold font-mono group-hover:scale-110 transition-transform">RX</div>
-          <p class="text-xs sm:text-sm font-bold text-white truncate" title="Redux Toolkit">Redux Toolkit</p>
-          <p class="text-[11px] font-mono text-indigo-300 truncate">State / Cache</p>
+        <div class="skill-card p-4 rounded-xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 hover:border-indigo-400 dark:hover:border-indigo-500/40 transition-all text-center space-y-2 group overflow-hidden shadow-sm" data-category="frontend">
+          <div class="w-10 h-10 mx-auto rounded-lg bg-indigo-500/10 flex items-center justify-center text-indigo-600 dark:text-indigo-400 font-bold font-mono group-hover:scale-110 transition-transform">RX</div>
+          <p class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white truncate" title="Redux Toolkit">Redux Toolkit</p>
+          <p class="text-[11px] font-mono text-indigo-600 dark:text-indigo-300 truncate">State / Cache</p>
         </div>
 
-        <div class="skill-card p-4 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-amber-500/40 transition-all text-center space-y-2 group overflow-hidden" data-category="frontend">
-          <div class="w-10 h-10 mx-auto rounded-lg bg-amber-500/10 flex items-center justify-center text-amber-400 font-bold font-mono group-hover:scale-110 transition-transform">JS</div>
-          <p class="text-xs sm:text-sm font-bold text-white truncate" title="JavaScript">JavaScript</p>
-          <p class="text-[11px] font-mono text-amber-300 truncate">ES6+ Core</p>
+        <div class="skill-card p-4 rounded-xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 hover:border-amber-400 dark:hover:border-amber-500/40 transition-all text-center space-y-2 group overflow-hidden shadow-sm" data-category="frontend">
+          <div class="w-10 h-10 mx-auto rounded-lg bg-amber-500/10 flex items-center justify-center text-amber-600 dark:text-amber-400 font-bold font-mono group-hover:scale-110 transition-transform">JS</div>
+          <p class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white truncate" title="JavaScript">JavaScript</p>
+          <p class="text-[11px] font-mono text-amber-600 dark:text-amber-300 truncate">ES6+ Core</p>
         </div>
 
-        <div class="skill-card p-4 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-amber-500/40 transition-all text-center space-y-2 group overflow-hidden" data-category="ai">
-          <div class="w-10 h-10 mx-auto rounded-lg bg-amber-500/10 flex items-center justify-center text-amber-400 font-bold font-mono group-hover:scale-110 transition-transform">PY</div>
-          <p class="text-xs sm:text-sm font-bold text-white truncate" title="Python">Python</p>
-          <p class="text-[11px] font-mono text-amber-300 truncate">5x Gold Badge</p>
+        <div class="skill-card p-4 rounded-xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 hover:border-amber-400 dark:hover:border-amber-500/40 transition-all text-center space-y-2 group overflow-hidden shadow-sm" data-category="ai">
+          <div class="w-10 h-10 mx-auto rounded-lg bg-amber-500/10 flex items-center justify-center text-amber-600 dark:text-amber-400 font-bold font-mono group-hover:scale-110 transition-transform">PY</div>
+          <p class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white truncate" title="Python">Python</p>
+          <p class="text-[11px] font-mono text-amber-600 dark:text-amber-300 truncate">5x Gold Badge</p>
         </div>
 
-        <div class="skill-card p-4 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-blue-500/40 transition-all text-center space-y-2 group overflow-hidden" data-category="security">
-          <div class="w-10 h-10 mx-auto rounded-lg bg-blue-500/10 flex items-center justify-center text-blue-400 font-bold font-mono group-hover:scale-110 transition-transform">AZ</div>
-          <p class="text-xs sm:text-sm font-bold text-white truncate" title="Azure Entra SSO">Azure Entra SSO</p>
-          <p class="text-[11px] font-mono text-blue-300 truncate">Token Refresh</p>
+        <div class="skill-card p-4 rounded-xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 hover:border-blue-400 dark:hover:border-blue-500/40 transition-all text-center space-y-2 group overflow-hidden shadow-sm" data-category="security">
+          <div class="w-10 h-10 mx-auto rounded-lg bg-blue-500/10 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold font-mono group-hover:scale-110 transition-transform">AZ</div>
+          <p class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white truncate" title="Azure Entra SSO">Azure Entra SSO</p>
+          <p class="text-[11px] font-mono text-blue-600 dark:text-blue-300 truncate">Token Refresh</p>
         </div>
 
-        <div class="skill-card p-4 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-purple-500/40 transition-all text-center space-y-2 group overflow-hidden" data-category="arch">
-          <div class="w-10 h-10 mx-auto rounded-lg bg-purple-500/10 flex items-center justify-center text-purple-400 font-bold font-mono group-hover:scale-110 transition-transform">SB</div>
-          <p class="text-xs sm:text-sm font-bold text-white truncate" title="Storybook / MUI">Storybook / MUI</p>
-          <p class="text-[11px] font-mono text-purple-300 truncate">Design Systems</p>
+        <div class="skill-card p-4 rounded-xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 hover:border-purple-400 dark:hover:border-purple-500/40 transition-all text-center space-y-2 group overflow-hidden shadow-sm" data-category="arch">
+          <div class="w-10 h-10 mx-auto rounded-lg bg-purple-500/10 flex items-center justify-center text-purple-600 dark:text-purple-400 font-bold font-mono group-hover:scale-110 transition-transform">SB</div>
+          <p class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white truncate" title="Storybook / MUI">Storybook / MUI</p>
+          <p class="text-[11px] font-mono text-purple-600 dark:text-purple-300 truncate">Design Systems</p>
         </div>
       </div>
     </section>
@@ -675,64 +691,64 @@
     <!-- CAREER & EXPERIENCE TIMELINE -->
     <section id="experience" class="space-y-8 sm:space-y-12">
       <div class="space-y-2">
-        <div class="inline-flex items-center gap-2 text-xs font-mono text-indigo-400 tracking-wider uppercase font-semibold">
+        <div class="inline-flex items-center gap-2 text-xs font-mono text-indigo-600 dark:text-indigo-400 tracking-wider uppercase font-semibold">
           <span>// CAREER & EXPERIENCE TIMELINE</span>
         </div>
-        <h2 class="text-2xl sm:text-3xl font-bold text-white">
+        <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">
           Work Experience & Recognition
         </h2>
       </div>
 
-      <div class="relative border-l-2 border-slate-800 ml-3 sm:ml-6 pl-5 sm:pl-8 space-y-8 sm:space-y-12">
+      <div class="relative border-l-2 border-slate-200 dark:border-slate-800 ml-3 sm:ml-6 pl-5 sm:pl-8 space-y-8 sm:space-y-12">
         <div class="relative group">
-          <div class="absolute -left-[27px] sm:-left-[39px] top-1.5 w-5 h-5 rounded-full bg-slate-950 border-2 border-indigo-400 flex items-center justify-center group-hover:scale-125 transition-transform">
-            <span class="w-1.5 h-1.5 rounded-full bg-indigo-400"></span>
+          <div class="absolute -left-[27px] sm:-left-[39px] top-1.5 w-5 h-5 rounded-full bg-white dark:bg-slate-950 border-2 border-indigo-500 flex items-center justify-center group-hover:scale-125 transition-transform">
+            <span class="w-1.5 h-1.5 rounded-full bg-indigo-500"></span>
           </div>
 
-          <div class="p-6 sm:p-8 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-indigo-500/40 transition-all space-y-5">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-4">
+          <div class="p-6 sm:p-8 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 hover:border-indigo-400 dark:hover:border-indigo-500/40 transition-all space-y-5 shadow-md dark:shadow-none">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-200 dark:border-slate-800 pb-4">
               <div>
-                <h3 class="text-lg sm:text-xl font-bold text-white">Software Engineer</h3>
-                <p class="text-xs sm:text-sm font-semibold text-indigo-400">IAURO Systems Pvt. Ltd., Pune, India</p>
+                <h3 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">Software Engineer</h3>
+                <p class="text-xs sm:text-sm font-semibold text-indigo-600 dark:text-indigo-400">IAURO Systems Pvt. Ltd., Pune, India</p>
               </div>
-              <span class="px-3 py-1 rounded-full text-[11px] font-mono font-bold bg-indigo-500/10 text-indigo-300 border border-indigo-500/30 self-start sm:self-auto">
+              <span class="px-3 py-1 rounded-full text-[11px] font-mono font-bold bg-indigo-500/10 text-indigo-600 dark:text-indigo-300 border border-indigo-500/30 self-start sm:self-auto">
                 Apr 2022 – Present (4.5+ Years)
               </span>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm text-slate-300">
-              <div class="p-4 rounded-xl bg-slate-950 border border-slate-800/80 space-y-1.5">
-                <div class="font-bold text-white flex items-center gap-2 text-xs">
-                  <span class="text-indigo-400">🚀</span> AI Counselor Platform
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm text-slate-600 dark:text-slate-300">
+              <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800/80 space-y-1.5">
+                <div class="font-bold text-slate-900 dark:text-white flex items-center gap-2 text-xs">
+                  <span class="text-indigo-600 dark:text-indigo-400">🚀</span> AI Counselor Platform
                 </div>
-                <p class="text-xs text-slate-400 leading-relaxed">
+                <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
                   Delivered Next.js parental control web app with Firebase. Built core AI platform combining RAG retrieval, guardrails, & age-based contextual guidance. Designed 12+ card layout response engine.
                 </p>
               </div>
 
-              <div class="p-4 rounded-xl bg-slate-950 border border-slate-800/80 space-y-1.5">
-                <div class="font-bold text-white flex items-center gap-2 text-xs">
-                  <span class="text-blue-400">🏗️</span> Microfrontends Architecture
+              <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800/80 space-y-1.5">
+                <div class="font-bold text-slate-900 dark:text-white flex items-center gap-2 text-xs">
+                  <span class="text-blue-600 dark:text-blue-400">🏗️</span> Microfrontends Architecture
                 </div>
-                <p class="text-xs text-slate-400 leading-relaxed">
+                <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
                   Architected microfrontend platform with React.js & Module Federation for independent deployment of identity, access management, and workflow modules.
                 </p>
               </div>
 
-              <div class="p-4 rounded-xl bg-slate-950 border border-slate-800/80 space-y-1.5">
-                <div class="font-bold text-white flex items-center gap-2 text-xs">
-                  <span class="text-emerald-400">🔐</span> keycloak-provider NPM & SSO
+              <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800/80 space-y-1.5">
+                <div class="font-bold text-slate-900 dark:text-white flex items-center gap-2 text-xs">
+                  <span class="text-emerald-600 dark:text-emerald-400">🔐</span> keycloak-provider NPM & SSO
                 </div>
-                <p class="text-xs text-slate-400 leading-relaxed">
+                <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
                   Published reusable React auth package with RBAC on NPM/Verdaccio. Migrated client apps to Azure Entra ID SSO, resolving critical token refresh issues.
                 </p>
               </div>
 
-              <div class="p-4 rounded-xl bg-slate-950 border border-slate-800/80 space-y-1.5">
-                <div class="font-bold text-white flex items-center gap-2 text-xs">
-                  <span class="text-purple-400">⚡</span> Performance & Storybook
+              <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800/80 space-y-1.5">
+                <div class="font-bold text-slate-900 dark:text-white flex items-center gap-2 text-xs">
+                  <span class="text-purple-600 dark:text-purple-400">⚡</span> Performance & Storybook
                 </div>
-                <p class="text-xs text-slate-400 leading-relaxed">
+                <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
                   Optimized Redux state management and reduced redundant API calls through caching and memoization, cutting unnecessary re-renders on high-traffic screens.
                 </p>
               </div>
@@ -741,33 +757,33 @@
         </div>
 
         <div class="relative group">
-          <div class="absolute -left-[27px] sm:-left-[39px] top-1.5 w-5 h-5 rounded-full bg-slate-950 border-2 border-blue-400 flex items-center justify-center group-hover:scale-125 transition-transform">
-            <span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span>
+          <div class="absolute -left-[27px] sm:-left-[39px] top-1.5 w-5 h-5 rounded-full bg-white dark:bg-slate-950 border-2 border-blue-500 flex items-center justify-center group-hover:scale-125 transition-transform">
+            <span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
           </div>
 
-          <div class="p-6 sm:p-8 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-blue-500/40 transition-all space-y-4">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-4">
+          <div class="p-6 sm:p-8 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 hover:border-blue-400 dark:hover:border-blue-500/40 transition-all space-y-4 shadow-md dark:shadow-none">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-200 dark:border-slate-800 pb-4">
               <div>
-                <h3 class="text-lg sm:text-xl font-bold text-white">B.Tech in Information Technology</h3>
-                <p class="text-xs sm:text-sm font-semibold text-blue-400">SGGSIE&T, Nanded</p>
+                <h3 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">B.Tech in Information Technology</h3>
+                <p class="text-xs sm:text-sm font-semibold text-blue-600 dark:text-blue-400">SGGSIE&T, Nanded</p>
               </div>
-              <span class="px-3 py-1 rounded-full text-[11px] font-mono font-bold bg-blue-500/10 text-blue-300 border border-blue-500/30 self-start sm:self-auto">
+              <span class="px-3 py-1 rounded-full text-[11px] font-mono font-bold bg-blue-500/10 text-blue-600 dark:text-blue-300 border border-blue-500/30 self-start sm:self-auto">
                 2018 – 2022 | CGPA: 9.19 / 10
               </span>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
-              <div class="p-3.5 rounded-xl bg-slate-950 border border-slate-800/80 text-center space-y-1">
-                <span class="text-amber-300 font-bold text-xs sm:text-sm">🏆 2x Annual Awards</span>
-                <p class="text-[11px] text-slate-400">Top Performance at IAURO</p>
+              <div class="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800/80 text-center space-y-1">
+                <span class="text-amber-600 dark:text-amber-300 font-bold text-xs sm:text-sm">🏆 2x Annual Awards</span>
+                <p class="text-[11px] text-slate-500 dark:text-slate-400">Top Performance at IAURO</p>
               </div>
-              <div class="p-3.5 rounded-xl bg-slate-950 border border-slate-800/80 text-center space-y-1">
-                <span class="text-indigo-300 font-bold text-xs sm:text-sm">🥇 Monthly Awards</span>
-                <p class="text-[11px] text-slate-400">Problem Solving Excellence</p>
+              <div class="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800/80 text-center space-y-1">
+                <span class="text-indigo-600 dark:text-indigo-300 font-bold text-xs sm:text-sm">🥇 Monthly Awards</span>
+                <p class="text-[11px] text-slate-500 dark:text-slate-400">Problem Solving Excellence</p>
               </div>
-              <div class="p-3.5 rounded-xl bg-slate-950 border border-slate-800/80 text-center space-y-1">
-                <span class="text-emerald-400 font-bold text-xs sm:text-sm">⭐ 5x HackerRank Gold</span>
-                <p class="text-[11px] text-slate-400">Python & Team Player Badge</p>
+              <div class="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800/80 text-center space-y-1">
+                <span class="text-emerald-600 dark:text-emerald-400 font-bold text-xs sm:text-sm">⭐ 5x HackerRank Gold</span>
+                <p class="text-[11px] text-slate-500 dark:text-slate-400">Python & Team Player Badge</p>
               </div>
             </div>
           </div>
@@ -780,77 +796,77 @@
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
         <div class="lg:col-span-5 space-y-6">
           <div class="space-y-2">
-            <div class="inline-flex items-center gap-2 text-xs font-mono text-indigo-400 tracking-wider uppercase font-semibold">
+            <div class="inline-flex items-center gap-2 text-xs font-mono text-indigo-600 dark:text-indigo-400 tracking-wider uppercase font-semibold">
               <span>// GET IN TOUCH</span>
             </div>
-            <h2 class="text-2xl sm:text-3xl font-bold text-white">
+            <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">
               Let's Build Impactful Products
             </h2>
           </div>
 
-          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+          <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
             I am open to Senior Frontend Engineer and Lead opportunities. Send a message using the form or connect directly via Email, LinkedIn, or Phone.
           </p>
 
           <div class="space-y-3">
-            <a href="mailto:motiramshinde944@gmail.com" class="p-4 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-indigo-500/50 flex items-center gap-3.5 transition-all group overflow-hidden">
-              <div class="w-10 h-10 rounded-lg bg-indigo-500/10 flex-shrink-0 flex items-center justify-center text-indigo-400 group-hover:scale-110 transition-transform">
+            <a href="mailto:motiramshinde944@gmail.com" class="p-4 rounded-xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 hover:border-indigo-400 dark:hover:border-indigo-500/50 flex items-center gap-3.5 transition-all group overflow-hidden shadow-sm">
+              <div class="w-10 h-10 rounded-lg bg-indigo-500/10 flex-shrink-0 flex items-center justify-center text-indigo-600 dark:text-indigo-400 group-hover:scale-110 transition-transform">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
               </div>
               <div class="min-w-0">
-                <p class="text-[10px] text-slate-400 font-mono">DIRECT EMAIL</p>
-                <p class="text-xs sm:text-sm font-bold text-white group-hover:text-indigo-300 transition-colors truncate" title="motiramshinde944@gmail.com">motiramshinde944@gmail.com</p>
+                <p class="text-[10px] text-slate-500 dark:text-slate-400 font-mono">DIRECT EMAIL</p>
+                <p class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-300 transition-colors truncate" title="motiramshinde944@gmail.com">motiramshinde944@gmail.com</p>
               </div>
             </a>
 
-            <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800 flex items-center gap-3.5 overflow-hidden">
-              <div class="w-10 h-10 rounded-lg bg-blue-500/10 flex-shrink-0 flex items-center justify-center text-blue-400">
+            <div class="p-4 rounded-xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 flex items-center gap-3.5 overflow-hidden shadow-sm">
+              <div class="w-10 h-10 rounded-lg bg-blue-500/10 flex-shrink-0 flex items-center justify-center text-blue-600 dark:text-blue-400">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
               </div>
               <div class="min-w-0">
-                <p class="text-[10px] text-slate-400 font-mono">LOCATION</p>
-                <p class="text-xs sm:text-sm font-bold text-white truncate" title="Pune, Maharashtra, India">Pune, Maharashtra, India</p>
+                <p class="text-[10px] text-slate-500 dark:text-slate-400 font-mono">LOCATION</p>
+                <p class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white truncate" title="Pune, Maharashtra, India">Pune, Maharashtra, India</p>
               </div>
             </div>
 
-            <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800 flex items-center gap-3.5 overflow-hidden">
-              <div class="w-10 h-10 rounded-lg bg-emerald-500/10 flex-shrink-0 flex items-center justify-center text-emerald-400">
+            <div class="p-4 rounded-xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 flex items-center gap-3.5 overflow-hidden shadow-sm">
+              <div class="w-10 h-10 rounded-lg bg-emerald-500/10 flex-shrink-0 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
               </div>
               <div class="min-w-0">
-                <p class="text-[10px] text-slate-400 font-mono">PHONE</p>
-                <p class="text-xs sm:text-sm font-bold text-white truncate" title="+91 8975303848">+91 8975303848</p>
+                <p class="text-[10px] text-slate-500 dark:text-slate-400 font-mono">PHONE</p>
+                <p class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white truncate" title="+91 8975303848">+91 8975303848</p>
               </div>
             </div>
           </div>
         </div>
 
         <div class="lg:col-span-7">
-          <form id="contact-form" class="p-6 sm:p-8 rounded-2xl bg-slate-900/60 border border-slate-800 space-y-4 shadow-xl">
-            <h3 class="text-base sm:text-lg font-bold text-white border-b border-slate-800 pb-3">
+          <form id="contact-form" class="p-6 sm:p-8 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 space-y-4 shadow-xl">
+            <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-800 pb-3">
               Send Direct Message
             </h3>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div class="space-y-1.5">
-                <label for="form-name" class="text-xs font-mono text-slate-300 font-semibold">YOUR NAME *</label>
-                <input type="text" id="form-name" required placeholder="e.g. Sarah (Recruiter / Manager)" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-950 border border-slate-800 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 text-xs sm:text-sm">
+                <label for="form-name" class="text-xs font-mono text-slate-700 dark:text-slate-300 font-semibold">YOUR NAME *</label>
+                <input type="text" id="form-name" required placeholder="e.g. Sarah (Recruiter / Manager)" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-indigo-500 text-xs sm:text-sm">
               </div>
 
               <div class="space-y-1.5">
-                <label for="form-email" class="text-xs font-mono text-slate-300 font-semibold">YOUR EMAIL *</label>
-                <input type="email" id="form-email" required placeholder="e.g. sarah@company.com" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-950 border border-slate-800 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 text-xs sm:text-sm">
+                <label for="form-email" class="text-xs font-mono text-slate-700 dark:text-slate-300 font-semibold">YOUR EMAIL *</label>
+                <input type="email" id="form-email" required placeholder="e.g. sarah@company.com" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-indigo-500 text-xs sm:text-sm">
               </div>
             </div>
 
             <div class="space-y-1.5">
-              <label for="form-subject" class="text-xs font-mono text-slate-300 font-semibold">SUBJECT *</label>
-              <input type="text" id="form-subject" required placeholder="e.g. Senior Frontend Opportunity" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-950 border border-slate-800 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 text-xs sm:text-sm">
+              <label for="form-subject" class="text-xs font-mono text-slate-700 dark:text-slate-300 font-semibold">SUBJECT *</label>
+              <input type="text" id="form-subject" required placeholder="e.g. Senior Frontend Opportunity" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-indigo-500 text-xs sm:text-sm">
             </div>
 
             <div class="space-y-1.5">
-              <label for="form-message" class="text-xs font-mono text-slate-300 font-semibold">MESSAGE *</label>
-              <textarea id="form-message" rows="4" required placeholder="Hi Motiram, we reviewed your AI Counselor & Microfrontends experience..." class="w-full px-3.5 py-2.5 rounded-lg bg-slate-950 border border-slate-800 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 text-xs sm:text-sm resize-none"></textarea>
+              <label for="form-message" class="text-xs font-mono text-slate-700 dark:text-slate-300 font-semibold">MESSAGE *</label>
+              <textarea id="form-message" rows="4" required placeholder="Hi Motiram, we reviewed your AI Counselor & Microfrontends experience..." class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-indigo-500 text-xs sm:text-sm resize-none"></textarea>
             </div>
 
             <button type="submit" id="form-submit-btn" class="w-full py-3 text-xs sm:text-sm font-bold rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white shadow-md shadow-indigo-600/20 transition-all flex items-center justify-center gap-2">
@@ -863,7 +879,7 @@
         </div>
       </div>
 
-      <div class="pt-8 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs font-mono text-slate-500 text-center sm:text-left">
+      <div class="pt-8 border-t border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs font-mono text-slate-500 text-center sm:text-left">
         <p>© 2026 Motiram V. Shinde. All rights reserved.</p>
         <p class="truncate">Built with HTML5, Tailwind CSS, & ES6 JavaScript</p>
       </div>
@@ -877,112 +893,112 @@
   <div id="ai-copilot-container" class="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3 pointer-events-auto">
     
     <!-- Expanded Chat Window -->
-    <div id="ai-copilot-window" class="hidden w-[90vw] sm:w-[400px] h-[480px] rounded-2xl bg-slate-950 border border-slate-800 shadow-2xl backdrop-blur-2xl flex-col overflow-hidden transition-all duration-300">
+    <div id="ai-copilot-window" class="hidden w-[90vw] sm:w-[400px] h-[480px] rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 shadow-2xl backdrop-blur-2xl flex-col overflow-hidden transition-all duration-300">
       
       <!-- Copilot Header -->
-      <div class="p-3.5 bg-slate-900 border-b border-slate-800 flex items-center justify-between">
+      <div class="p-3.5 bg-slate-100 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
         <div class="flex items-center gap-2.5">
           <div class="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white font-mono font-bold text-xs shadow-md">
             AI
           </div>
           <div>
-            <h4 class="text-xs font-bold text-white flex items-center gap-1.5">
+            <h4 class="text-xs font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
               <span>Motiram.AI Copilot</span>
               <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
             </h4>
-            <p class="text-[10px] text-slate-400 font-mono">Resume Knowledge Base</p>
+            <p class="text-[10px] text-slate-500 dark:text-slate-400 font-mono">Resume Knowledge Base</p>
           </div>
         </div>
-        <button id="close-copilot-btn" class="p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800 text-xs">✕</button>
+        <button id="close-copilot-btn" class="p-1.5 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 text-xs">✕</button>
       </div>
 
       <!-- Copilot Messages Area -->
-      <div id="copilot-messages-target" class="flex-1 p-4 overflow-y-auto space-y-3 font-mono text-xs text-slate-200">
-        <div class="p-3 rounded-xl bg-slate-900 border border-slate-800/80 space-y-1 text-slate-300">
-          <span class="text-indigo-300 font-bold block">🤖 Motiram.AI Assistant:</span>
+      <div id="copilot-messages-target" class="flex-1 p-4 overflow-y-auto space-y-3 font-mono text-xs text-slate-800 dark:text-slate-200">
+        <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800/80 space-y-1 text-slate-700 dark:text-slate-300">
+          <span class="text-indigo-600 dark:text-indigo-300 font-bold block">🤖 Motiram.AI Assistant:</span>
           <p class="text-[11px] leading-relaxed">Hi! I am Motiram's AI Portfolio Copilot. Ask me anything about his 4.5+ years experience, Next.js RAG AI platform, Microfrontends at IAURO, keycloak-provider NPM package, awards, or CGPA!</p>
         </div>
       </div>
 
       <!-- Copilot Quick Prompt Chips -->
-      <div class="px-3 py-2 bg-slate-950 border-t border-slate-800/80 flex flex-wrap gap-1 text-[10px]">
-        <button class="copilot-chip-btn px-2 py-1 rounded bg-slate-900 hover:bg-slate-800 text-indigo-300 border border-slate-800" data-q="Tell me about Motiram's Next.js AI Counselor project">AI Counselor RAG</button>
-        <button class="copilot-chip-btn px-2 py-1 rounded bg-slate-900 hover:bg-slate-800 text-blue-300 border border-slate-800" data-q="What is Motiram's Microfrontends experience?">Microfrontends</button>
-        <button class="copilot-chip-btn px-2 py-1 rounded bg-slate-900 hover:bg-slate-800 text-amber-300 border border-slate-800" data-q="What awards and HackerRank badges has Motiram won?">Awards & Honors</button>
+      <div class="px-3 py-2 bg-slate-50 dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800/80 flex flex-wrap gap-1 text-[10px]">
+        <button class="copilot-chip-btn px-2 py-1 rounded bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 text-indigo-600 dark:text-indigo-300 border border-slate-200 dark:border-slate-800" data-q="Tell me about Motiram's Next.js AI Counselor project">AI Counselor RAG</button>
+        <button class="copilot-chip-btn px-2 py-1 rounded bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 text-blue-600 dark:text-blue-300 border border-slate-200 dark:border-slate-800" data-q="What is Motiram's Microfrontends experience?">Microfrontends</button>
+        <button class="copilot-chip-btn px-2 py-1 rounded bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 text-amber-600 dark:text-amber-300 border border-slate-200 dark:border-slate-800" data-q="What awards and HackerRank badges has Motiram won?">Awards & Honors</button>
       </div>
 
       <!-- Copilot Form -->
-      <form id="copilot-form" class="p-2.5 bg-slate-950 border-t border-slate-800 flex items-center gap-2">
-        <input type="text" id="copilot-input" placeholder="Ask AI about Motiram..." required class="flex-1 px-3 py-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-100 text-xs font-mono focus:outline-none focus:border-indigo-500">
+      <form id="copilot-form" class="p-2.5 bg-slate-100 dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 flex items-center gap-2">
+        <input type="text" id="copilot-input" placeholder="Ask AI about Motiram..." required class="flex-1 px-3 py-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 text-slate-900 dark:text-slate-100 text-xs font-mono focus:outline-none focus:border-indigo-500">
         <button type="submit" class="px-3 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs shadow-md transition-all">Send</button>
       </form>
 
     </div>
 
     <!-- Floating Trigger Badge Button -->
-    <button id="toggle-copilot-btn" class="group flex items-center gap-2.5 px-4 py-3 rounded-full bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs shadow-2xl hover:scale-105 transition-all duration-200 border border-slate-700 hover:border-indigo-400">
+    <button id="toggle-copilot-btn" class="group flex items-center gap-2.5 px-4 py-3 rounded-full bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-900 dark:text-white font-bold text-xs shadow-2xl hover:scale-105 transition-all duration-200 border border-slate-300 dark:border-slate-700 hover:border-indigo-500">
       <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
-      <span class="font-mono text-indigo-300">🤖 Motiram.AI Copilot</span>
+      <span class="font-mono text-indigo-600 dark:text-indigo-300">🤖 Motiram.AI Copilot</span>
     </button>
 
   </div>
 
   <!-- MODALS -->
   <div id="modal-rbac" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
-    <div class="relative w-full max-w-2xl rounded-2xl bg-slate-900 border border-slate-800 shadow-2xl p-5 sm:p-6 space-y-5">
-      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+    <div class="relative w-full max-w-2xl rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl p-5 sm:p-6 space-y-5">
+      <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
         <div class="flex items-center gap-3">
-          <div class="w-8 h-8 rounded bg-indigo-500/20 text-indigo-400 flex items-center justify-center font-mono font-bold text-xs">KC</div>
+          <div class="w-8 h-8 rounded bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-mono font-bold text-xs">KC</div>
           <div>
-            <h3 class="text-base sm:text-lg font-bold text-white">keycloak-provider RBAC Simulator</h3>
-            <p class="text-xs text-slate-400">Toggle role to test declarative authorization</p>
+            <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white">keycloak-provider RBAC Simulator</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Toggle role to test declarative authorization</p>
           </div>
         </div>
-        <button class="close-modal p-2 text-slate-400 hover:text-white" aria-label="Close modal">✕</button>
+        <button class="close-modal p-2 text-slate-400 hover:text-slate-900 dark:hover:text-white" aria-label="Close modal">✕</button>
       </div>
 
-      <div class="flex items-center gap-3 p-3.5 rounded-xl bg-slate-950 border border-slate-800 overflow-x-auto">
-        <span class="text-xs font-mono text-slate-400 flex-shrink-0">Select Role:</span>
+      <div class="flex items-center gap-3 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 overflow-x-auto">
+        <span class="text-xs font-mono text-slate-500 dark:text-slate-400 flex-shrink-0">Select Role:</span>
         <button class="rbac-role-btn active px-3 py-1 rounded text-xs font-mono bg-indigo-600 text-white font-bold" data-role="ADMIN">ADMIN</button>
-        <button class="rbac-role-btn px-3 py-1 rounded text-xs font-mono bg-slate-900 border border-slate-800 text-slate-300" data-role="PARENT">PARENT</button>
-        <button class="rbac-role-btn px-3 py-1 rounded text-xs font-mono bg-slate-900 border border-slate-800 text-slate-300" data-role="GUEST">GUEST</button>
+        <button class="rbac-role-btn px-3 py-1 rounded text-xs font-mono bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 text-slate-700 dark:text-slate-300" data-role="PARENT">PARENT</button>
+        <button class="rbac-role-btn px-3 py-1 rounded text-xs font-mono bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 text-slate-700 dark:text-slate-300" data-role="GUEST">GUEST</button>
       </div>
 
-      <div id="rbac-demo-area" class="p-4 sm:p-6 rounded-xl bg-slate-950 border border-slate-800 space-y-4"></div>
+      <div id="rbac-demo-area" class="p-4 sm:p-6 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-4"></div>
     </div>
   </div>
 
   <div id="modal-pipeline" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
-    <div class="relative w-full max-w-3xl rounded-2xl bg-slate-900 border border-slate-800 shadow-2xl p-5 sm:p-6 space-y-5">
-      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+    <div class="relative w-full max-w-3xl rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl p-5 sm:p-6 space-y-5">
+      <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
         <div class="flex items-center gap-3">
-          <div class="w-8 h-8 rounded bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-mono font-bold text-xs">RF</div>
+          <div class="w-8 h-8 rounded bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-mono font-bold text-xs">RF</div>
           <div>
-            <h3 class="text-base sm:text-lg font-bold text-white">GESSA & IO Flow Pipeline Renderer</h3>
-            <p class="text-xs text-slate-400">React Flow node execution simulation</p>
+            <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white">GESSA & IO Flow Pipeline Renderer</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400">React Flow node execution simulation</p>
           </div>
         </div>
-        <button class="close-modal p-2 text-slate-400 hover:text-white" aria-label="Close modal">✕</button>
+        <button class="close-modal p-2 text-slate-400 hover:text-slate-900 dark:hover:text-white" aria-label="Close modal">✕</button>
       </div>
 
-      <div class="p-5 sm:p-6 rounded-xl bg-slate-950 border border-slate-800 space-y-5">
+      <div class="p-5 sm:p-6 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-5">
         <div class="flex flex-col sm:flex-row items-center justify-between gap-3">
-          <div class="p-3.5 rounded-lg bg-slate-900 border border-emerald-500/40 text-center w-full">
-            <span class="text-xs font-mono text-emerald-400 font-bold block">1. Ingestion Node</span>
-            <p class="text-[10px] text-slate-400">Entra Token Auth</p>
+          <div class="p-3.5 rounded-lg bg-white dark:bg-slate-900 border border-emerald-500/40 text-center w-full shadow-sm">
+            <span class="text-xs font-mono text-emerald-600 dark:text-emerald-400 font-bold block">1. Ingestion Node</span>
+            <p class="text-[10px] text-slate-500 dark:text-slate-400">Entra Token Auth</p>
           </div>
-          <span class="text-emerald-400 font-mono hidden sm:inline">➔</span>
-          <div class="p-3.5 rounded-lg bg-slate-900 border border-blue-500/40 text-center w-full">
-            <span class="text-xs font-mono text-blue-400 font-bold block">2. RBAC Policy Guard</span>
-            <p class="text-[10px] text-slate-400">Keycloak Provider</p>
+          <span class="text-emerald-600 dark:text-emerald-400 font-mono hidden sm:inline">➔</span>
+          <div class="p-3.5 rounded-lg bg-white dark:bg-slate-900 border border-blue-500/40 text-center w-full shadow-sm">
+            <span class="text-xs font-mono text-blue-600 dark:text-blue-400 font-bold block">2. RBAC Policy Guard</span>
+            <p class="text-[10px] text-slate-500 dark:text-slate-400">Keycloak Provider</p>
           </div>
-          <span class="text-blue-400 font-mono hidden sm:inline">➔</span>
-          <div class="p-3.5 rounded-lg bg-slate-900 border border-indigo-500/40 text-center w-full">
-            <span class="text-xs font-mono text-indigo-400 font-bold block">3. Workflow Exec</span>
-            <p class="text-[10px] text-slate-400">IO Flow Module</p>
+          <span class="text-blue-600 dark:text-blue-400 font-mono hidden sm:inline">➔</span>
+          <div class="p-3.5 rounded-lg bg-white dark:bg-slate-900 border border-indigo-500/40 text-center w-full shadow-sm">
+            <span class="text-xs font-mono text-indigo-600 dark:text-indigo-400 font-bold block">3. Workflow Exec</span>
+            <p class="text-[10px] text-slate-500 dark:text-slate-400">IO Flow Module</p>
           </div>
         </div>
-        <p class="text-xs text-slate-400 text-center">
+        <p class="text-xs text-slate-500 dark:text-slate-400 text-center">
           Real-time execution tracking node updates engineered for GESSA enterprise suite.
         </p>
       </div>
@@ -990,24 +1006,24 @@
   </div>
 
   <div id="modal-resume" class="fixed inset-0 z-50 hidden items-center justify-center p-3 sm:p-4 bg-slate-950/80 backdrop-blur-md">
-    <div class="relative w-full max-w-4xl rounded-2xl bg-slate-900 border border-slate-800 shadow-2xl p-4 sm:p-6 space-y-5 max-h-[90vh] overflow-y-auto">
-      <div class="flex items-center justify-between border-b border-slate-800 pb-3 gap-2">
+    <div class="relative w-full max-w-4xl rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl p-4 sm:p-6 space-y-5 max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3 gap-2">
         <div class="flex items-center gap-3 truncate">
-          <div class="w-8 h-8 rounded bg-indigo-500/20 text-indigo-400 flex-shrink-0 flex items-center justify-center font-mono font-bold text-xs">RESUME</div>
+          <div class="w-8 h-8 rounded bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 flex-shrink-0 flex items-center justify-center font-mono font-bold text-xs">RESUME</div>
           <div class="truncate">
-            <h3 class="text-base sm:text-lg font-bold text-white truncate" title="Motiram V. Shinde - Resume Summary">Motiram V. Shinde</h3>
-            <p class="text-xs text-slate-400 truncate">Senior Frontend Engineer (4.5+ Yrs Exp)</p>
+            <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white truncate" title="Motiram V. Shinde - Resume Summary">Motiram V. Shinde</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 truncate">Senior Frontend Engineer (4.5+ Yrs Exp)</p>
           </div>
         </div>
         <div class="flex items-center gap-2 flex-shrink-0">
-          <button id="btn-print-resume" class="px-3 py-1.5 text-xs font-mono font-bold rounded bg-indigo-600 text-white hover:bg-indigo-500">
+          <button id="btn-print-resume" class="px-3 py-1.5 text-xs font-mono font-bold rounded bg-indigo-600 text-white hover:bg-indigo-500 shadow-sm">
             🖨️ PRINT PDF
           </button>
-          <button class="close-modal p-2 text-slate-400 hover:text-white" aria-label="Close modal">✕</button>
+          <button class="close-modal p-2 text-slate-400 hover:text-slate-900 dark:hover:text-white" aria-label="Close modal">✕</button>
         </div>
       </div>
 
-      <div id="printable-resume" class="bg-white text-slate-900 p-6 sm:p-8 rounded-xl space-y-5 font-sans text-sm shadow-inner">
+      <div id="printable-resume" class="bg-white text-slate-900 p-6 sm:p-8 rounded-xl space-y-5 font-sans text-sm shadow-inner border border-slate-200">
         <div class="text-center space-y-1 border-b pb-4">
           <h1 class="text-xl sm:text-2xl font-black text-slate-900">MOTIRAM V. SHINDE</h1>
           <p class="text-xs text-slate-600">Pune, India | (+91) 8975303848 | motiramshinde944@gmail.com</p>

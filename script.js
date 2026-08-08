@@ -1,7 +1,7 @@
 /**
  * Motiram V. Shinde - Developer Portfolio JavaScript Engine
  * Stack: Pure Vanilla ES6+ JavaScript + Tailwind CSS
- * Features: Professional AI Copilot Engine & Dynamic AI Counselor RAG Sandbox
+ * Features: Light & Dark Theme Toggle, Professional AI Copilot Engine & Dynamic AI Counselor RAG Sandbox
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -44,6 +44,43 @@ AWARDS & BADGES:
 
 Be polite, technical, helpful, and concise.
 `;
+
+  /* ==========================================================================
+     LIGHT / DARK THEME TOGGLE CONTROLLER
+     ========================================================================== */
+  const initThemeToggle = () => {
+    const themeToggleBtn = document.getElementById('theme-toggle-btn');
+    const darkIcon = document.getElementById('theme-toggle-dark-icon');
+    const lightIcon = document.getElementById('theme-toggle-light-icon');
+    if (!themeToggleBtn || !darkIcon || !lightIcon) return;
+
+    const isDarkMode = () => document.documentElement.classList.contains('dark');
+
+    const updateIcons = () => {
+      if (isDarkMode()) {
+        lightIcon.classList.remove('hidden');
+        darkIcon.classList.add('hidden');
+      } else {
+        lightIcon.classList.add('hidden');
+        darkIcon.classList.remove('hidden');
+      }
+    };
+
+    updateIcons();
+
+    themeToggleBtn.addEventListener('click', () => {
+      if (isDarkMode()) {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('color-theme', 'light');
+      } else {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('color-theme', 'dark');
+      }
+      updateIcons();
+    });
+  };
+
+  initThemeToggle();
 
   /* ==========================================================================
      COMPREHENSIVE DYNAMIC RAG RESUME ROUTER FOR MOTIRAM.AI COPILOT
@@ -188,7 +225,6 @@ Be polite, technical, helpful, and concise.
         this.vx = (Math.random() - 0.5) * 0.6;
         this.vy = (Math.random() - 0.5) * 0.6;
         this.radius = Math.random() * 1.5 + 1;
-        this.color = Math.random() > 0.5 ? '#6366f1' : '#3b82f6';
       }
 
       update() {
@@ -211,9 +247,10 @@ Be polite, technical, helpful, and concise.
       }
 
       draw() {
+        const isDark = document.documentElement.classList.contains('dark');
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = this.color;
+        ctx.fillStyle = isDark ? '#6366f1' : '#4f46e5';
         ctx.fill();
       }
     }
@@ -224,6 +261,7 @@ Be polite, technical, helpful, and concise.
 
     const animate = () => {
       ctx.clearRect(0, 0, width, height);
+      const isDark = document.documentElement.classList.contains('dark');
 
       for (let i = 0; i < particles.length; i++) {
         particles[i].update();
@@ -239,7 +277,9 @@ Be polite, technical, helpful, and concise.
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(99, 102, 241, ${alpha * 0.18})`;
+            ctx.strokeStyle = isDark
+              ? `rgba(99, 102, 241, ${alpha * 0.18})`
+              : `rgba(79, 70, 229, ${alpha * 0.15})`;
             ctx.lineWidth = 0.7;
             ctx.stroke();
           }
@@ -355,16 +395,16 @@ Be polite, technical, helpful, and concise.
     const appendMessage = (sender, text, isThinking = false) => {
       const msgDiv = document.createElement('div');
       msgDiv.className = sender === 'user'
-        ? 'p-2.5 rounded-xl bg-indigo-600/20 border border-indigo-500/30 text-indigo-200 text-right ml-6 font-mono text-[11px]'
-        : 'p-3 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 font-mono text-[11px] space-y-1';
+        ? 'p-2.5 rounded-xl bg-indigo-600/20 border border-indigo-500/30 text-indigo-700 dark:text-indigo-200 text-right ml-6 font-mono text-[11px]'
+        : 'p-3 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-300 font-mono text-[11px] space-y-1';
 
       if (sender === 'user') {
         msgDiv.textContent = text;
       } else if (isThinking) {
         msgDiv.id = 'thinking-msg-node';
-        msgDiv.innerHTML = `<span class="text-indigo-300 font-semibold block flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-indigo-400 animate-ping"></span> 🤖 Motiram.AI Copilot:</span><p class="text-slate-400 italic">Processing prompt...</p>`;
+        msgDiv.innerHTML = `<span class="text-indigo-600 dark:text-indigo-300 font-semibold block flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-indigo-400 animate-ping"></span> 🤖 Motiram.AI Copilot:</span><p class="text-slate-500 dark:text-slate-400 italic">Processing prompt...</p>`;
       } else {
-        msgDiv.innerHTML = `<span class="text-indigo-300 font-semibold block flex items-center gap-1">🤖 Motiram.AI Copilot:</span><p class="leading-relaxed whitespace-pre-wrap">${text}</p>`;
+        msgDiv.innerHTML = `<span class="text-indigo-600 dark:text-indigo-300 font-semibold block flex items-center gap-1">🤖 Motiram.AI Copilot:</span><p class="leading-relaxed whitespace-pre-wrap">${text}</p>`;
       }
 
       messagesTarget.appendChild(msgDiv);
@@ -375,7 +415,7 @@ Be polite, technical, helpful, and concise.
     // Smooth streaming typewriter simulation for AI Copilot
     const streamCopilotResponse = (targetNode, fullText) => {
       let charIdx = 0;
-      targetNode.innerHTML = `<span class="text-indigo-300 font-semibold block flex items-center gap-1">🤖 Motiram.AI Copilot:</span><p class="leading-relaxed whitespace-pre-wrap"><span id="copilot-stream-text"></span><span class="blinking-cursor"></span></p>`;
+      targetNode.innerHTML = `<span class="text-indigo-600 dark:text-indigo-300 font-semibold block flex items-center gap-1">🤖 Motiram.AI Copilot:</span><p class="leading-relaxed whitespace-pre-wrap"><span id="copilot-stream-text"></span><span class="blinking-cursor"></span></p>`;
       const streamSpan = targetNode.querySelector('#copilot-stream-text');
 
       const streamTimer = setInterval(() => {
@@ -486,7 +526,7 @@ Be polite, technical, helpful, and concise.
       react: {
         roleTitle: 'SENIOR REACT / NEXT.JS FRONTEND ENGINEER',
         matchScore: '98% MATCH',
-        scoreColor: 'text-emerald-400 bg-emerald-500/10 border-emerald-500/30',
+        scoreColor: 'text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 border-emerald-500/30',
         summary: 'Ideal fit for high-scale React/Next.js roles. 4.5+ years experience building production RAG AI interfaces, Redux state caching, and Storybook component libraries at IAURO Systems.',
         bullets: [
           '4.5+ Years production React.js & Next.js experience at IAURO Systems',
@@ -498,7 +538,7 @@ Be polite, technical, helpful, and concise.
       ai: {
         roleTitle: 'AI PRODUCT & RAG SYSTEMS SPECIALIST',
         matchScore: '96% MATCH',
-        scoreColor: 'text-indigo-300 bg-indigo-500/10 border-indigo-500/30',
+        scoreColor: 'text-indigo-600 dark:text-indigo-300 bg-indigo-500/10 border-indigo-500/30',
         summary: 'Strong technical fit for AI-native product teams. Direct experience building production RAG parental guidance platforms with vector cosine matching and guardrails.',
         bullets: [
           'Production Next.js + Firebase RAG Parental Control AI platform',
@@ -510,7 +550,7 @@ Be polite, technical, helpful, and concise.
       microfrontend: {
         roleTitle: 'MICROFRONTEND & ENTERPRISE ARCHITECT',
         matchScore: '95% MATCH',
-        scoreColor: 'text-blue-300 bg-blue-500/10 border-blue-500/30',
+        scoreColor: 'text-blue-600 dark:text-blue-300 bg-blue-500/10 border-blue-500/30',
         summary: 'Expertise in modular enterprise architectures using Webpack Module Federation, keycloak auth, and drag-and-drop workflow builders.',
         bullets: [
           'GESSA IAM Enterprise Platform with Module Federation architecture',
@@ -525,22 +565,22 @@ Be polite, technical, helpful, and concise.
       const data = roleEvaluations[roleKey];
       cardTarget.innerHTML = `
         <div class="space-y-4 font-mono">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-3">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-200 dark:border-slate-800 pb-3">
             <div>
-              <span class="text-xs text-slate-400 block font-semibold">Target Evaluated Role:</span>
-              <h3 class="text-sm sm:text-base font-bold text-white">${data.roleTitle}</h3>
+              <span class="text-xs text-slate-500 dark:text-slate-400 block font-semibold">Target Evaluated Role:</span>
+              <h3 class="text-sm sm:text-base font-bold text-slate-900 dark:text-white">${data.roleTitle}</h3>
             </div>
             <span class="px-3 py-1 rounded-lg text-xs font-bold border ${data.scoreColor} self-start sm:self-auto">${data.matchScore}</span>
           </div>
 
-          <p class="text-xs text-slate-300 font-sans leading-relaxed">${data.summary}</p>
+          <p class="text-xs text-slate-600 dark:text-slate-300 font-sans leading-relaxed">${data.summary}</p>
 
           <div class="space-y-2 pt-1">
-            <span class="text-xs font-semibold text-indigo-400 block">AI Verified Candidate Strengths:</span>
-            <ul class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-slate-300 font-sans">
+            <span class="text-xs font-semibold text-indigo-600 dark:text-indigo-400 block">AI Verified Candidate Strengths:</span>
+            <ul class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-slate-700 dark:text-slate-300 font-sans">
               ${data.bullets.map(b => `
-                <li class="p-2.5 rounded-lg bg-slate-900 border border-slate-800 flex items-start gap-2">
-                  <span class="text-emerald-400 font-mono">✔</span>
+                <li class="p-2.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-start gap-2 shadow-sm dark:shadow-none">
+                  <span class="text-emerald-500 dark:text-emerald-400 font-mono">✔</span>
                   <span>${b}</span>
                 </li>
               `).join('')}
@@ -556,10 +596,10 @@ Be polite, technical, helpful, and concise.
       btn.addEventListener('click', () => {
         btns.forEach(b => {
           b.classList.remove('active', 'bg-indigo-600', 'text-white', 'shadow-md');
-          b.classList.add('bg-slate-900', 'text-slate-300');
+          b.classList.add('bg-slate-100', 'dark:bg-slate-900', 'text-slate-700', 'dark:text-slate-300');
         });
         btn.classList.add('active', 'bg-indigo-600', 'text-white', 'shadow-md');
-        btn.classList.remove('bg-slate-900', 'text-slate-300');
+        btn.classList.remove('bg-slate-100', 'dark:bg-slate-900', 'text-slate-700', 'dark:text-slate-300');
 
         const role = btn.getAttribute('data-role');
         renderRoleFit(role);
@@ -598,53 +638,53 @@ Be polite, technical, helpful, and concise.
         return {
           html: `
             <div class="space-y-3 font-mono text-xs">
-              <span class="text-indigo-300 font-semibold block">Interactive 3-State Rule Toggles (Click to change state):</span>
+              <span class="text-indigo-600 dark:text-indigo-300 font-semibold block">Interactive 3-State Rule Toggles (Click to change state):</span>
               
               <div class="space-y-2">
-                <div class="p-3 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-between gap-2">
+                <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-between gap-2">
                   <div>
-                    <span class="text-white font-bold block">YouTube App</span>
-                    <span class="text-[10px] text-slate-400">Age Appropriateness Filter</span>
+                    <span class="text-slate-900 dark:text-white font-bold block">YouTube App</span>
+                    <span class="text-[10px] text-slate-500 dark:text-slate-400">Age Appropriateness Filter</span>
                   </div>
                   <button class="rule-toggle-btn px-3 py-1.5 rounded text-xs font-bold border transition-all" data-state="scheduled" id="rule-yt">
                     ⏳ SCHEDULED (09:00 PM)
                   </button>
                 </div>
 
-                <div class="p-3 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-between gap-2">
+                <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-between gap-2">
                   <div>
-                    <span class="text-white font-bold block">Roblox & Online Gaming</span>
-                    <span class="text-[10px] text-slate-400">Multiplayer Safety Guard</span>
+                    <span class="text-slate-900 dark:text-white font-bold block">Roblox & Online Gaming</span>
+                    <span class="text-[10px] text-slate-500 dark:text-slate-400">Multiplayer Safety Guard</span>
                   </div>
                   <button class="rule-toggle-btn px-3 py-1.5 rounded text-xs font-bold border transition-all" data-state="allowed" id="rule-gaming">
                     ✔ ALLOWED
                   </button>
                 </div>
 
-                <div class="p-3 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-between gap-2">
+                <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-between gap-2">
                   <div>
-                    <span class="text-white font-bold block">Adult Web Filtering</span>
-                    <span class="text-[10px] text-slate-400">Strict Domain Shield</span>
+                    <span class="text-slate-900 dark:text-white font-bold block">Adult Web Filtering</span>
+                    <span class="text-[10px] text-slate-500 dark:text-slate-400">Strict Domain Shield</span>
                   </div>
                   <button class="rule-toggle-btn px-3 py-1.5 rounded text-xs font-bold border transition-all" data-state="blocked" id="rule-adult">
                     🚫 BLOCKED
                   </button>
                 </div>
               </div>
-              <p class="text-[11px] text-slate-400 pt-1">Unified visual system introduced by Motiram at IAURO Systems to clarify clickable vs static elements.</p>
+              <p class="text-[11px] text-slate-500 dark:text-slate-400 pt-1">Unified visual system introduced by Motiram at IAURO Systems to clarify clickable vs static elements.</p>
             </div>
           `,
           attach: () => {
             const updateBtnUI = (btn, state) => {
               btn.setAttribute('data-state', state);
               if (state === 'allowed') {
-                btn.className = 'rule-toggle-btn px-3 py-1.5 rounded text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40';
+                btn.className = 'rule-toggle-btn px-3 py-1.5 rounded text-xs font-bold bg-emerald-500/20 text-emerald-600 dark:text-emerald-300 border border-emerald-500/40';
                 btn.textContent = '✔ ALLOWED';
               } else if (state === 'scheduled') {
-                btn.className = 'rule-toggle-btn px-3 py-1.5 rounded text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40';
+                btn.className = 'rule-toggle-btn px-3 py-1.5 rounded text-xs font-bold bg-amber-500/20 text-amber-600 dark:text-amber-300 border border-amber-500/40';
                 btn.textContent = '⏳ SCHEDULED (09:00 PM)';
               } else {
-                btn.className = 'rule-toggle-btn px-3 py-1.5 rounded text-xs font-bold bg-red-500/20 text-red-400 border border-red-500/40';
+                btn.className = 'rule-toggle-btn px-3 py-1.5 rounded text-xs font-bold bg-red-500/20 text-red-600 dark:text-red-400 border border-red-500/40';
                 btn.textContent = '🚫 BLOCKED';
               }
             };
@@ -669,14 +709,14 @@ Be polite, technical, helpful, and concise.
           html: `
             <div class="space-y-3 font-mono text-xs">
               <div class="overflow-x-auto">
-                <table class="w-full text-left text-slate-300">
-                  <thead class="bg-slate-900 text-slate-400 text-[11px]">
+                <table class="w-full text-left text-slate-700 dark:text-slate-300">
+                  <thead class="bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400 text-[11px]">
                     <tr><th class="p-2.5">Feature Shield</th><th class="p-2.5">Configured Policy</th><th class="p-2.5">AI Guardrail</th></tr>
                   </thead>
-                  <tbody class="divide-y divide-slate-800 text-[11px]">
-                    <tr><td class="p-2.5 text-indigo-300 font-bold">App Install Consent</td><td class="p-2.5 text-amber-400 font-bold">Requires Parent PIN</td><td class="p-2.5 text-emerald-400">PASSED</td></tr>
-                    <tr><td class="p-2.5 text-blue-300 font-bold">Bedtime Quiet Hours</td><td class="p-2.5 text-slate-200">${age === '16' ? '11:00 PM' : '09:00 PM'}</td><td class="p-2.5 text-emerald-400">PASSED</td></tr>
-                    <tr><td class="p-2.5 text-purple-300 font-bold">Safe Search Mode</td><td class="p-2.5 text-emerald-400 font-bold">Enforced (Strict)</td><td class="p-2.5 text-emerald-400">PASSED</td></tr>
+                  <tbody class="divide-y divide-slate-200 dark:divide-slate-800 text-[11px]">
+                    <tr><td class="p-2.5 text-indigo-600 dark:text-indigo-300 font-bold">App Install Consent</td><td class="p-2.5 text-amber-600 dark:text-amber-400 font-bold">Requires Parent PIN</td><td class="p-2.5 text-emerald-600 dark:text-emerald-400">PASSED</td></tr>
+                    <tr><td class="p-2.5 text-blue-600 dark:text-blue-300 font-bold">Bedtime Quiet Hours</td><td class="p-2.5 text-slate-800 dark:text-slate-200">${age === '16' ? '11:00 PM' : '09:00 PM'}</td><td class="p-2.5 text-emerald-600 dark:text-emerald-400">PASSED</td></tr>
+                    <tr><td class="p-2.5 text-purple-600 dark:text-purple-300 font-bold">Safe Search Mode</td><td class="p-2.5 text-emerald-600 dark:text-emerald-400 font-bold">Enforced (Strict)</td><td class="p-2.5 text-emerald-600 dark:text-emerald-400">PASSED</td></tr>
                   </tbody>
                 </table>
               </div>
@@ -693,21 +733,21 @@ Be polite, technical, helpful, and concise.
           html: `
             <div class="space-y-4 font-mono">
               <div class="flex items-center justify-between">
-                <span class="text-xs text-indigo-300 font-semibold">Interactive Screen Time Control:</span>
-                <span id="slider-val" class="text-xs font-bold text-white bg-slate-900 px-2.5 py-1 rounded border border-slate-800">${defaultHours} Hours / Day</span>
+                <span class="text-xs text-indigo-600 dark:text-indigo-300 font-semibold">Interactive Screen Time Control:</span>
+                <span id="slider-val" class="text-xs font-bold text-slate-900 dark:text-white bg-slate-100 dark:bg-slate-900 px-2.5 py-1 rounded border border-slate-300 dark:border-slate-800">${defaultHours} Hours / Day</span>
               </div>
               
-              <input type="range" id="screentime-slider" min="0.5" max="4.0" step="0.5" value="${defaultHours}" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer">
+              <input type="range" id="screentime-slider" min="0.5" max="4.0" step="0.5" value="${defaultHours}" class="w-full h-2 bg-slate-200 dark:bg-slate-800 rounded-lg appearance-none cursor-pointer">
               
               <div class="space-y-2 pt-2 text-xs font-mono">
-                <div class="flex justify-between text-slate-400"><span>Educational Study (Unlimited)</span><span class="text-emerald-400 font-semibold">2.5 hrs</span></div>
-                <div class="w-full bg-slate-900 rounded-full h-2 overflow-hidden">
-                  <div class="bg-emerald-400 h-2 rounded-full" style="width: 80%"></div>
+                <div class="flex justify-between text-slate-500 dark:text-slate-400"><span>Educational Study (Unlimited)</span><span class="text-emerald-600 dark:text-emerald-400 font-semibold">2.5 hrs</span></div>
+                <div class="w-full bg-slate-200 dark:bg-slate-900 rounded-full h-2 overflow-hidden">
+                  <div class="bg-emerald-500 h-2 rounded-full" style="width: 80%"></div>
                 </div>
 
-                <div class="flex justify-between text-slate-400"><span>Gaming & Recreational Apps (Capped)</span><span id="gaming-hr-text" class="text-indigo-300 font-semibold">${defaultHours} hrs</span></div>
-                <div class="w-full bg-slate-900 rounded-full h-2 overflow-hidden">
-                  <div id="gaming-bar" class="bg-indigo-500 h-2 rounded-full transition-all duration-300" style="width: ${(defaultHours / 4) * 100}%"></div>
+                <div class="flex justify-between text-slate-500 dark:text-slate-400"><span>Gaming & Recreational Apps (Capped)</span><span id="gaming-hr-text" class="text-indigo-600 dark:text-indigo-300 font-semibold">${defaultHours} hrs</span></div>
+                <div class="w-full bg-slate-200 dark:bg-slate-900 rounded-full h-2 overflow-hidden">
+                  <div id="gaming-bar" class="bg-indigo-600 dark:bg-indigo-500 h-2 rounded-full transition-all duration-300" style="width: ${(defaultHours / 4) * 100}%"></div>
                 </div>
               </div>
             </div>
@@ -735,7 +775,7 @@ Be polite, technical, helpful, and concise.
       isStreaming = true;
 
       telStatus.textContent = 'STREAMING...';
-      telStatus.className = 'px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 text-[10px] font-bold animate-pulse';
+      telStatus.className = 'px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-600 dark:text-indigo-300 text-[10px] font-bold animate-pulse';
 
       streamTarget.textContent = 'Retrieving age-contextual guidance rules...';
       controlArea.innerHTML = '';
@@ -767,7 +807,7 @@ Be polite, technical, helpful, and concise.
           clearInterval(charInterval);
           isStreaming = false;
           telStatus.textContent = 'COMPLETED';
-          telStatus.className = 'px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 text-[10px] font-bold';
+          telStatus.className = 'px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-[10px] font-bold';
           controlArea.innerHTML = controls.html;
           controls.attach();
         }
@@ -778,10 +818,10 @@ Be polite, technical, helpful, and concise.
       btn.addEventListener('click', () => {
         ageBtns.forEach(b => {
           b.classList.remove('active', 'bg-indigo-600', 'text-white', 'shadow-sm');
-          b.classList.add('bg-slate-900', 'text-slate-300');
+          b.classList.add('bg-white', 'dark:bg-slate-900', 'text-slate-700', 'dark:text-slate-300');
         });
         btn.classList.add('active', 'bg-indigo-600', 'text-white', 'shadow-sm');
-        btn.classList.remove('bg-slate-900', 'text-slate-300');
+        btn.classList.remove('bg-white', 'dark:bg-slate-900', 'text-slate-700', 'dark:text-slate-300');
 
         activeAge = btn.getAttribute('data-age');
         currentAgeBadge.textContent = `${activeAge} Years Old`;
@@ -793,10 +833,10 @@ Be polite, technical, helpful, and concise.
       btn.addEventListener('click', () => {
         scenarioBtns.forEach(b => {
           b.classList.remove('active', 'bg-indigo-600', 'text-white', 'shadow-md');
-          b.classList.add('bg-slate-900', 'text-slate-300');
+          b.classList.add('bg-slate-100', 'dark:bg-slate-900', 'text-slate-700', 'dark:text-slate-300');
         });
         btn.classList.add('active', 'bg-indigo-600', 'text-white', 'shadow-md');
-        btn.classList.remove('bg-slate-900', 'text-slate-300');
+        btn.classList.remove('bg-slate-100', 'dark:bg-slate-900', 'text-slate-700', 'dark:text-slate-300');
 
         currentScenario = btn.getAttribute('data-scenario');
         if (promptInput) {
@@ -833,11 +873,11 @@ Be polite, technical, helpful, and concise.
       btn.addEventListener('click', () => {
         tabBtns.forEach(b => {
           b.classList.remove('active', 'bg-indigo-600', 'text-white', 'shadow-sm');
-          b.classList.add('text-slate-400');
+          b.classList.add('text-slate-600', 'dark:text-slate-400');
         });
 
         btn.classList.add('active', 'bg-indigo-600', 'text-white', 'shadow-sm');
-        btn.classList.remove('text-slate-400');
+        btn.classList.remove('text-slate-600', 'dark:text-slate-400');
 
         const category = btn.getAttribute('data-category');
 
@@ -901,15 +941,15 @@ Be polite, technical, helpful, and concise.
         targetArea.innerHTML = `
           <div class="space-y-3 font-sans">
             <div class="flex items-center justify-between text-xs">
-              <span class="text-indigo-400 font-mono font-bold">Active Role: ADMIN</span>
-              <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 text-[10px] font-mono font-bold">ALL PERMISSIONS UNLOCKED</span>
+              <span class="text-indigo-600 dark:text-indigo-400 font-mono font-bold">Active Role: ADMIN</span>
+              <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-[10px] font-mono font-bold">ALL PERMISSIONS UNLOCKED</span>
             </div>
-            <div class="p-4 rounded-xl bg-slate-900 border border-indigo-500/40 space-y-2">
-              <span class="text-white text-xs font-bold">&lt;HasRole role="admin"&gt;</span>
-              <p class="text-xs text-slate-400">Granted tenant user provisioning, Keycloak client secrets, and Azure Entra SSO token refresh controls.</p>
+            <div class="p-4 rounded-xl bg-slate-100 dark:bg-slate-900 border border-indigo-500/40 space-y-2">
+              <span class="text-slate-900 dark:text-white text-xs font-bold">&lt;HasRole role="admin"&gt;</span>
+              <p class="text-xs text-slate-600 dark:text-slate-400">Granted tenant user provisioning, Keycloak client secrets, and Azure Entra SSO token refresh controls.</p>
               <div class="flex gap-2 pt-1">
                 <button class="px-3 py-1 rounded text-xs bg-indigo-600 text-white font-mono font-semibold">Provision Tenant User</button>
-                <button class="px-3 py-1 rounded text-xs bg-red-500/20 text-red-400 border border-red-500/40 font-mono">Revoke Secrets</button>
+                <button class="px-3 py-1 rounded text-xs bg-red-500/20 text-red-600 dark:text-red-400 border border-red-500/40 font-mono">Revoke Secrets</button>
               </div>
             </div>
           </div>
@@ -918,12 +958,12 @@ Be polite, technical, helpful, and concise.
         targetArea.innerHTML = `
           <div class="space-y-3 font-sans">
             <div class="flex items-center justify-between text-xs">
-              <span class="text-blue-400 font-mono font-bold">Active Role: PARENT</span>
-              <span class="px-2 py-0.5 rounded bg-blue-500/20 text-blue-400 text-[10px] font-mono font-bold">MANAGED ACCESS</span>
+              <span class="text-blue-600 dark:text-blue-400 font-mono font-bold">Active Role: PARENT</span>
+              <span class="px-2 py-0.5 rounded bg-blue-500/20 text-blue-600 dark:text-blue-400 text-[10px] font-mono font-bold">MANAGED ACCESS</span>
             </div>
-            <div class="p-4 rounded-xl bg-slate-900 border border-blue-500/40 space-y-2">
-              <span class="text-white text-xs font-bold">Parental Controls Dashboard</span>
-              <p class="text-xs text-slate-400">Can view RAG guidance, schedule bedtime locks, and configure URL filters. Admin tenant provisioning is hidden.</p>
+            <div class="p-4 rounded-xl bg-slate-100 dark:bg-slate-900 border border-blue-500/40 space-y-2">
+              <span class="text-slate-900 dark:text-white text-xs font-bold">Parental Controls Dashboard</span>
+              <p class="text-xs text-slate-600 dark:text-slate-400">Can view RAG guidance, schedule bedtime locks, and configure URL filters. Admin tenant provisioning is hidden.</p>
             </div>
           </div>
         `;
@@ -931,12 +971,12 @@ Be polite, technical, helpful, and concise.
         targetArea.innerHTML = `
           <div class="space-y-3 font-sans">
             <div class="flex items-center justify-between text-xs">
-              <span class="text-amber-400 font-mono font-bold">Active Role: GUEST</span>
-              <span class="px-2 py-0.5 rounded bg-red-500/20 text-red-400 text-[10px] font-mono font-bold">ACCESS RESTRICTED</span>
+              <span class="text-amber-600 dark:text-amber-400 font-mono font-bold">Active Role: GUEST</span>
+              <span class="px-2 py-0.5 rounded bg-red-500/20 text-red-600 dark:text-red-400 text-[10px] font-mono font-bold">ACCESS RESTRICTED</span>
             </div>
-            <div class="p-4 rounded-xl bg-slate-900 border border-red-500/40 text-center space-y-1">
-              <p class="text-xs text-red-400 font-mono font-bold">🚫 Access Denied</p>
-              <p class="text-xs text-slate-400">keycloak-provider fallback prevents unauthorized access.</p>
+            <div class="p-4 rounded-xl bg-slate-100 dark:bg-slate-900 border border-red-500/40 text-center space-y-1">
+              <p class="text-xs text-red-600 dark:text-red-400 font-mono font-bold">🚫 Access Denied</p>
+              <p class="text-xs text-slate-600 dark:text-slate-400">keycloak-provider fallback prevents unauthorized access.</p>
             </div>
           </div>
         `;
@@ -949,10 +989,10 @@ Be polite, technical, helpful, and concise.
       btn.addEventListener('click', () => {
         btns.forEach(b => {
           b.classList.remove('active', 'bg-indigo-600', 'text-white', 'font-bold');
-          b.classList.add('bg-slate-900', 'text-slate-300');
+          b.classList.add('bg-white', 'dark:bg-slate-900', 'text-slate-700', 'dark:text-slate-300');
         });
         btn.classList.add('active', 'bg-indigo-600', 'text-white', 'font-bold');
-        btn.classList.remove('bg-slate-900', 'text-slate-300');
+        btn.classList.remove('bg-white', 'dark:bg-slate-900', 'text-slate-700', 'dark:text-slate-300');
 
         const role = btn.getAttribute('data-role');
         renderRBACState(role);
@@ -1001,15 +1041,15 @@ Be polite, technical, helpful, and concise.
         submitBtn.innerHTML = `<span>SEND MESSAGE</span><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>`;
 
         statusDiv.classList.remove('hidden');
-        statusDiv.className = 'p-5 rounded-2xl bg-emerald-950/90 border border-emerald-500/60 text-slate-100 shadow-xl space-y-3 transition-all duration-300 text-center sm:text-left';
+        statusDiv.className = 'p-5 rounded-2xl bg-emerald-50 dark:bg-emerald-950/90 border border-emerald-500/60 text-slate-900 dark:text-slate-100 shadow-xl space-y-3 transition-all duration-300 text-center sm:text-left';
         
         statusDiv.innerHTML = `
           <div class="space-y-2">
-            <div class="flex items-center gap-2 text-emerald-400 font-bold text-sm justify-center sm:justify-start">
+            <div class="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-bold text-sm justify-center sm:justify-start">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
               <span>Gmail Compose Tab Opened!</span>
             </div>
-            <p class="text-xs text-slate-300 leading-relaxed">
+            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
               Hi <strong>${name}</strong>, a pre-filled Gmail Compose tab has been opened for <strong>motiramshinde944@gmail.com</strong>. Simply review and send!
             </p>
             <div class="flex flex-wrap items-center gap-2 pt-2 justify-center sm:justify-start">
@@ -1019,7 +1059,7 @@ Be polite, technical, helpful, and concise.
               <a href="${mailtoUrl}" target="_blank" class="px-3.5 py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs flex items-center gap-1.5 shadow-md transition-all">
                 <span>💻 Open Desktop Mail App</span>
               </a>
-              <button type="button" id="btn-copy-contact-email" class="px-3.5 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-semibold text-xs flex items-center gap-1.5 transition-all">
+              <button type="button" id="btn-copy-contact-email" class="px-3.5 py-2 rounded-lg bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 border border-slate-300 dark:border-slate-700 font-semibold text-xs flex items-center gap-1.5 transition-all">
                 <span>📋 Copy Email Address</span>
               </button>
             </div>
