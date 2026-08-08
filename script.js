@@ -108,6 +108,11 @@ Be polite, technical, helpful, and concise.
       return "I am Motiram.AI, dedicated exclusively to assisting with Motiram V. Shinde's professional profile, engineering experience, and projects. Please feel free to ask me any question about Motiram's background!";
     }
 
+    // Greetings & Introductions
+    if (q === 'hello' || q === 'hi' || q === 'hey' || q === 'hello!' || q === 'hi there' || q.startsWith('hello') || q.startsWith('hi ') || q.startsWith('hey ') || q.includes('who are you') || q.includes('what can you do') || q.includes('help')) {
+      return "Hello! 👋 I am Motiram.AI Copilot, an official interactive assistant for Motiram V. Shinde's portfolio. I can answer any questions about Motiram's 4.5+ years of engineering experience at IAURO Systems, his production Parental-Control AI Counselor platform, microfrontends with Webpack Module Federation, his keycloak-provider NPM package, tech stack, or awards. How can I help you today?";
+    }
+
     // Why hire / Strengths / Value / Leadership
     if (q.includes('why hire') || q.includes('hire') || q.includes('strength') || q.includes('value') || q.includes('why should') || q.includes('lead') || q.includes('benefit')) {
       return "Why hire Motiram: With 4.5+ years at IAURO Systems, he bridges complex Frontend Architecture with production AI systems. Key assets: 1) Proven track record delivering production RAG AI platforms with 12+ layout card renderers, 2) Enterprise Microfrontend architect with Webpack Module Federation, 3) Open-source contributor (published 'keycloak-provider' on NPM), 4) Exceptional academic foundation (9.19 / 10 CGPA), and 5) Recognized with 2x Annual Awards and monthly problem-solving awards.";
@@ -459,43 +464,43 @@ Be polite, technical, helpful, and concise.
       const thinkingNode = appendMessage('bot', '', true);
 
       const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+      const targetEndpoint = isLocal ? NVIDIA_LOCAL_ENDPOINT : 'https://integrate.api.nvidia.com/v1/chat/completions';
 
-      if (isLocal) {
-        try {
-          const controller = new AbortController();
-          const timeoutId = setTimeout(() => controller.abort(), 4000);
+      try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 3500);
 
-          const response = await fetch(NVIDIA_LOCAL_ENDPOINT, {
-            method: 'POST',
-            signal: controller.signal,
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              model: NVIDIA_MODEL,
-              messages: chatHistory,
-              temperature: 0.3,
-              max_tokens: 512
-            })
-          });
+        const response = await fetch(targetEndpoint, {
+          method: 'POST',
+          signal: controller.signal,
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer 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'
+          },
+          body: JSON.stringify({
+            model: NVIDIA_MODEL,
+            messages: chatHistory,
+            temperature: 0.4,
+            max_tokens: 512
+          })
+        });
 
-          clearTimeout(timeoutId);
+        clearTimeout(timeoutId);
 
-          if (response.ok) {
-            const data = await response.json();
-            if (data && data.choices && data.choices[0] && data.choices[0].message) {
-              const aiAnswer = data.choices[0].message.content;
-              chatHistory.push({ role: "assistant", content: aiAnswer });
-              streamCopilotResponse(thinkingNode, aiAnswer);
-              return;
-            }
+        if (response.ok) {
+          const data = await response.json();
+          if (data && data.choices && data.choices[0] && data.choices[0].message) {
+            const aiAnswer = data.choices[0].message.content;
+            chatHistory.push({ role: "assistant", content: aiAnswer });
+            streamCopilotResponse(thinkingNode, aiAnswer);
+            return;
           }
-        } catch (e) {
-          // Fallback to dynamic RAG if local server is not running
         }
+      } catch (e) {
+        // Network fetch caught gracefully
       }
 
-      // On GitHub Pages (Static Hosting) & fallback: Instant zero-CORS Neural RAG Engine
+      // Smooth fallback to high-speed dynamic RAG engine with natural answers
       setTimeout(() => {
         const dynamicAnswer = getDynamicRAGResponse(userQuery);
         chatHistory.push({ role: "assistant", content: dynamicAnswer });
